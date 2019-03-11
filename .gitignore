@@ -1,0 +1,9 @@
+*.pyc
+__pycache__
+env/
+.env
+/static/*
+/talem.sql
+/talem.sql.gz
+/media/*
+
