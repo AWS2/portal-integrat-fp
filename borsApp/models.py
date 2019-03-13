@@ -8,6 +8,8 @@ class Categoria(models.Model):
 	pare = models.ForeignKey('self',
 			on_delete=models.CASCADE,
 			null=True, default=None)
+	def __str__(self):
+		return self.nom
 
 class Centre(models.Model):
 	nom = models.CharField(max_length=255)

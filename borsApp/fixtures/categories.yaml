@@ -1,0 +1,36 @@
+- model: borsApp.Categoria
+  pk: 1
+  fields:
+    nom: Informàtica
+    descripcio: Família de cicles formatius d'informàtica i comunicacions
+    pare: null
+- model: borsApp.Categoria
+  pk: 2
+  fields:
+    nom: Arts Gràfiques
+    descripcio: Família de cicles formatius d'arts gràfiques
+    pare: null
+- model: borsApp.Categoria
+  pk: 3
+  fields:
+    nom: CFGS DAW Desenvolupament d'Aplicacions Web
+    descripcio: Cicle Formatiu de Grau Superior
+    pare: 1
+- model: borsApp.Categoria
+  pk: 4
+  fields:
+    nom: CFGS DAM Desenvolupament d'Aplicacions Multiplataforma
+    descripcio: Cicle Formatiu de Grau Superior
+    pare: 1
+- model: borsApp.Categoria
+  pk: 5
+  fields:
+    nom: CFGS ASIX Administració de Sistemes Informàtics i Xarxes
+    descripcio: Cicle Formatiu de Grau Superior
+    pare: 1
+- model: borsApp.Categoria
+  pk: 6
+  fields:
+    nom: CFGS ASIX Ciberseguretat
+    descripcio: Cicle Formatiu de Grau Superior d'Administració de Sistemes Informàtics i Xarxes, especialtizat en Ciberseguretat
+    pare: 5
