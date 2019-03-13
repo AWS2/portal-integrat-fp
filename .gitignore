@@ -6,4 +6,4 @@ env/
 /talem.sql
 /talem.sql.gz
 /media/*
-
+db.sqlite3
