@@ -21,14 +21,21 @@ class Centre(models.Model):
 	web = models.URLField()
 
 class Cicle(models.Model):
+	GRAU = (
+		('CFGM',"Grau Mitjà"),
+		('CFGS',"Grau Superior"),
+		)
+	grau = models.CharField(max_length=4,choices=GRAU)
+	codi = models.CharField(max_length=4)
 	nom = models.CharField(max_length=255)
-	especialitzacio = models.CharField(max_length=255)
 	pladestudis = models.URLField(blank=True,null=True)
 	familia = models.ForeignKey(Categoria,on_delete=models.CASCADE)
 	descripcio = models.TextField()
+	def __str__(self):
+		return self.nom
 
 class Oferta(models.Model):
-	pass #empresa = models.ForeignKey()
+	pass
 
 class Demandes(models.Model):
 	pass
