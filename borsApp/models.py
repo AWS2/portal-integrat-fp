@@ -3,11 +3,11 @@ from django.db import models
 # Create your models here.
 
 class Categoria(models.Model):
-	nom = models.CharField(max_length=255)
+	nom = models.CharField(max_length=255,unique=True)
 	descripcio = models.TextField(blank=True,null=True)
 	pare = models.ForeignKey('self',
 			on_delete=models.CASCADE,
-			null=True, default=None)
+			null=True, blank=True, default=None)
 	def __str__(self):
 		return self.nom
 
@@ -26,8 +26,8 @@ class Cicle(models.Model):
 		('CFGS',"Grau Superior"),
 		)
 	grau = models.CharField(max_length=4,choices=GRAU)
-	codi = models.CharField(max_length=4)
-	nom = models.CharField(max_length=255)
+	codi = models.CharField(max_length=4,unique=True)
+	nom = models.CharField(max_length=255,unique=True)
 	pladestudis = models.URLField(blank=True,null=True)
 	familia = models.ForeignKey(Categoria,on_delete=models.CASCADE)
 	descripcio = models.TextField()
