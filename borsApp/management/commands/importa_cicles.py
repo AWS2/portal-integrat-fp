@@ -15,9 +15,24 @@ class Command(BaseCommand):
             for row in csv_reader:
                 self.cicles[row["CODI_CICLE_FORMATIU"]] = row["NOM_CICLE_FORMATIU"]
         # mostrem cicles
-        self.show()
+        #self.show()
+
+        Cicle.objects.all().delete()
+        self.carrega()
 
     def show(self):
         for codi in self.cicles:
             print(self.cicles[codi])
+
+
+    def carrega(self):
+        for codi in self.cicles:
+            cicle = Cicle()
+            cicle.grau = "CFGS"
+            cicle.codi = codi[-4:]
+            cicle.nom = self.cicles[codi]
+            cicle.familia = None
+            cicle.descripcio = cicle.nom
+            print(cicle.codi)
+            cicle.save()
 

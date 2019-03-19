@@ -29,7 +29,7 @@ class Cicle(models.Model):
 	codi = models.CharField(max_length=4,unique=True)
 	nom = models.CharField(max_length=255,unique=True)
 	pladestudis = models.URLField(blank=True,null=True)
-	familia = models.ForeignKey(Categoria,on_delete=models.CASCADE)
+	familia = models.ForeignKey(Categoria,on_delete=models.CASCADE,null=True)
 	descripcio = models.TextField()
 	def __str__(self):
 		return self.nom
