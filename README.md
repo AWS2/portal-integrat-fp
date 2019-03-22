@@ -16,7 +16,7 @@ Per instal·lar-te aquest software has de tenir instal·lat GIT, Python 3.x i Vi
 Si en aquest punt obtens errors del pip install, probablement és perquè tens un virtualenv que només treballa en Python 2.x, i ens cal un virtualenv instal·lat per a Python 3.x (amb pip3). Consulta la documentació de pip.
 
 
-Utilitzarem la base de dades PostGis, PostgreSQL amb ampliacions de geolocalització (com s'explica [aquí](https://realpython.com/location-based-app-with-geodjango-tutorial/). Per arrencar una instància dockeritzada ho farem mitjançant:
+Com a BD no ens servirà utilitzar SQLite, haurem d'utilitzar MySQL o bé PostGis (PostgreSQL amb ampliacions de geolocalització com s'explica [aquí](https://realpython.com/location-based-app-with-geodjango-tutorial/)). Per arrencar una instància dockeritzada ho farem mitjançant:
 
     $ docker run --name=postgis -d -e POSTGRES_USER=user001 -e POSTGRES_PASS=123456789 -e POSTGRES_DBNAME=gis -p 5432:5432 kartoza/postgis:9.6-2.4
 
