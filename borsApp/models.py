@@ -1,5 +1,8 @@
 from django.db import models
 
+from django.contrib.gis.db import models as gismodels
+from django.contrib.gis.geos import Point
+
 # Create your models here.
 
 class Categoria(models.Model):
@@ -19,6 +22,7 @@ class Centre(models.Model):
 	telefon = models.IntegerField()
 	email = models.EmailField()
 	web = models.URLField()
+	localitzacio = gismodels.PointField(default=Point(0,0))
 
 class Cicle(models.Model):
 	GRAU = (
