@@ -31,4 +31,7 @@ Si volem carregar dades de prova, podem fer (per exemple, amb "categories"):
 Pots trobar més informació del desenvolupament del projecte a la wiki de l'Esteve Terradas:
     https://wiket.esteveterradas.cat/index.php/Projecte_Borsa_de_Treball
 
+## Usuarios
 
+# Correo
+Nombre de usuario: AWS2BorsAppAdmin@gmail.com
