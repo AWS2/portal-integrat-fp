@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'borsApp',
+    'djrichtextfield',
 ]
 
 MIDDLEWARE = [
@@ -119,3 +120,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+DJRICHTEXTFIELD_CONFIG = {
+    'js': ['//tinymce.cachefly.net/4.1/tinymce.min.js'],
+    'init_template': 'djrichtextfield/init/tinymce.js',
+    'settings': {
+        'menubar': False,
+        'plugins': 'link image',
+        'toolbar': 'bold italic | link image | removeformat',
+        'width': 700
+    }
+}
