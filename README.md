@@ -34,4 +34,4 @@ Pots trobar més informació del desenvolupament del projecte a la wiki de l'Est
 ## Usuarios
 
 # Correo
-Nombre de usuario: AWS2BorsAppAdmin@gmail.com
+Nombre de usuario: aws2Borsapp@gmail.com
