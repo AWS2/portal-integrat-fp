@@ -11,6 +11,10 @@ class Command(BaseCommand):
         with open('misc/Directori_de_centres_docents.csv') as csvfile:
             csv_reader = csv.DictReader( csvfile )
             for row in csv_reader:
+                qs = Centre.objects.filter(nom=row["Denominació completa"])
+                if qs:
+                    print("--- SALTANT (ja existeix) : "+row["Denominació completa"])
+                    continue
                 centre = Centre()
                 centre.codi = row["Codi centre"]
                 centre.nom = row["Denominació completa"]
