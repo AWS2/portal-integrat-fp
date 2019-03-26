@@ -1,6 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
+
+
+class User(AbstractUser):
+	imatge = models.ImageField(upload_to='imatgesPerfil', blank=True)
+	arxiu = models.FileField(upload_to='docPerfil', blank=True)
+
 
 class Categoria(models.Model):
 	nom = models.CharField(max_length=255,unique=True)
