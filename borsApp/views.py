@@ -1,5 +1,9 @@
 from django.shortcuts import render
 
 # Create your views here.
-def loginOAuth(request):
-    return render(request, 'borsApp/loginOAuth.html', {})
+# Create your views here.
+def index(request):
+    return render(request, 'borsApp/index.html', {})
+    
+def login(request):
+	return render(request, 'borsApp/login.html', {})
