@@ -6,3 +6,6 @@ def index(request):
     
 def login(request):
     return render(request, 'borsApp/login.html', {})
+
+def oferta(request):
+    return render(request, 'borsApp/oferta.html', {})

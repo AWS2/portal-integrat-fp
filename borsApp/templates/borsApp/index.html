@@ -21,13 +21,14 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
     {% include "borsApp/nav.html" %}
 
     <div class="container" style="border: 1px solid black; width: 100%;">
-        <div class="row">
+        <div class="row text-center">
             <div class="col-4">
                 Filtro
             </div>
@@ -39,8 +40,59 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <h2>Ofertas de Trabajo</h2>
+        <hr>
+        <div class="row">
+            <div class="col-3 bg-dark text-light text-center mt-20" style="border: 1px solid black;">
+                <h1>Nombre de la Oferta</h1>
+                <hr class="bg-light">
+                <p>Nombre de la Empresa</p>
+                <p>Fecha</p>
+                <hr class="bg-light">
+                <button class="btn btn-lg btn-block text-light" type="submit"><i class="fa fa-plus-circle"></i></button>
+            </div>
+            <div class="col-3 bg-dark text-light text-center" style="border: 1px solid black;">
+                <h1>Nombre de la Oferta</h1>
+                <hr class="bg-light">
+                <p>Nombre de la Empresa</p>
+                <p>Fecha</p>
+                <hr class="bg-light">
+                <button class="btn btn-lg btn-block text-light" type="submit"><i class="fa fa-plus-circle"></i></button>
+            </div>
+            <div class="col-3 bg-dark text-light text-center" style="border: 1px solid black;">
+                <h1>Nombre de la Oferta</h1>
+                <hr class="bg-light">
+                <p>Nombre de la Empresa</p>
+                <p>Fecha</p>
+                <hr class="bg-light">
+                <button class="btn btn-lg btn-block text-light" type="submit"><i class="fa fa-plus-circle"></i></button>
+            </div>
+            <div class="col-3 bg-dark text-light text-center" style="border: 1px solid black;">
+                <h1>Nombre de la Oferta</h1>
+                <hr class="bg-light">
+                <p>Nombre de la Empresa</p>
+                <p>Fecha</p>
+                <hr class="bg-light">
+                <button class="btn btn-lg btn-block text-light" type="submit"><i class="fa fa-plus-circle"></i></button>
+            </div>
+        </div>
+    </div>
 
     {% include "borsApp/footer.html" %}
+    <script>
+        $(document).ready(function () {
+            $('tbody tr').click(function () {
+                window.location = $(this).attr('href');
+                return false;
+            });
+            $('tbody tr').hover(function () {
+                $(this).css("background-color", "silver");
+            }, function () {
+                $(this).css("background-color", "initial");
+            });
+        });
+    </script>
 </body>
 
 </html>

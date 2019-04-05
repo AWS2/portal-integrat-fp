@@ -20,5 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('borsApp.urls')),
     path('login', include('borsApp.urls')),
-
+    path('oferta', include('borsApp.urls')),
 ]
