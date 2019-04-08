@@ -68,6 +68,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'BorsaDeTreball.wsgi.application'
 
 
@@ -120,4 +121,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+from BorsaDeTreball import settings2
 
+EMAIL_HOST = settings2.EMAIL_HOST
+EMAIL_PORT = settings2.EMAIL_PORT
+EMAIL_HOST_USER = settings2.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = settings2.EMAIL_HOST_PASSWORD
+EMAIL_USE_TLS = settings2.EMAIL_USE_TLS
+EMAIL_USE_SSL = settings2.EMAIL_USE_SSL

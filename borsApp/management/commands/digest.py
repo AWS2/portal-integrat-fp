@@ -6,7 +6,7 @@ from borsApp.models import *
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        subject = 'Hola esto es una prueba'
+        subject = 'Hola esto es una prueba para la demo'
         message = 'No respondas a este correo'
         email_from = settings.EMAIL_HOST_USER
         recipient_list = ['rgarciapaules@iesesteveterradas.cat',]
