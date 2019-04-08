@@ -4,11 +4,6 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 
-class User(AbstractUser):
-	imatge = models.ImageField(upload_to='imatgesPerfil', blank=True)
-	arxiu = models.FileField(upload_to='docPerfil', blank=True)
-
-
 class Categoria(models.Model):
 	nom = models.CharField(max_length=255,unique=True)
 	descripcio = models.TextField(blank=True,null=True)
@@ -17,6 +12,11 @@ class Categoria(models.Model):
 			null=True, blank=True, default=None)
 	def __str__(self):
 		return self.nom
+
+class User(AbstractUser):
+	imatge = models.ImageField(upload_to='imatgesPerfil', blank=True)
+	arxiu = models.FileField(upload_to='docPerfil', blank=True)
+	categoria = models.ManyToManyField(Categoria)
 
 class Centre(models.Model):
 	nom = models.CharField(max_length=255)
