@@ -16,16 +16,14 @@ class UserInline(admin.StackedInline):
     filter_horizontal = ('categoria',)
 '''
 class MyUserAdmin(UserAdmin):
-	#model = User
-	#filter_horizontal = ('categoria',)
 
 	fieldsets = UserAdmin.fieldsets + (
             (None, {
-				'fields': ('imatge','arxiu',),
+				'fields': ('imatge','arxiu','categoria'),
 			}),
 	)
-	#inlines = [UserInline]
 
+	filter_horizontal = ('categoria',)
 admin.site.register( Categoria, CatAdmin )
 admin.site.register( Cicle )
 admin.site.register( User, MyUserAdmin)
