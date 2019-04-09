@@ -4,3 +4,8 @@ from django.shortcuts import render
 
 def index(request):
     return render(request,'borsApp/index.html',{})
+
+
+def myForm(request):
+	form=myForm()
+	return render('index.html',{form:form})
