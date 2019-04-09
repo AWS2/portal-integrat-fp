@@ -16,7 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
+from borsApp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('djrichtextfield/', include('djrichtextfield.urls'))  
+    path('djrichtextfield/', include('djrichtextfield.urls')),
+    path('wisy',views.index, name='index') 
 ]
