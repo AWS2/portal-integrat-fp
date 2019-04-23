@@ -7,10 +7,10 @@
 # EMAIL_USE_SSL = "Esto tiene que estar a False"
 
 #Oauth
-# SOCIAL_AUTH_URL_NAMESPACE =
+# SOCIAL_AUTH_URL_NAMESPACE = "En caso de que necesite un espacio de nombres personalizado"
 
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY =
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "Clave que recibimos de Google"
 
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET =
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "Clave secreta que recibimos de Google para usar este plugin"
 
-# SOCIAL_AUTH_LOGIN_REDIRECT_URL =
+# SOCIAL_AUTH_LOGIN_REDIRECT_URL = "Si la cuenta pertenece a Google redireccionará donde le indiquemos"
