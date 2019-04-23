@@ -1,8 +1,10 @@
 Django==2.1.7
+django-richtextfield==1.4.0
 mysql-connector-python==8.0.15
+mysqlclient==1.4.2.post1
+Pillow==5.4.1
 protobuf==3.7.0
 psycopg2-binary==2.7.7
 pytz==2018.9
 PyYAML==3.13
 six==1.12.0
-Pillow==5.4.1

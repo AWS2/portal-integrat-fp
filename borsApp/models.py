@@ -5,13 +5,14 @@ from django.conf import settings
 
 from django.contrib.gis.db import models as gismodels
 from django.contrib.gis.geos import Point
+from djrichtextfield.models import RichTextField
 
 # Create your models here.
 
 
 class Categoria(models.Model):
 	nom = models.CharField(max_length=255,unique=True)
-	descripcio = models.TextField(blank=True,null=True)
+	descripcio = RichTextField(blank=True,null=True)
 	pare = models.ForeignKey('self',
 			on_delete=models.CASCADE,
 			null=True, blank=True, default=None)
@@ -34,7 +35,7 @@ class User(AbstractUser):
 
 class Centre(models.Model):
 	nom = models.CharField(max_length=255)
-	direccio = models.TextField()
+	direccio = RichTextField()
 	poblacio = models.CharField(max_length=255)
 	cp = models.CharField(max_length=5)
 	telefon = models.IntegerField()
@@ -52,7 +53,7 @@ class Cicle(models.Model):
 	nom = models.CharField(max_length=255,unique=True)
 	pladestudis = models.URLField(blank=True,null=True)
 	familia = models.ForeignKey(Categoria,on_delete=models.CASCADE,null=True)
-	descripcio = models.TextField()
+	descripcio = RichTextField()
 	def __str__(self):
 		return self.nom
 
