@@ -11,6 +11,8 @@ class Command(BaseCommand):
         with open('misc/Directori_de_centres_docents.csv') as csvfile:
             csv_reader = csv.DictReader( csvfile )
             for row in csv_reader:
+                if row["Curs"] != "2018/2019":
+                    continue
                 qs = Centre.objects.filter(nom=row["Denominació completa"])
                 if qs:
                     print("--- SALTANT (ja existeix) : "+row["Denominació completa"])

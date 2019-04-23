@@ -27,9 +27,11 @@ Seguim creant la BD, carregant dades de prova i posant en marxa l'aplicació:
     (env)$ python manage.py createsuperuser
     (env)$ python manage.py runserver
 
-Si volem carregar dades de prova, podem fer (per exemple, amb "categories"):
+Si volem importar dades d'inici:
 
-    (env)$ python manage.py loaddata <arxiu_fixtures>
+    (env)$ python manage.py loaddata categories
+    (env)$ python manage.py loaddata cicles
+    (env)$ python manage.py loaddata centres
 
 
 

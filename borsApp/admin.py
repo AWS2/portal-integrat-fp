@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.gis.admin import OSMGeoAdmin
+from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
 
@@ -18,8 +19,24 @@ class CicleAdmin(admin.ModelAdmin):
 class CentreAdmin(OSMGeoAdmin):
 	list_display = ('nom','localitzacio')
 
+'''
+class UserInline(admin.StackedInline):
+    model = User
+    filter_horizontal = ('categoria',)
+'''
+class MyUserAdmin(UserAdmin):
+	#model = User
+	#filter_horizontal = ('categoria',)
+
+	fieldsets = UserAdmin.fieldsets + (
+            (None, {
+				'fields': ('imatge','arxiu',),
+			}),
+	)
+	#inlines = [UserInline]
 
 admin.site.register( Categoria, CatAdmin )
 admin.site.register( Cicle, CicleAdmin )
 admin.site.register( Centre, CentreAdmin )
+admin.site.register( User, MyUserAdmin)
 
