@@ -6,6 +6,6 @@ def index(request):
     return render(request,'borsApp/index.html',{})
 
 
-def myForm(request):
-	form=myForm()
-	return render('index.html',{form:form})
+#def myForm(request):
+#	form=myForm()
+#	return render('index.html',{form:form})
