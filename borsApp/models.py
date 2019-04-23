@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils.safestring import mark_safe
+from django.conf import settings
 
 from django.contrib.gis.db import models as gismodels
 from django.contrib.gis.geos import Point
@@ -20,6 +22,15 @@ class User(AbstractUser):
 	imatge = models.ImageField(upload_to='imatgesPerfil', blank=True)
 	arxiu = models.FileField(upload_to='docPerfil', blank=True)
 	categoria = models.ManyToManyField(Categoria)
+	descripcio = models.TextField(blank=True,null=True)
+	
+	def mostrar_imatge(self):
+		return mark_safe('<img src="'+settings.MEDIA_URL+'%s" width="90" height="90"/>' % (self.imatge))
+	''
+	mostrar_imatge.short_description = 'Avatar'
+    #imatge = models.ImageField(upload_to=_generar_ruta_imagen)
+	#def save(self): hay que cambiar el metodo de guardar para la imagen
+
 
 class Centre(models.Model):
 	nom = models.CharField(max_length=255)
