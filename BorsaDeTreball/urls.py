@@ -19,10 +19,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import include
 from borsApp import views
+#from django.contrib.auth import auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('djrichtextfield/', include('djrichtextfield.urls')),
     path('wysi',views.index, name='index'),
+    path('', include('borsApp.urls')),
+    path('', include('social_django.urls', namespace='social')),
 ]   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
