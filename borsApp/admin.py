@@ -19,11 +19,13 @@ class MyUserAdmin(UserAdmin):
 
 	fieldsets = UserAdmin.fieldsets + (
             (None, {
-				'fields': ('imatge','arxiu','categoria'),
+				'fields': ('imatge','mostrar_imatge','arxiu','categoria','descripcio'),
 			}),
 	)
+	readonly_fields = ['mostrar_imatge']
 
 	filter_horizontal = ('categoria',)
+
 admin.site.register( Categoria, CatAdmin )
 admin.site.register( Cicle )
 admin.site.register( User, MyUserAdmin)
