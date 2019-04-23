@@ -5,3 +5,12 @@
 # EMAIL_HOST_PASSWORD = "Password correspondiente al email"
 # EMAIL_USE_TLS = "Esto tiene que estar a True"
 # EMAIL_USE_SSL = "Esto tiene que estar a False"
+
+#Oauth
+# SOCIAL_AUTH_URL_NAMESPACE =
+
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY =
+
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET =
+
+# SOCIAL_AUTH_LOGIN_REDIRECT_URL =
