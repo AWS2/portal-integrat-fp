@@ -20,5 +20,5 @@ from borsApp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('djrichtextfield/', include('djrichtextfield.urls')),
-    path('wysi',views.index, name='index') 
+    path('wysi',views.index, name='formularioWysi') 
 ]

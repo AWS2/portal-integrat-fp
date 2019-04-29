@@ -1,5 +1,7 @@
 from django.db import models
 from djrichtextfield.models import RichTextField
+from djrichtextfield.widgets import RichTextWidget
+from django import forms
 
 # Create your models here.
 
@@ -41,3 +43,11 @@ class Oferta(models.Model):
 class Demandes(models.Model):
 	pass
 
+
+class Formulario(models.Model):
+ 
+    titulo = models.CharField(max_length=100)
+    descripcion = RichTextField()
+ 
+    def __str__(self): 
+        return self.titulo
