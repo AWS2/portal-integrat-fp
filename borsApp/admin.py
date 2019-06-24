@@ -15,25 +15,25 @@ class CatAdmin(admin.ModelAdmin):
 class CicleAdmin(admin.ModelAdmin):
 	list_display = ('nom','familia')
 	ordering = ('familia','nom',)
+	search_fields = ('grau','codi','nom','familia__nom','descripcio')
 
 class CentreAdmin(OSMGeoAdmin):
 	list_display = ('nom','localitzacio')
+	search_fields = ('nom','direccio','poblacio')
+	filter_horizontal = ('admins','cicles','adscripcio')
 
-'''
-class UserInline(admin.StackedInline):
-    model = User
-    filter_horizontal = ('categoria',)
-'''
+
+class TitolInline(admin.TabularInline):
+	model = Titol
 class MyUserAdmin(UserAdmin):
-
 	fieldsets = UserAdmin.fieldsets + (
             (None, {
-				'fields': ('imatge','mostrar_imatge','arxiu','categoria','descripcio'),
+				'fields': ('imatge','mostrar_imatge','arxiu','descripcio'),
 			}),
 	)
+	inlines = [ TitolInline, ]
 	readonly_fields = ['mostrar_imatge']
 
-	filter_horizontal = ('categoria',)
 
 admin.site.register( Categoria, CatAdmin )
 admin.site.register( Cicle, CicleAdmin )

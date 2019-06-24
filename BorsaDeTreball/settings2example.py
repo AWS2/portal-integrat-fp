@@ -6,7 +6,7 @@ EMAIL_HOST_PASSWORD = "Password correspondiente al email"
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-#Oauth
+#OAuth
 SOCIAL_AUTH_URL_NAMESPACE = "En caso de que necesite un espacio de nombres personalizado"
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "Clave que recibimos de Google"
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "Clave secreta que recibimos de Google para usar este plugin"

@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+from BorsaDeTreball import settings2
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPOSITORY_ROOT = os.path.dirname(BASE_DIR)
@@ -56,13 +59,22 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_uid',
     'social_core.pipeline.social_auth.social_user',
     'social_core.pipeline.user.get_username',
-    'social_core.pipeline.user.create_user',
+    #'social_core.pipeline.user.create_user',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
     'social_core.pipeline.social_auth.associate_by_email',
 )
-
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.social_auth.associate_by_email',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -106,7 +118,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'postgre': {
+    'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'gis',
         'USER': 'user001',
@@ -114,13 +126,15 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432'
     },
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.mysql',
-        'NAME': 'borsApp',
-        'USER': 'enric',
-        'PASSWORD': 'enric123',
-        'HOST': 'localhost',
-        'PORT': '3306'
+    'mysql': { # mysql
+        #'ENGINE': 'django.contrib.gis.db.backends.mysql',
+        #'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mysql.connector.django', # MySQL 8 (problemes amb GIS)
+        'NAME': settings2.DB_NAME,
+        'USER': settings2.DB_USER,
+        'PASSWORD': settings2.DB_PASS,
+        'HOST': settings2.DB_HOST,
+        'PORT': settings2.DB_PORT,
     }
 }
 
@@ -179,7 +193,6 @@ MEDIA_ROOT = 'media/'
 STATIC_ROOT = os.path.join(REPOSITORY_ROOT, 'static/')
 MEDIA_URL = '/media/'
 
-from BorsaDeTreball import settings2
 
 EMAIL_HOST = settings2.EMAIL_HOST
 EMAIL_PORT = settings2.EMAIL_PORT
