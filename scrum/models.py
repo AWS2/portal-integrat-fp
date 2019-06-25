@@ -3,18 +3,18 @@ from djrichtextfield.models import RichTextField
 
 # Create your models here.
 
-from borsApp.models import User, Centre, Cicle
+from core.models import User, Centre, Cicle
 
 
-class ModulProfessional(models.ModelAdmin):
+class ModulProfessional(models.Model):
 	numero = models.IntegerField(default=0)
 	nom = models.CharField(max_length=255)
 	descripcio = RichTextField()
-	cicle = models.ForeignKey(Cicle,on_delete=models.SET_NULL)
+	cicle = models.ForeignKey(Cicle,on_delete=models.SET_NULL,null=True)
 	def __str__(self):
 		return self.nom
 
-class UnitatFormativa(models.ModelAdmin):
+class UnitatFormativa(models.Model):
 	numero = models.IntegerField(default=0)
 	nom = models.CharField(max_length=255)
 	descripcio = RichTextField()
@@ -22,7 +22,7 @@ class UnitatFormativa(models.ModelAdmin):
 	def __str__(self):
 		return self.nom
 
-class Projecte(models.ModelAdmin):
+class Projecte(models.Model):
 	nom = models.CharField(max_length=255)
 	descripcio = RichTextField()
 	centre = models.ForeignKey(Centre,on_delete=models.CASCADE)
@@ -32,7 +32,7 @@ class Projecte(models.ModelAdmin):
 	def __str__(self):
 		return self.nom
 
-class Equip(models.ModelAdmin):
+class Equip(models.Model):
 	nom = models.CharField(max_length=255)
 	descripcio = RichTextField()
 	projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
@@ -40,7 +40,7 @@ class Equip(models.ModelAdmin):
 	def __str__(self):
 		return self.nom
 
-class Spec(models.ModelAdmin):
+class Spec(models.Model):
 	nom = models.CharField(max_length=255)
 	descripcio = RichTextField()
 	pare = models.ForeignKey('self',on_delete=models.CASCADE,null=True)
@@ -49,7 +49,7 @@ class Spec(models.ModelAdmin):
 	def __str__(self):
 		return self.nom
 
-class Sprint(models.ModelAdmin):
+class Sprint(models.Model):
 	nom = models.CharField(max_length=255)
 	notes = RichTextField()
 	projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)

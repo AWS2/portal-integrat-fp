@@ -41,11 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    'core',
     'borsApp',
     'scrum',
     'djrichtextfield',
     'social_django',
-    #'django_select2',
     'easy_select2',
 ]
 # OAuth -> 
@@ -62,22 +62,13 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_uid',
     'social_core.pipeline.social_auth.social_user',
     'social_core.pipeline.user.get_username',
-    #'social_core.pipeline.user.create_user',
+    'social_core.pipeline.user.create_user',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
     'social_core.pipeline.social_auth.associate_by_email',
 )
-SOCIAL_AUTH_PIPELINE = (
-    'social_core.pipeline.social_auth.social_details',
-    'social_core.pipeline.social_auth.social_uid',
-    'social_core.pipeline.social_auth.auth_allowed',
-    'social_core.pipeline.social_auth.social_user',
-    'social_core.pipeline.user.get_username',
-    'social_core.pipeline.social_auth.associate_by_email',
-    'social_core.pipeline.social_auth.associate_user',
-    'social_core.pipeline.social_auth.load_extra_data',
-)
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -121,26 +112,27 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'mysql': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'gis',
-        'USER': 'user001',
-        'PASSWORD': '123456789',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    },
-    'default': { # mysql
-        'ENGINE': 'django.contrib.gis.db.backends.mysql',
+    'mysql': { # mysql
+        #'ENGINE': 'django.contrib.gis.db.backends.mysql',
         #'ENGINE': 'django.db.backends.mysql',
-        #'ENGINE': 'mysql.connector.django', # MySQL 8 (problemes amb GIS)
+        'ENGINE': 'mysql.connector.django', # MySQL 8 (problemes amb GIS)
         'NAME': settings2.DB_NAME,
         'USER': settings2.DB_USER,
         'PASSWORD': settings2.DB_PASS,
-        'HOST': settings2.DB_HOST,
-        'PORT': settings2.DB_PORT,
-    }
+        'HOST': settings2.DB_HOST or "localhost",
+        'PORT': settings2.DB_PORT or 3306,
+    },
+    'postgre': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': settings2.DB_NAME,
+        'USER': 'user001',
+        'PASSWORD': '123456789',
+        'HOST': settings2.DB_HOST or 'localhost',
+        'PORT': settings2.DB_PORT or 5432,
+    },
 }
 
+DATABASES["default"] = DATABASES[settings2.DB_TYPE]
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -160,7 +152,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'borsApp.User'
+AUTH_USER_MODEL = 'core.User'
 
 
 # Internationalization

@@ -12,3 +12,12 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "Clave que recibimos de Google"
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "Clave secreta que recibimos de Google para usar este plugin"
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = "Si la cuenta pertenece a Google redireccionará donde le indiquemos"
 
+
+# DB
+DB_TYPE = "postgre" # postgre, mysql
+DB_HOST = "localhost"
+DB_PORT = None # None = auto
+DB_NAME = "borsApp"
+DB_USER = "user001"
+DB_PASS = "123456789"
+
