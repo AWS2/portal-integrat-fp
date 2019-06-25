@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'borsApp',
+    'scrum',
     'djrichtextfield',
     'social_django',
     #'django_select2',
@@ -120,7 +121,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'default': {
+    'mysql': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'gis',
         'USER': 'user001',
@@ -128,10 +129,10 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432'
     },
-    'mysql': { # mysql
-        #'ENGINE': 'django.contrib.gis.db.backends.mysql',
+    'default': { # mysql
+        'ENGINE': 'django.contrib.gis.db.backends.mysql',
         #'ENGINE': 'django.db.backends.mysql',
-        'ENGINE': 'mysql.connector.django', # MySQL 8 (problemes amb GIS)
+        #'ENGINE': 'mysql.connector.django', # MySQL 8 (problemes amb GIS)
         'NAME': settings2.DB_NAME,
         'USER': settings2.DB_USER,
         'PASSWORD': settings2.DB_PASS,
