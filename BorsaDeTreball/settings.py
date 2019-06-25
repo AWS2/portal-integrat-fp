@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'borsApp',
     'djrichtextfield',
     'social_django',
+    #'django_select2',
+    'easy_select2',
 ]
 # OAuth -> 
 AUTHENTICATION_BACKENDS = (
