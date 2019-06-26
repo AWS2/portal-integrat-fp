@@ -36,6 +36,7 @@ class Equip(models.Model):
 	nom = models.CharField(max_length=255)
 	descripcio = RichTextField()
 	projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
+	membres = models.ManyToManyField(User)
 	# TODO: permisos (read, write, etc.)
 	def __str__(self):
 		return self.nom

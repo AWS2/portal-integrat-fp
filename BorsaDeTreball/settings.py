@@ -114,9 +114,9 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
     'mysql': { # mysql
-        #'ENGINE': 'django.contrib.gis.db.backends.mysql',
+        'ENGINE': 'django.contrib.gis.db.backends.mysql',
         #'ENGINE': 'django.db.backends.mysql',
-        'ENGINE': 'mysql.connector.django', # MySQL 8 (problemes amb GIS)
+        #'ENGINE': 'mysql.connector.django', # MySQL 8 (problemes amb GIS)
         'NAME': settings2.DB_NAME,
         'USER': settings2.DB_USER,
         'PASSWORD': settings2.DB_PASS,

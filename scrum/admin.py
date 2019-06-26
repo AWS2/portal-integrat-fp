@@ -12,10 +12,28 @@ MPForm = select2_modelform(ModulProfessional)
 SpecForm = select2_modelform(Spec)
 SprintForm = select2_modelform(Sprint)
 UFForm = select2_modelform(UnitatFormativa)
+EquipForm = select2_modelform(Equip)
+
+class EquipAdmin(admin.ModelAdmin):
+	model = Equip
+	filter_horizontal = ('membres',)
+	list_display = ('nom','projecte','centre','show_membres',)
+	#form = EquipForm
+	def centre(self,obj):
+		return obj.projecte.centre.nom
+	def cicle(self,obj):
+		return obj.projecte.cicle.nom
+	def show_membres(self,obj):
+		ret = ""
+		for membre in obj.membres.all():
+			ret += membre.first_name + " " + membre.last_name \
+				+ " (<a href='/admin/core/user/"+str(membre.id)+"'>" + membre.username+"</a>)<br>\n"
+		return mark_safe(ret)
 
 class ProjecteAdmin(admin.ModelAdmin):
 	model = Projecte
 	form = ProjecteForm
+	list_display = ('nom','centre','inici','final',)
 
 class MPAdmin(admin.ModelAdmin):
 	model = ModulProfessional
@@ -25,6 +43,7 @@ class MPAdmin(admin.ModelAdmin):
 
 class SpecAdmin(admin.ModelAdmin):
 	model = Spec
+	search_fields = ('projecte__nom','mp__nom',)
 	filter_horizontal = ('mp',)
 	list_display = ('nom','projecte','moduls','ordre',)
 	list_editable = ('ordre',)
@@ -43,5 +62,5 @@ admin.site.register( Projecte, ProjecteAdmin )
 admin.site.register( Spec, SpecAdmin )
 admin.site.register( Sprint, SprintAdmin )
 admin.site.register( ModulProfessional, MPAdmin )
-admin.site.register( UnitatFormativa )
-
+#admin.site.register( UnitatFormativa )
+admin.site.register( Equip, EquipAdmin )
