@@ -48,6 +48,7 @@ class SpecAdmin(admin.ModelAdmin):
 	list_display = ('nom','projecte','moduls','ordre',)
 	list_editable = ('ordre',)
 	ordering = ('projecte','ordre',)
+	form = SpecForm
 	def moduls(self,obj):
 		mps = ""
 		for mp in obj.mp.all():
@@ -56,6 +57,7 @@ class SpecAdmin(admin.ModelAdmin):
 
 class SprintAdmin(admin.ModelAdmin):
 	model = Sprint
+	list_display = ('nom','projecte','ordre','inici','final')
 	form = SprintForm
 
 admin.site.register( Projecte, ProjecteAdmin )

@@ -42,7 +42,7 @@ from django.utils import timezone
 class Oferta(models.Model):
 	inici = models.DateTimeField(default=timezone.now)
 	# TODO: check timedelta
-	final = models.DateTimeField(default=timezone.now()+timezone.timedelta(days=32))
+	final = models.DateTimeField()
 	activa = models.BooleanField(default=True)
 	empresa = models.ForeignKey(Centre,on_delete=models.CASCADE,null=True)
 	cicles = models.ManyToManyField(Cicle)

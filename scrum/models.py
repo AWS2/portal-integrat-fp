@@ -1,5 +1,6 @@
 from django.db import models
 from djrichtextfield.models import RichTextField
+import datetime
 
 # Create your models here.
 
@@ -27,8 +28,8 @@ class Projecte(models.Model):
 	descripcio = RichTextField()
 	centre = models.ForeignKey(Centre,on_delete=models.CASCADE)
 	admins = models.ManyToManyField(User)
-	inici = models.DateTimeField(auto_now_add=True)
-	final = models.DateTimeField()
+	inici = models.DateField(default=datetime.datetime.now)
+	final = models.DateField()
 	def __str__(self):
 		return self.nom
 
@@ -53,9 +54,11 @@ class Spec(models.Model):
 
 class Sprint(models.Model):
 	nom = models.CharField(max_length=255)
-	notes = RichTextField()
+	notes = RichTextField(blank=True)
 	projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
 	ordre = models.IntegerField(default=0)
+	inici = models.DateField(default=datetime.datetime.now)
+	final = models.DateField()
 	def __str__(self):
 		return self.nom
 	def save(self, *args, **kwargs):
