@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from django.contrib.gis.admin import OSMGeoAdmin
 from django.contrib.auth.admin import UserAdmin
+from django.utils.safestring import mark_safe
 
 # Register your models here.
 
@@ -40,3 +41,8 @@ admin.site.register( Categoria, CatAdmin )
 admin.site.register( Cicle, CicleAdmin )
 admin.site.register( Centre, CentreAdmin )
 admin.site.register( User, MyUserAdmin )
+
+
+admin.site.site_title = "Gestió portal integrat"
+admin.site.site_header = mark_safe("Administració | <a href='/login'>->social login<-</a>")
+

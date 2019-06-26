@@ -43,9 +43,10 @@ class Equip(models.Model):
 class Spec(models.Model):
 	nom = models.CharField(max_length=255)
 	descripcio = RichTextField()
-	pare = models.ForeignKey('self',on_delete=models.CASCADE,null=True)
+	pare = models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True)
 	projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
 	ordre = models.IntegerField(default=0)
+	mp = models.ManyToManyField(ModulProfessional,blank=True,help_text="Mòdul Professional")
 	def __str__(self):
 		return self.nom
 

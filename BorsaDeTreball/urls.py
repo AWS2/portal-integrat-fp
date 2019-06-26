@@ -29,7 +29,7 @@ urlpatterns = [
     path('djrichtextfield/', include('djrichtextfield.urls')),
     path('wysi',views.index, name='index'),
     path('', include('core.urls')),
-    path('', include('borsApp.urls')),
+    path('borsa/', include('borsApp.urls')),
     path('', include('social_django.urls', namespace='social')),
     #re_path('^accounts/', admin.site.urls),
 ]   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
