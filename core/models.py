@@ -78,7 +78,7 @@ class Centre(models.Model):
 class ModulProfessional(models.Model):
 	numero = models.IntegerField(default=0)
 	nom = models.CharField(max_length=255)
-	descripcio = RichTextField()
+	descripcio = RichTextField(blank=True)
 	cicle = models.ForeignKey(Cicle,on_delete=models.SET_NULL,null=True)
 	def __str__(self):
 		return self.nom

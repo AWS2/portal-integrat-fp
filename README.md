@@ -32,6 +32,8 @@ Si volem importar dades d'inici:
     (env)$ python manage.py loaddata categories
     (env)$ python manage.py loaddata cicles
     (env)$ python manage.py loaddata centres
+    (env)$ python manage.py loaddata mps
+    (env)$ python manage.py loaddata ufs
 
 
 

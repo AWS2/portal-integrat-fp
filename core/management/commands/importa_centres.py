@@ -8,16 +8,20 @@ class Command(BaseCommand):
     help = 'Carrega dades dels centres docents'
 
     def handle(self, *args, **options):
+        # esborrem tots els centres
+        Centre.objects.all().delete()
+
         with open('misc/Directori_de_centres_docents.csv') as csvfile:
             csv_reader = csv.DictReader( csvfile )
             for row in csv_reader:
-                if row["Curs"] != "2018/2019":
+                if row["Curs"] != "2018/2019" or "institut" not in row["Denominació completa"].lower():
                     continue
                 qs = Centre.objects.filter(nom=row["Denominació completa"])
                 if qs:
                     print("--- SALTANT (ja existeix) : "+row["Denominació completa"])
                     continue
                 centre = Centre()
+                centre.educatiu = True
                 centre.codi = row["Codi centre"]
                 centre.nom = row["Denominació completa"]
                 centre.direccio = row["Adreça"]

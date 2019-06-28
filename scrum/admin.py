@@ -8,10 +8,8 @@ from easy_select2 import select2_modelform
 from scrum.models import *
 
 ProjecteForm = select2_modelform(Projecte)
-MPForm = select2_modelform(ModulProfessional)
 SpecForm = select2_modelform(Spec)
 SprintForm = select2_modelform(Sprint)
-UFForm = select2_modelform(UnitatFormativa)
 EquipForm = select2_modelform(Equip)
 
 class EquipAdmin(admin.ModelAdmin):
@@ -35,12 +33,6 @@ class ProjecteAdmin(admin.ModelAdmin):
 	form = ProjecteForm
 	list_display = ('nom','centre','inici','final',)
 
-class MPAdmin(admin.ModelAdmin):
-	model = ModulProfessional
-	form = MPForm
-	list_display = ('nom','numero','cicle')
-	ordering = ('cicle','numero')
-
 class SpecAdmin(admin.ModelAdmin):
 	model = Spec
 	search_fields = ('projecte__nom','mp__nom',)
@@ -63,6 +55,4 @@ class SprintAdmin(admin.ModelAdmin):
 admin.site.register( Projecte, ProjecteAdmin )
 admin.site.register( Spec, SpecAdmin )
 admin.site.register( Sprint, SprintAdmin )
-admin.site.register( ModulProfessional, MPAdmin )
-#admin.site.register( UnitatFormativa )
 admin.site.register( Equip, EquipAdmin )
