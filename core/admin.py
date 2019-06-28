@@ -15,7 +15,7 @@ class CatAdmin(admin.ModelAdmin):
 	ordering = ('pare','nom',)
 
 class CicleAdmin(admin.ModelAdmin):
-	list_display = ('nom','familia')
+	list_display = ('codi','nom','familia')
 	ordering = ('familia','nom',)
 	search_fields = ('grau','codi','nom','familia__nom','descripcio')
 

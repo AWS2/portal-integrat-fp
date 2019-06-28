@@ -4,24 +4,8 @@ import datetime
 
 # Create your models here.
 
-from core.models import User, Centre, Cicle
+from core.models import *
 
-
-class ModulProfessional(models.Model):
-	numero = models.IntegerField(default=0)
-	nom = models.CharField(max_length=255)
-	descripcio = RichTextField()
-	cicle = models.ForeignKey(Cicle,on_delete=models.SET_NULL,null=True)
-	def __str__(self):
-		return self.nom
-
-class UnitatFormativa(models.Model):
-	numero = models.IntegerField(default=0)
-	nom = models.CharField(max_length=255)
-	descripcio = RichTextField()
-	mp = models.ForeignKey(ModulProfessional,on_delete=models.CASCADE)
-	def __str__(self):
-		return self.nom
 
 class Projecte(models.Model):
 	nom = models.CharField(max_length=255)
