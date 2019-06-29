@@ -25,6 +25,8 @@ class Titol(models.Model):
 
 # Alertes d'ofertes de feina
 class Subscripcio(models.Model):
+	class Meta:
+		verbose_name_plural = "Subscripcions"
 	alumne = models.ForeignKey(User,on_delete=models.CASCADE)
 	# centre al què està adscrit l'alumne (títol) o bé el centre de treball
 	centre = models.ForeignKey(Centre,on_delete=models.CASCADE,null=True)
@@ -40,6 +42,8 @@ class Subscripcio(models.Model):
 from django.utils import timezone
 
 class Oferta(models.Model):
+	class Meta:
+		verbose_name_plural = "Ofertes"
 	inici = models.DateTimeField(default=timezone.now)
 	# TODO: check timedelta
 	final = models.DateTimeField()

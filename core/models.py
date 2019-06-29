@@ -26,6 +26,8 @@ class User(AbstractUser):
 
 
 class Categoria(models.Model):
+	class Meta:
+		verbose_name_plural = "Categories"
 	nom = models.CharField(max_length=255,unique=True)
 	descripcio = RichTextField(blank=True,null=True)
 	pare = models.ForeignKey('self',
@@ -76,6 +78,8 @@ class Centre(models.Model):
 
 
 class ModulProfessional(models.Model):
+	class Meta:
+		verbose_name_plural = "Moduls Professionals"
 	numero = models.IntegerField(default=0)
 	nom = models.CharField(max_length=255)
 	descripcio = RichTextField(blank=True)
@@ -85,6 +89,8 @@ class ModulProfessional(models.Model):
 
 
 class UnitatFormativa(models.Model):
+	class Meta:
+		verbose_name_plural = "Unitats Formatives"
 	numero = models.IntegerField(default=0)
 	nom = models.CharField(max_length=255)
 	descripcio = RichTextField()

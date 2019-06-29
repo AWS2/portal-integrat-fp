@@ -21,6 +21,7 @@ class MPInline(admin.TabularInline):
 	exclude = ('descripcio',)
 class CicleAdmin(admin.ModelAdmin):
 	list_display = ('codi','nom','familia')
+	list_display_links = ('codi','nom',)
 	ordering = ('familia','nom',)
 	search_fields = ('grau','codi','nom','familia__nom','descripcio')
 	inlines = ( MPInline, )
@@ -39,8 +40,10 @@ class UFInline(admin.TabularInline):
 class MPAdmin(admin.ModelAdmin):
 	model = ModulProfessional
 	form = MPForm
-	list_display = ('nom','numero','codi_cicle','cicle',)
+	list_display = ('codi_cicle','numero','nom','cicle',)
+	list_display_links = ('numero','nom',)
 	ordering = ('cicle','numero')
+	search_fields = ('cicle__codi','cicle__nom','nom')
 	inlines = [ UFInline, ]
 	def codi_cicle(self,obj):
 		return obj.cicle.codi

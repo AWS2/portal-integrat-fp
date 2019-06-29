@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django import forms
 
 from django.utils.safestring import mark_safe
 from easy_select2 import select2_modelform
@@ -8,9 +9,9 @@ from easy_select2 import select2_modelform
 from scrum.models import *
 
 ProjecteForm = select2_modelform(Projecte)
-SpecForm = select2_modelform(Spec)
 SprintForm = select2_modelform(Sprint)
 EquipForm = select2_modelform(Equip)
+SpecForm = select2_modelform(Spec)
 
 class EquipAdmin(admin.ModelAdmin):
 	model = Equip
@@ -33,6 +34,7 @@ class ProjecteAdmin(admin.ModelAdmin):
 	form = ProjecteForm
 	list_display = ('nom','centre','inici','final',)
 
+from urllib.parse import urlsplit
 class SpecAdmin(admin.ModelAdmin):
 	model = Spec
 	search_fields = ('projecte__nom','mp__nom',)
@@ -45,7 +47,21 @@ class SpecAdmin(admin.ModelAdmin):
 		mps = ""
 		for mp in obj.mp.all():
 			mps += mp.nom + "<br>"
-		return mark_safe(mps)
+		return mark_safe(mps)		
+	def formfield_for_manytomany(self, db_field, request=None, **kwargs):
+		if db_field.name == 'mp':
+			try:
+				parts = request.get_raw_uri().split("/")
+				i = parts.index("spec")
+				#print("I="+str(i))
+				obj_id = parts[i+1]
+				#print(obj_id)
+				obj = self.get_object(request,obj_id)
+				if obj:
+					kwargs['queryset'] = ModulProfessional.objects.filter(cicle=obj.projecte.cicle).order_by('numero')
+			except:
+				print("ERROR in formfield_for_manytomany (SpecAdmin)")
+		return super().formfield_for_manytomany(db_field, request=request, **kwargs)
 
 class SprintAdmin(admin.ModelAdmin):
 	model = Sprint

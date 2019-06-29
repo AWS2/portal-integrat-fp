@@ -14,12 +14,13 @@ class Projecte(models.Model):
 	admins = models.ManyToManyField(User)
 	inici = models.DateField(default=datetime.datetime.now)
 	final = models.DateField()
+	cicle = models.ForeignKey(Cicle,on_delete=models.SET_NULL,null=True)
 	def __str__(self):
 		return self.nom
 
 class Equip(models.Model):
 	nom = models.CharField(max_length=255)
-	descripcio = RichTextField()
+	descripcio = RichTextField(blank=True)
 	projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
 	membres = models.ManyToManyField(User)
 	# TODO: permisos (read, write, etc.)
@@ -28,7 +29,7 @@ class Equip(models.Model):
 
 class Spec(models.Model):
 	nom = models.CharField(max_length=255)
-	descripcio = RichTextField()
+	descripcio = RichTextField(blank=True)
 	pare = models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True)
 	projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
 	ordre = models.IntegerField(default=0)
