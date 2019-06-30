@@ -28,12 +28,14 @@ class Equip(models.Model):
 		return self.nom
 
 class Spec(models.Model):
+	class Meta:
+		ordering = ['ordre',]
 	nom = models.CharField(max_length=255)
 	descripcio = RichTextField(blank=True)
 	pare = models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True)
 	projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
 	ordre = models.IntegerField(default=0)
-	mp = models.ManyToManyField(ModulProfessional,blank=True,help_text="Mòdul Professional")
+	mp = models.ManyToManyField(ModulProfessional,blank=True,help_text="Mòduls Professionals. NOTA: no apareixeran a en la CREACIÓ de la Spec, sinó en l'EDICIÓ")
 	def __str__(self):
 		return self.nom
 
@@ -41,15 +43,8 @@ class Sprint(models.Model):
 	nom = models.CharField(max_length=255)
 	notes = RichTextField(blank=True)
 	projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
-	ordre = models.IntegerField(default=0)
-	inici = models.DateField(default=datetime.datetime.now)
+	inici = models.DateField()
 	final = models.DateField()
+	specs = models.ManyToManyField(Spec,blank=True,help_text="NOTA: no apareixeran a en la CREACIÓ del Sprint, sinó en l'EDICIÓ")
 	def __str__(self):
 		return self.nom
-	def save(self, *args, **kwargs):
-		super().save(*args,**kwargs)
-		# si no posem nº ordre, li asignem la pròpia ID pq sigui un sprint correlatiu
-		if self.ordre == 0:
-			self.ordre = self.id
-			super().save(*args,**kwargs)
-

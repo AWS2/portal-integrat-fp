@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'djrichtextfield',
     'social_django',
     'easy_select2',
+    'adminsortable2',
 ]
 # OAuth -> 
 AUTHENTICATION_BACKENDS = (
