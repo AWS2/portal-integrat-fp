@@ -21,7 +21,7 @@ class Projecte(models.Model):
 class Equip(models.Model):
 	nom = models.CharField(max_length=255)
 	descripcio = RichTextField(blank=True)
-	projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
+	projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE,related_name="equips")
 	membres = models.ManyToManyField(User)
 	# TODO: permisos (read, write, etc.)
 	def __str__(self):
@@ -48,3 +48,22 @@ class Sprint(models.Model):
 	specs = models.ManyToManyField(Spec,blank=True,help_text="NOTA: no apareixeran a en la CREACIÓ del Sprint, sinó en l'EDICIÓ")
 	def __str__(self):
 		return self.nom
+
+class Qualificacio(models.Model):
+	class Meta:
+		verbose_name_plural = "Qualificacions"
+	equip = models.ForeignKey(Equip,on_delete=models.CASCADE)
+	sprint = models.ForeignKey(Sprint,on_delete=models.CASCADE)
+	nota = models.FloatField(null=True,blank=True)
+	comentaris = RichTextField(blank=True)
+	def __str__(self):
+		return str(self.equip)+" ("+str(self.sprint)+") : "+str(self.nota)
+
+class DoneSpec(models.Model):
+	qualificacio = models.ForeignKey(Qualificacio,on_delete=models.CASCADE,related_name="done_specs")
+	spec = models.ForeignKey(Spec,on_delete=models.CASCADE)
+	done = models.BooleanField(default=False)
+	def __str__(self):
+		return str(self.qualificacio.equip.nom)+" ("+str(self.spec.nom)+") : "+str(self.done)
+
+
