@@ -66,7 +66,7 @@ class Centre(models.Model):
 	localitzacio = gismodels.PointField(blank=True,default=Point(2.6875,41.5600))
 	descripcio = RichTextField(blank=True)
 	# usuaris administradors
-	admins = models.ManyToManyField(User,blank=True,related_name="admin")
+	admins = models.ManyToManyField(User,blank=True,related_name="centres_admin")
 	# només per centres educatius
 	cicles = models.ManyToManyField(Cicle,blank=True)
 	# logo empresa o centre educatiu

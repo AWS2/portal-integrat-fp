@@ -31,5 +31,5 @@ urlpatterns = [
     path('', include('core.urls')),
     path('borsa/', include('borsApp.urls')),
     path('', include('social_django.urls', namespace='social')),
-    #re_path('^accounts/', admin.site.urls),
-]   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

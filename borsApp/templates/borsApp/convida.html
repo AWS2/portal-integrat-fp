@@ -1,0 +1,40 @@
+
+<h1>Convida alumnes</h1>
+
+
+{% if form %}
+
+<form method="post">
+	{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+
+{% else %}
+<p>CENTRE: {{centre}}</p>
+<p>CICLE: {{cicle}}</p>
+
+Emails convidats:
+<ol>
+	{% for email in emails_ok %}
+	<li>{{email}}</li>	
+	{% endfor %}	
+</ol>
+
+Emails repetits (no s'ha afegit ni modificat):
+<ol>
+	{% for email in emails_repetits %}
+	<li>{{email}}</li>	
+	{% endfor %}	
+</ol>
+
+Emails erronis:
+<ol>
+	{% for email in emails_erronis %}
+	<li>{{email}}</li>	
+	{% endfor %}	
+</ol>
+
+
+{% endif %}
+

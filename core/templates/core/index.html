@@ -7,10 +7,21 @@
 
 	<h1>Portal de gestió</h1>
 
+	{% if not request.user.is_anonymous %}
+	<p>Hola, {{request.user.first_name}}</p>
+	<ul>
+		<li><a href='/logout'>logout</a></li>
+		<li><a href='/admin'>admin</a></li>
+		<li><a href="/borsa/convida">convida alumnes</a></li>
+	</ul>
+	{% else %}
+
 	<ul>
 		<li><a href='/login'>login</a></li>
-		<li><a href='/admin'>admin</a></li>
 	</ul>
 
+	{% endif %}
 </body>
 </html>
+
+

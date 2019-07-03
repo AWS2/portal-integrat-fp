@@ -10,8 +10,10 @@ TitolForm = select2_modelform(Titol)#,attrs={"width":"450px"})
 SubscripcioForm = select2_modelform(Subscripcio)
 
 class TitolAdmin(admin.ModelAdmin):
-	list_display = ('alumne','cicle','centre')
+	list_display = ('alumne','nom','cicle','centre')
 	form = TitolForm
+	def nom(self,obj):
+		return obj.alumne.first_name+" "+obj.alumne.last_name+" (email: "+obj.alumne.email+")"
 
 class SubscripcioAdmin(admin.ModelAdmin):
 	list_display = ('alumne','centre','distancia')

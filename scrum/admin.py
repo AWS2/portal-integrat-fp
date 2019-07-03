@@ -143,8 +143,10 @@ class DoneSpecInline(admin.TabularInline):
 	model = DoneSpec
 	extra = 0
 	can_delete = False
-	readonly_fields = ('spec','mps',)
-	#list_display = ('__str__','spec__nom','done')
+	readonly_fields = ('is_done','spec','mps')
+	def is_done(self,obj):
+		return obj.done
+	is_done.boolean = True
 	def mps(self,obj):
 		mps = ""
 		for mp in obj.spec.mp.all():
@@ -187,13 +189,13 @@ class QualificacioAdmin(admin.ModelAdmin):
 			mp = mps[mpid]["obj"]
 			ret += mp.nom + " : "+str(100*dades["done"]/dades["total"])+ " %<br>"
 		return mark_safe(ret)
-	def get_form(self,*args,**kwargs):
+	def get_list_display(self,*args,**kwargs):
 		actualitza_qualificacions()
-		return super().get_form(*args,**kwargs)
+		return super().get_list_display(*args,**kwargs)
 
 class DoneSpecAdmin(admin.ModelAdmin):
 	model = DoneSpec
-	list_display = ('__str__','projecte','sprint','equip','done')
+	list_display = ('__str__','is_done','done','projecte','sprint','equip')
 	list_editable = ('done',)
 	search_fields = ('qualificacio__sprint__projecte__nom','qualificacio__equip__nom','qualificacio__sprint__nom','spec__nom')
 	ordering = ('qualificacio__sprint__projecte__nom','qualificacio__equip__nom','qualificacio__sprint__inici',)
@@ -203,9 +205,14 @@ class DoneSpecAdmin(admin.ModelAdmin):
 		return obj.qualificacio.sprint.nom
 	def equip(self,obj):
 		return obj.qualificacio.equip.nom
-	def get_form(self,*args,**kwargs):
+	def is_done(self,obj):
+		if obj.done:
+			return True
+		return False
+	is_done.boolean = True
+	def get_list_display(self,*args,**kwargs):
 		actualitza_qualificacions()
-		return super().get_form(*args,**kwargs)
+		return super().get_list_display(*args,**kwargs)
 
 def actualitza_qualificacions():
 	print("actualitzant...")

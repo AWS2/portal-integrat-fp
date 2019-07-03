@@ -15,7 +15,8 @@ from core.models import User, Cicle, Centre, Categoria
 class Titol(models.Model):
 	cicle = models.ForeignKey(Cicle,on_delete=models.SET_NULL,null=True)
 	centre = models.ForeignKey(Centre,on_delete=models.SET_NULL,null=True)
-	data = models.DateField(help_text="Data de graduació de l'alumne")
+	graduat = models.BooleanField()
+	data = models.DateField(help_text="Data de graduació de l'alumne",blank=True,null=True)
 	alumne = models.ForeignKey(User,on_delete=models.CASCADE)
 	# guardar descripció títol per si s'esborra el títol de referència
 	descripcio = RichTextField(blank=True)
