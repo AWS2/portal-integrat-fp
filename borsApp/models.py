@@ -17,7 +17,7 @@ class Titol(models.Model):
 	centre = models.ForeignKey(Centre,on_delete=models.SET_NULL,null=True)
 	graduat = models.BooleanField()
 	data = models.DateField(help_text="Data de graduació de l'alumne",blank=True,null=True)
-	alumne = models.ForeignKey(User,on_delete=models.CASCADE)
+	alumne = models.ForeignKey(User,on_delete=models.CASCADE,related_name="titols")
 	# guardar descripció títol per si s'esborra el títol de referència
 	descripcio = RichTextField(blank=True)
 	def __str__(self):

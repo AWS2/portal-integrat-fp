@@ -17,6 +17,7 @@ SpecForm = select2_modelform(Spec)
 
 class EquipAdmin(admin.ModelAdmin):
 	model = Equip
+	form = EquipForm
 	filter_horizontal = ('membres',)
 	list_display = ('nom','projecte','centre','show_membres',)
 	#form = EquipForm
@@ -30,6 +31,18 @@ class EquipAdmin(admin.ModelAdmin):
 			ret += membre.first_name + " " + membre.last_name \
 				+ " (<a href='/admin/core/user/"+str(membre.id)+"'>" + membre.username+"</a>)<br>\n"
 		return mark_safe(ret)
+	def get_queryset(self,request):
+		qs = super().get_queryset(request)
+		if request.user.is_superuser:
+			return qs
+		# filtrem projectes propis
+		# + (OR) projectes dels centres on soc admin
+		# + (OR) projectes en els que participo com a alumne
+		cids = [ centre.id for centre in request.user.centres_admin.all() ]
+		qs = qs.filter( Q(projecte__admins__in=[request.user])
+						| Q(projecte__centre__in=cids)
+						| Q(membres__in=[request.user]) )
+		return qs
 
 class SpecInline(SortableInlineAdminMixin,admin.TabularInline):
 	model = Spec
@@ -78,11 +91,27 @@ class SprintInline(admin.TabularInline):
 				print("ERROR in formfield_for_manytomany (SprintInline)")
 		return super().formfield_for_manytomany(db_field, request=request, **kwargs)
 
+from django.db.models import Q
 class ProjecteAdmin(admin.ModelAdmin):
 	model = Projecte
 	form = ProjecteForm
 	list_display = ('nom','centre','inici','final','cicle')
+	ordering = ('centre','cicle','-inici')
+	search_fields = ('nom','centre__nom','cicle__nom',)
 	inlines = ( SprintInline, SpecInline, )
+	def get_queryset(self,request):
+		qs = super().get_queryset(request)
+		if request.user.is_superuser:
+			return qs
+		# filtrem projectes propis
+		# + (OR) projectes dels centres on soc admin
+		# + (OR) projectes en els que participo com a alumne
+		cids = [ centre.id for centre in request.user.centres_admin.all() ]
+		qs = qs.filter( Q(admins__in=[request.user])
+						| Q(centre__in=cids)
+						| Q(equips__membres__in=[request.user]) )
+		return qs
+
 
 from urllib.parse import urlsplit
 class SpecAdmin(SortableAdminMixin,admin.ModelAdmin):
@@ -92,6 +121,18 @@ class SpecAdmin(SortableAdminMixin,admin.ModelAdmin):
 	list_display = ('nom','projecte','moduls','ordre',)
 	ordering = ('ordre',)
 	form = SpecForm
+	def get_queryset(self,request):
+		qs = super().get_queryset(request)
+		if request.user.is_superuser:
+			return qs
+		# filtrem projectes propis (profe)
+		# + (OR) projectes dels centres on soc admin <- TODO: treure aquest?
+		# + (OR) projectes en els que participo com a alumne
+		cids = [ centre.id for centre in request.user.centres_admin.all() ]
+		qs = qs.filter( Q(projecte__admins__in=[request.user])
+				| Q(projecte__centre__in=cids)
+				| Q(projecte__equips__membres__in=[request.user]) )
+		return qs
 	def moduls(self,obj):
 		mps = ""
 		for mp in obj.mp.all():
@@ -107,14 +148,15 @@ class SpecAdmin(SortableAdminMixin,admin.ModelAdmin):
 				#print(obj_id)
 				obj = self.get_object(request,obj_id)
 				if obj:
-					kwargs['queryset'] = ModulProfessional.objects.filter(cicle=obj.projecte.cicle).order_by('numero')
+					kwargs['queryset'] = ModulProfessional.objects.filter(
+								cicle=obj.projecte.cicle).order_by('numero')
 				else:
 					kwargs['queryset'] = Spec.objects.none()
 			except:
 				print("ERROR in formfield_for_manytomany (SpecAdmin)")
 		return super().formfield_for_manytomany(db_field, request=request, **kwargs)
 
-
+""" # deprecated (no registrem pel backend, ho fem inline al Projecte admin)
 class SprintAdmin(admin.ModelAdmin):
 	model = Sprint
 	list_display = ('nom','projecte','inici','final')
@@ -138,6 +180,7 @@ class SprintAdmin(admin.ModelAdmin):
 			except:
 				print("ERROR in formfield_for_manytomany (SprintAdmin)")
 		return super().formfield_for_manytomany(db_field, request=request, **kwargs)
+"""
 
 class DoneSpecInline(admin.TabularInline):
 	model = DoneSpec
@@ -152,7 +195,6 @@ class DoneSpecInline(admin.TabularInline):
 		for mp in obj.spec.mp.all():
 			mps += mp.nom + "<br>"
 		return mark_safe(mps)
-
 class QualificacioAdmin(admin.ModelAdmin):
 	model = Qualificacio
 	list_display = ('__str__','projecte','sprint','equip','nota','comepletat','completat_mps')
@@ -192,7 +234,19 @@ class QualificacioAdmin(admin.ModelAdmin):
 	def get_list_display(self,*args,**kwargs):
 		actualitza_qualificacions()
 		return super().get_list_display(*args,**kwargs)
-
+	def get_queryset(self,request):
+		qs = super().get_queryset(request)
+		if request.user.is_superuser:
+			return qs
+		# filtrem projectes propis (profe)
+		# + (OR) projectes dels centres on soc admin <- TODO: treure aquest?
+		# + (OR) projectes en els que participo com a alumne
+		cids = [ centre.id for centre in request.user.centres_admin.all() ]
+		qs = qs.filter( Q(sprint__projecte__admins__in=[request.user])
+				| Q(sprint__projecte__centre__in=cids)
+				| Q(sprint__projecte__equips__membres__in=[request.user]) )
+		return qs
+"""
 class DoneSpecAdmin(admin.ModelAdmin):
 	model = DoneSpec
 	list_display = ('__str__','is_done','done','projecte','sprint','equip')
@@ -213,7 +267,7 @@ class DoneSpecAdmin(admin.ModelAdmin):
 	def get_list_display(self,*args,**kwargs):
 		actualitza_qualificacions()
 		return super().get_list_display(*args,**kwargs)
-
+"""
 def actualitza_qualificacions():
 	print("actualitzant...")
 	sprints = Sprint.objects.all()
@@ -239,9 +293,9 @@ def actualitza_qualificacions():
 
 admin.site.register( Projecte, ProjecteAdmin )
 admin.site.register( Spec, SpecAdmin )
-admin.site.register( Sprint, SprintAdmin )
+#admin.site.register( Sprint, SprintAdmin )
 admin.site.register( Equip, EquipAdmin )
 admin.site.register( Qualificacio, QualificacioAdmin )
-admin.site.register( DoneSpec, DoneSpecAdmin )
+#admin.site.register( DoneSpec, DoneSpecAdmin )
 
 

@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.contrib.gis.admin import OSMGeoAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.safestring import mark_safe
+from django.db.models import Count
+
 from easy_select2 import select2_modelform
 
 # Register your models here.
@@ -27,9 +29,30 @@ class CicleAdmin(admin.ModelAdmin):
 	inlines = ( MPInline, )
 
 class CentreAdmin(OSMGeoAdmin):
-	list_display = ('nom','localitzacio')
+	list_display = ('nom','educatiu','te_admin','nempreses')
+	#ordering = ('te_admin','nom')
 	search_fields = ('nom','direccio','poblacio')
 	filter_horizontal = ('admins','cicles','adscripcio')
+	readonly_fields = ('empreses',)
+	def te_admin(self,obj):
+		return obj.admins.count()
+	te_admin.boolean = True
+	te_admin.admin_order_field = "nadmins"
+	def nempreses(self,obj):
+		return obj.adscrits.count()
+	nempreses.admin_order_field = "nempreses"
+	def empreses(self,obj):
+		res = ""
+		for empresa in obj.adscrits.all():
+			res += empresa.nom+"<br>"
+		return mark_safe(res)
+	def get_queryset(self, request):
+		queryset = super().get_queryset(request)
+		queryset = queryset.annotate(
+						nadmins=Count("admins"),
+						nempreses=Count("adscrits"),
+					).order_by("-nadmins","-nempreses","nom")
+		return queryset
 
 UFForm = select2_modelform(UnitatFormativa)
 MPForm = select2_modelform(ModulProfessional)
@@ -47,8 +70,6 @@ class MPAdmin(admin.ModelAdmin):
 	inlines = [ UFInline, ]
 	def codi_cicle(self,obj):
 		return obj.cicle.codi
-admin.site.register( ModulProfessional, MPAdmin )
-#admin.site.register( UnitatFormativa )
 
 
 from borsApp.admin import TitolInline, SubscripcioInline
@@ -61,8 +82,32 @@ class MyUserAdmin(UserAdmin):
 	)
 	inlines = [ TitolInline, SubscripcioInline, ]
 	readonly_fields = ['mostrar_imatge']
+	def mostra_grups(self,obj):
+		grups = ""
+		for grup in obj.groups.all():
+			grups += grup.name + "<br>"
+		return mark_safe(grups)
+	def mostra_centres_admin(self,obj):
+		centres = ""
+		for centre in obj.centres_admin.all():
+			centres += centre.nom + "<br>"
+		return mark_safe(centres)
+	def __init__(self,*args,**kwargs):
+		super().__init__(*args,**kwargs)
+		self.list_display += ('mostra_centres_admin','mostra_grups')
+	def get_queryset(self,request):
+		centres = request.user.centres_admin.all()
+		qs = super().get_queryset(request).annotate(
+			ncentres=Count('centres_admin'))
+		self.ordering = ('-ncentres','username')
+		if not request.user.is_superuser:
+			# els usuaris (profes) admins de centre només poden veure els seus usuaris
+			qs = qs.filter(titols__centre__in=centres).distinct()
+		return qs
 
 
+admin.site.register( ModulProfessional, MPAdmin )
+#admin.site.register( UnitatFormativa )
 admin.site.register( Categoria, CatAdmin )
 admin.site.register( Cicle, CicleAdmin )
 admin.site.register( Centre, CentreAdmin )

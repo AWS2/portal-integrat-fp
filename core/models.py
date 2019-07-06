@@ -19,10 +19,12 @@ class User(AbstractUser):
 	arxiu = models.FileField(upload_to='docPerfil', blank=True)
 	descripcio = RichTextField(blank=True,null=True)
 	localitzacio = gismodels.PointField(null=True,default=Point(0,0))
+	#TODO: eliminar centre
+	centre = models.ForeignKey('Centre',on_delete=models.SET_NULL,null=True)
 	def mostrar_imatge(self):
 		return mark_safe('<img src="'+settings.MEDIA_URL+'%s" width="90" height="90"/>' % (self.imatge))
 	mostrar_imatge.short_description = 'Avatar'
-	#def save(self): hay que cambiar el metodo de guardar para la imagen
+	#def save(self): TODO hay que cambiar el metodo de guardar para la imagen
 
 
 class Categoria(models.Model):
@@ -71,8 +73,8 @@ class Centre(models.Model):
 	cicles = models.ManyToManyField(Cicle,blank=True)
 	# logo empresa o centre educatiu
 	imatge = models.ImageField(upload_to='imatgesCentre', blank=True)
-	# si es empresa, adscrita a ceentres educatius
-	adscripcio = models.ManyToManyField('self',blank=True)
+	# si es empresa, adscrita a centres educatius
+	adscripcio = models.ManyToManyField('self',blank=True,related_name="adscrits",symmetrical=False)
 	def __str__(self):
 		return self.nom
 

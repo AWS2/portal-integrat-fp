@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django import forms
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.models import Group
 
 from easy_select2 import Select2
 # https://stackoverflow.com/questions/8022530/how-to-check-for-valid-email-address
@@ -22,7 +23,7 @@ class ConvidaForm(forms.Form):
 
 # Create your views here.
 def index(request):
-    return render(request, 'borsApp/index.html', {})
+    return render(request, 'borsApp/index.html', {} )
 
 
 def es_admin_centre( usuari ):
@@ -32,9 +33,12 @@ def es_admin_centre( usuari ):
 
 def es_admin_centre_educatiu( usuari ):
 	# nomes retornem true si es administrador de centre educatiu
-	for centre in usuari.centres_admin.all():
-		if centre.educatiu:
-			return True
+	try:
+		for centre in usuari.centres_admin.all():
+			if centre.educatiu:
+				return True
+	except:
+		return False
 	return False
 
 @login_required
@@ -50,31 +54,38 @@ def convida(request):
 		emails_ok = []
 		emails_repetits = []
 		emails_erronis = []
+		# grup alumnes
+		galumnes = Group.objects.get(name="alumnes")
 		for email in emails:
 			email = email.strip()
-			print("("+email+")")
+			#print("("+email+")")
 			# comprovar si repetit
 			users = User.objects.filter(email=email)
 			if not validate_email(email):
 				emails_erronis.append(email)
 			elif users:
+				usuari = users[0]
 				# no cal crear usuari
 				emails_repetits.append(email)
 				# creem titol si necessari
-				if Titol.objects.filter(cicle=cicle,centre=centre,alumne=users[0]).count()==0:
-					titol = Titol( cicle=cicle, centre=centre, graduat=finalitzat, alumne=users[0] )
+				if Titol.objects.filter(cicle=cicle,centre=centre,alumne=usuari).count()==0:
+					titol = Titol( cicle=cicle, centre=centre, graduat=finalitzat, alumne=usuari )
 					titol.save()
+				# afegim al grup alumnes
+				galumnes.user_set.add(usuari)
 			elif validate_email(email,verify=True):
-				# crear usuari
-				user = User(username=email.replace("@","_"),email=email,is_staff=True,)
+				# crear usuari (al grup alumnes)
+				user = User(username=email.replace("@","_"),email=email,is_staff=True)
 				user.save()
 				emails_ok.append(email)
 				# crear títol de l'alumne
 				titol = Titol( cicle=cicle, centre=centre, graduat=True, alumne=user )
 				titol.save()
+				# afegir al grup alumnes
+				galumnes.user_set.add(user)
 			else:
 				emails_erronis.append(email)
-			# TODO: enviar email
+			# TODO: enviar email a l'alumne
 		return render(request,'borsApp/convida.html',
 			{	"cicle":cicle, "centre":centre,
 				"emails_ok":emails_ok,

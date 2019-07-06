@@ -27,7 +27,6 @@ from django.conf.urls import re_path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('djrichtextfield/', include('djrichtextfield.urls')),
-    path('wysi',views.index, name='index'),
     path('', include('core.urls')),
     path('borsa/', include('borsApp.urls')),
     path('', include('social_django.urls', namespace='social')),

@@ -11,7 +11,7 @@ class Projecte(models.Model):
 	nom = models.CharField(max_length=255)
 	descripcio = RichTextField()
 	centre = models.ForeignKey(Centre,on_delete=models.CASCADE)
-	admins = models.ManyToManyField(User)
+	admins = models.ManyToManyField(User,help_text="Incloure aquí als professors implicats en el projecte")
 	inici = models.DateField(default=datetime.datetime.now)
 	final = models.DateField()
 	cicle = models.ForeignKey(Cicle,on_delete=models.SET_NULL,null=True)

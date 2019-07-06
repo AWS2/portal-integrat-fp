@@ -12,7 +12,9 @@
 	<ul>
 		<li><a href='/logout'>logout</a></li>
 		<li><a href='/admin'>admin</a></li>
+		{% if es_admin_centre_educatiu %}
 		<li><a href="/borsa/convida">convida alumnes</a></li>
+		{% endif %}
 	</ul>
 	{% else %}
 
