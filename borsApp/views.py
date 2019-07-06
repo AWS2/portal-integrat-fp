@@ -75,11 +75,11 @@ def convida(request):
 				galumnes.user_set.add(usuari)
 			elif validate_email(email,verify=True):
 				# crear usuari (al grup alumnes)
-				user = User(username=email.replace("@","_"),email=email,is_staff=True)
+				user = User(username=email.replace("@","_"),email=email,is_staff=True,centre=centre)
 				user.save()
 				emails_ok.append(email)
 				# crear títol de l'alumne
-				titol = Titol( cicle=cicle, centre=centre, graduat=True, alumne=user )
+				titol = Titol( cicle=cicle, centre=centre, graduat=finalitzat, alumne=user )
 				titol.save()
 				# afegir al grup alumnes
 				galumnes.user_set.add(user)

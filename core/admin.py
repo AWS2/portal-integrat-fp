@@ -74,10 +74,12 @@ class MPAdmin(admin.ModelAdmin):
 
 from borsApp.admin import TitolInline, SubscripcioInline
 
+UserForm = select2_modelform(User)
 class MyUserAdmin(UserAdmin):
+	form = UserForm
 	fieldsets = UserAdmin.fieldsets + (
             (None, {
-				'fields': ('imatge','mostrar_imatge','arxiu','descripcio'),
+				'fields': ('centre','imatge','mostrar_imatge','arxiu','descripcio'),
 			}),
 	)
 	inlines = [ TitolInline, SubscripcioInline, ]
@@ -94,15 +96,19 @@ class MyUserAdmin(UserAdmin):
 		return mark_safe(centres)
 	def __init__(self,*args,**kwargs):
 		super().__init__(*args,**kwargs)
-		self.list_display += ('mostra_centres_admin','mostra_grups')
+		# reset ordering pq a get_queryset si no, dona un error en altres admins (equips...)
+		self.ordering = ('username',)
+		self.list_display += ('mostra_centres_admin','mostra_grups','centre','last_login')
 	def get_queryset(self,request):
-		centres = request.user.centres_admin.all()
 		qs = super().get_queryset(request).annotate(
 			ncentres=Count('centres_admin'))
 		self.ordering = ('-ncentres','username')
 		if not request.user.is_superuser:
 			# els usuaris (profes) admins de centre només poden veure els seus usuaris
-			qs = qs.filter(titols__centre__in=centres).distinct()
+			centres = request.user.centres_admin.all()
+			# TODO: afegir segons titols obtinguts?
+			#qs = qs.filter(titols__centre__in=centres).distinct()
+			qs = qs.filter(centre__in=centres).distinct()
 		return qs
 
 

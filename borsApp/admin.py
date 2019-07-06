@@ -23,6 +23,7 @@ class TitolInline(admin.TabularInline):
 	model = Titol
 	form = TitolForm
 	extra = 0
+	readonly_fields = ('descripcio',)
 class SubscripcioInline(admin.StackedInline):
 	model = Subscripcio
 	form = SubscripcioForm

@@ -43,6 +43,22 @@ class EquipAdmin(admin.ModelAdmin):
 						| Q(projecte__centre__in=cids)
 						| Q(membres__in=[request.user]) )
 		return qs
+	def formfield_for_foreignkey(slef,db_field,request=None,**kwargs):
+		if db_field.name=="projecte" and not request.user.is_superuser:
+			# restringir a projectes del propi centre/s
+			centres = Centre.objects.filter(admins__in=[request.user])
+			if request.user.centre:
+				centres |= Centre.objects.filter(pk=request.user.centre.id)
+			kwargs["queryset"] = Projecte.objects.filter(centre__in=centres)
+		return super().formfield_for_foreignkey(db_field,request=request,**kwargs)
+	def formfield_for_manytomany(slef,db_field,request=None,**kwargs):
+		if db_field.name=="membres" and not request.user.is_superuser:
+			# els membres de l'equip poden ser els alumnes del mateix centre que l'usuari
+			if request.user.centre:
+				kwargs["queryset"] = User.objects.filter(centre=request.user.centre)
+				#TODO: initial sense modificar els que hi ha ja
+				kwargs["initial"] = User.objects.filter(pk=request.user.id)
+		return super().formfield_for_manytomany(db_field,request=request,**kwargs)
 
 class SpecInline(SortableInlineAdminMixin,admin.TabularInline):
 	model = Spec
@@ -104,12 +120,14 @@ class ProjecteAdmin(admin.ModelAdmin):
 		if request.user.is_superuser:
 			return qs
 		# filtrem projectes propis
-		# + (OR) projectes dels centres on soc admin
+		# + (OR) projectes dels centres on soc admin o al que pertanyo
 		# + (OR) projectes en els que participo com a alumne
 		cids = [ centre.id for centre in request.user.centres_admin.all() ]
+		if request.user.centre:
+			cids.append(request.user.centre.id)
 		qs = qs.filter( Q(admins__in=[request.user])
 						| Q(centre__in=cids)
-						| Q(equips__membres__in=[request.user]) )
+						| Q(equips__membres__in=[request.user]) ).distinct()
 		return qs
 
 
@@ -126,12 +144,12 @@ class SpecAdmin(SortableAdminMixin,admin.ModelAdmin):
 		if request.user.is_superuser:
 			return qs
 		# filtrem projectes propis (profe)
-		# + (OR) projectes dels centres on soc admin <- TODO: treure aquest?
+		# + (OR) projectes dels centres on soc admin <- TODO: treure aquest? de monent no
 		# + (OR) projectes en els que participo com a alumne
 		cids = [ centre.id for centre in request.user.centres_admin.all() ]
 		qs = qs.filter( Q(projecte__admins__in=[request.user])
 				| Q(projecte__centre__in=cids)
-				| Q(projecte__equips__membres__in=[request.user]) )
+				| Q(projecte__equips__membres__in=[request.user]) ).distinct()
 		return qs
 	def moduls(self,obj):
 		mps = ""
