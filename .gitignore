@@ -8,3 +8,4 @@ env/
 /media/*
 db.sqlite3
 settings2.py
+.DS_Store

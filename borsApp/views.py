@@ -14,8 +14,9 @@ from borsApp.models import Titol
 # Create your views here.
 
 
+
 class ConvidaForm(forms.Form):
-	centre = forms.ModelChoiceField( Centre.objects.none() )
+	centre = forms.ModelChoiceField( Centre.objects.none() )#, widget=forms.Select(attrs={'class': 'browser-default'}) )
 	cicle = forms.ModelChoiceField( None )
 	finalitzat = forms.BooleanField( required=False, help_text="Marcar si els alumnes ja han finalitzat el cicle." )
 	emails = forms.CharField(widget=forms.Textarea,help_text="Un email per línia dels alumnes a convidar.")
@@ -27,19 +28,10 @@ def index(request):
 
 
 def es_admin_centre( usuari ):
-	if usuari.centres_admin.count() > 0:
-		return True
-	return False
+	return usuari.es_admin_centre
 
 def es_admin_centre_educatiu( usuari ):
-	# nomes retornem true si es administrador de centre educatiu
-	try:
-		for centre in usuari.centres_admin.all():
-			if centre.educatiu:
-				return True
-	except:
-		return False
-	return False
+	return usuari.es_admin_centre_educatiu
 
 @login_required
 @user_passes_test( es_admin_centre_educatiu, login_url="/login" )
@@ -93,8 +85,12 @@ def convida(request):
 				"emails_erronis":emails_erronis} )
 	# GET: creem form per introduir emails d'invitació
 	form = ConvidaForm(request.GET)
-	form.fields["centre"].queryset = request.user.centres_admin.all()
-	form.fields["cicle"].queryset = request.user.centres_admin.first().cicles.all()
+	if request.user.is_superuser:
+		form.fields["centre"].queryset = Centre.objects.all()
+		form.fields["cicle"].queryset = Cicle.objects.all()
+	else:
+		form.fields["centre"].queryset = request.user.centres_admin.all()
+		form.fields["cicle"].queryset = request.user.centres_admin.first().cicles.all()
 	return render(request, 'borsApp/convida.html', {"form":form} )
 
 @login_required

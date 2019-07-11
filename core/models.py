@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
 from django.utils.safestring import mark_safe
 
 # Create your models here.
@@ -25,6 +25,29 @@ class User(AbstractUser):
 		return mark_safe('<img src="'+settings.MEDIA_URL+'%s" width="90" height="90"/>' % (self.imatge))
 	mostrar_imatge.short_description = 'Avatar'
 	#def save(self): TODO hay que cambiar el metodo de guardar para la imagen
+	@property
+	def es_alumne(self):
+		galumnes = Group.objects.get(name="alumnes")
+		if galumnes in self.groups.all():
+			return True
+		return False
+	@property
+	def es_admin_centre(self):
+		if self.centres_admin.count() > 0:
+			return True
+		return False
+	@property
+	def es_admin_centre_educatiu(self):
+		if self.is_superuser:
+			return True
+		# nomes retornem true si es administrador de centre educatiu
+		try:
+			for centre in self.centres_admin.all():
+				if centre.educatiu:
+					return True
+		except:
+			return False
+		return False
 
 
 class Categoria(models.Model):

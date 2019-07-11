@@ -99,6 +99,9 @@ class MyUserAdmin(UserAdmin):
 		# reset ordering pq a get_queryset si no, dona un error en altres admins (equips...)
 		self.ordering = ('username',)
 		self.list_display += ('mostra_centres_admin','mostra_grups','centre','last_login')
+	def ncentres(self,obj):
+		return obj.centres.count()
+	ncentres.admin_order_field = 'ncentres'
 	def get_queryset(self,request):
 		qs = super().get_queryset(request).annotate(
 			ncentres=Count('centres_admin'))
@@ -121,5 +124,5 @@ admin.site.register( User, MyUserAdmin )
 
 
 admin.site.site_title = "Gestió portal integrat"
-admin.site.site_header = mark_safe("Administració | <a href='/login'>->social login<-</a>")
+admin.site.site_header = mark_safe("Administració | <a href='/'>->Anar a inici<-</a>")
 

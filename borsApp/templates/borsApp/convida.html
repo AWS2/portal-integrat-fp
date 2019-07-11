@@ -1,40 +1,57 @@
+{% extends 'base.html' %}
 
-<h1>Convida alumnes</h1>
+{% block content %}
+
+  <div class="container">
+    <div class="section">
+		<h2>Convida alumnes</h2>
 
 
 {% if form %}
 
-<form method="post">
-	{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
+	<form method="post">
+		{% csrf_token %}
+	    {{ form.as_p }}
+	    <input class="btn" type="submit" value="Submit">
+	</form>
 
 {% else %}
-<p>CENTRE: {{centre}}</p>
-<p>CICLE: {{cicle}}</p>
+	<h3>{{centre}}</h3>
+	<h4>{{cicle}}</h4>
 
-Emails convidats:
-<ol>
-	{% for email in emails_ok %}
-	<li>{{email}}</li>	
-	{% endfor %}	
-</ol>
+	{% if emails_ok %}
+	Emails convidats:
+	<ol>
+		{% for email in emails_ok %}
+		<li>{{email}}</li>	
+		{% endfor %}	
+	</ol>
+	{% endif %}
 
-Emails repetits (no s'ha afegit ni modificat):
-<ol>
-	{% for email in emails_repetits %}
-	<li>{{email}}</li>	
-	{% endfor %}	
-</ol>
+	{% if emails_repetits %}
+	Emails repetits (no s'ha afegit ni modificat):
+	<ol>
+		{% for email in emails_repetits %}
+		<li>{{email}}</li>	
+		{% endfor %}	
+	</ol>
+	{% endif %}
 
-Emails erronis:
-<ol>
-	{% for email in emails_erronis %}
-	<li>{{email}}</li>	
-	{% endfor %}	
-</ol>
-
+	{% if emails_erronis %}
+	Emails erronis:
+	<ol>
+		{% for email in emails_erronis %}
+		<li>{{email}}</li>	
+		{% endfor %}	
+	</ol>
+	{% endif %}
 
 {% endif %}
+
+
+	</div>
+</div>
+
+
+{% endblock %}
 

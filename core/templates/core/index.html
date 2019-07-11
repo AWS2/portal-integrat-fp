@@ -1,29 +1,60 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>main</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-	<h1>Portal de gestió</h1>
+{% block content %}
 
-	{% if not request.user.is_anonymous %}
-	<p>Hola, {{request.user.first_name}}</p>
-	<ul>
-		<li><a href='/logout'>logout</a></li>
-		<li><a href='/admin'>admin</a></li>
-		{% if es_admin_centre_educatiu %}
-		<li><a href="/borsa/convida">convida alumnes</a></li>
-		{% endif %}
-	</ul>
-	{% else %}
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <h1 class="header center orange-text">Portal Integrat FP</h1>
+      <div class="row center">
+        <h5 class="header col s12 light">Una iniciativa de IETI - Innovació Esteve Terradas</h5>
+      </div>
+      <div class="row center">
+        <a href="login" id="download-button" class="btn-large waves-effect waves-light orange">Comença</a>
+      </div>
+      <br><br>
 
-	<ul>
-		<li><a href='/login'>login</a></li>
-	</ul>
+    </div>
+  </div>
 
-	{% endif %}
-</body>
-</html>
 
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
+            <h5 class="center">Portal integral</h5>
+
+            <p class="light">El projecte ha començant entorn de diverses necessitats concretes dels institus que imparteixen cicles formatius, però pensem en un portal que integri la gestió del centre educatiu i que la faci més eficient.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">Scrum / ABP</h5>
+
+            <p class="light">Gestió de projectes a l'aula amb metodologia Scrum.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons">work</i></h2>
+            <h5 class="center">Borsa de Treball</h5>
+
+            <p class="light">Centralitzant les ofertes de treball relacionats amb les titulacions ofertes pels centres educatius de la comarca. Hem començat pel Baix Llobregat, però pensem en integrar més comarques.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <br><br>
+  </div>
+
+
+{% endblock %}
 

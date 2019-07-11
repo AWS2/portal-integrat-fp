@@ -30,12 +30,20 @@ class Subscripcio(models.Model):
 		verbose_name_plural = "Subscripcions"
 	alumne = models.ForeignKey(User,on_delete=models.CASCADE)
 	# centre al què està adscrit l'alumne (títol) o bé el centre de treball
-	centre = models.ForeignKey(Centre,on_delete=models.CASCADE,null=True)
-	categories = models.ManyToManyField(Categoria,blank=True)
-	cicles = models.ManyToManyField(Cicle)
+	centre_educatiu = models.ForeignKey(Centre,on_delete=models.CASCADE,null=True,blank=True,
+					help_text="Rebre les ofertes dirigides a aquest centre",
+					related_name="subscripcions_educatiu")
+	centre_treball = models.ForeignKey(Centre,on_delete=models.CASCADE,null=True,blank=True,
+					help_text="Rebre les ofertes d'aquesta empresa",
+					related_name="subscipcions_treball")
+	categories = models.ManyToManyField(Categoria,blank=True,
+					help_text="Rebre les ofertes que estiguin en aquestes categories")
+	cicles = models.ManyToManyField(Cicle,
+					help_text="Rebre les ofertes relacionades amb aquests cicles")
 	# distancia en km al centre (educatiu o de treball)
 	# si és 0.0 o negatiu s'entén que a qualsevol distància
-	distancia = models.FloatField(default=0.0)
+	distancia = models.FloatField(default=0.0,
+					help_text="Si la distància és 0 no es tindrà en compte aquest paràmetre")
 	creat = models.DateTimeField(auto_now_add=True)
 	modificat = models.DateTimeField(auto_now=True)
 
