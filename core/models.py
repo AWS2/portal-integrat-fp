@@ -10,19 +10,20 @@ from django.contrib.gis.db import models as gismodels
 from django.contrib.gis.geos import Point
 from djrichtextfield.models import RichTextField
 
-
-
 class User(AbstractUser):
 	# foto alumne o logo admin empresa
-	imatge = models.ImageField(upload_to='imatgesPerfil', blank=True)
+	imatge = models.ImageField(upload_to="imatgesPerfil", blank=True,
+						help_text="Carrega aquí la teva imatge.")
 	# cv
-	arxiu = models.FileField(upload_to='docPerfil', blank=True)
+	arxiu = models.FileField(upload_to="docPerfil", blank=True,
+						help_text="Carrega aquí el CV")
 	descripcio = RichTextField(blank=True,null=True)
 	localitzacio = gismodels.PointField(null=True,default=Point(0,0))
 	#TODO: eliminar centre
-	centre = models.ForeignKey('Centre',on_delete=models.SET_NULL,null=True)
+	centre = models.ForeignKey('Centre',on_delete=models.SET_NULL,null=True,blank=True,
+						help_text="Centre on està actualment matriculat l'alumne o el darrer centre on hi va estar.")
 	def mostrar_imatge(self):
-		return mark_safe('<img src="'+settings.MEDIA_URL+'%s" width="90" height="90"/>' % (self.imatge))
+		return mark_safe('<img src="'+settings.MEDIA_URL+'%s" width="90" />' % (self.imatge))
 	mostrar_imatge.short_description = 'Avatar'
 	#def save(self): TODO hay que cambiar el metodo de guardar para la imagen
 	@property

@@ -61,6 +61,7 @@ class Oferta(models.Model):
 	cicles = models.ManyToManyField(Cicle)
 	titol = models.CharField(max_length=255)
 	descripcio = RichTextField()
+	creador = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
 
 
 class Demandes(models.Model):

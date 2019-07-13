@@ -4,8 +4,9 @@ from django.contrib.gis.admin import OSMGeoAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.safestring import mark_safe
 from django.db.models import Count
+from django import forms
 
-from easy_select2 import select2_modelform
+#from easy_select2 import select2_modelform
 
 # Register your models here.
 
@@ -54,15 +55,16 @@ class CentreAdmin(OSMGeoAdmin):
 					).order_by("-nadmins","-nempreses","nom")
 		return queryset
 
-UFForm = select2_modelform(UnitatFormativa)
-MPForm = select2_modelform(ModulProfessional)
+# no cal select2_modelform pq amb django-admin-select2 ja funciona
+#UFForm = select2_modelform(UnitatFormativa)
+#MPForm = select2_modelform(ModulProfessional)
 class UFInline(admin.TabularInline):
 	model = UnitatFormativa
 	extra = 0
 	exclude = ('descripcio',)
 class MPAdmin(admin.ModelAdmin):
 	model = ModulProfessional
-	form = MPForm
+	#form = MPForm
 	list_display = ('codi_cicle','numero','nom','cicle',)
 	list_display_links = ('numero','nom',)
 	ordering = ('cicle','numero')
@@ -74,16 +76,19 @@ class MPAdmin(admin.ModelAdmin):
 
 from borsApp.admin import TitolInline, SubscripcioInline
 
-UserForm = select2_modelform(User)
+#from django.contrib.auth.forms import ReadOnlyPasswordHashField, UserChangeForm
+#from django_select2.forms import Select2Widget
+#UserForm = select2_modelform(User,attrs={'exclude':'password'})
+# no cal select2_modelform pq amb django-admin-select2 ja funciona
 class MyUserAdmin(UserAdmin):
-	form = UserForm
+	#form = UserForm
 	fieldsets = UserAdmin.fieldsets + (
-            (None, {
+            ("Dades acadèmiques", {
 				'fields': ('centre','imatge','mostrar_imatge','arxiu','descripcio'),
 			}),
 	)
 	inlines = [ TitolInline, SubscripcioInline, ]
-	readonly_fields = ['mostrar_imatge']
+	readonly_fields = ['mostrar_imatge','last_login','date_joined']
 	def mostra_grups(self,obj):
 		grups = ""
 		for grup in obj.groups.all():

@@ -35,6 +35,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     #'BorsaDeTreball.apps.MyAdminConfig', 
+    'easy_select2',
+    'django_select2',
+    'django_admin_select2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,7 +50,6 @@ INSTALLED_APPS = [
     'scrum',
     'djrichtextfield',
     'social_django',
-    'easy_select2',
     'adminsortable2',
 ]
 # OAuth -> 
