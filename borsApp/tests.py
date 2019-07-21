@@ -6,7 +6,7 @@ from django.db.utils import IntegrityError
 
 from borsApp.models import *
 
-
+"""
 class CicleTestCase(TestCase):
 	TEST_CAT = "TEST CAT"
 	TEST_CICLE_CODI = "TEST"
@@ -38,7 +38,7 @@ class CicleTestCase(TestCase):
 		self.assertRaises( IntegrityError, self.duplica_cicle )
 
 
-	"""NO ens cal fer tearDown pq es destrueix sola la DB de test ;)
+	NO ens cal fer tearDown pq es destrueix sola la DB de test ;)
 	def tearDown(self):
 		self.test_cic.delete()
 		self.test_cat.delete()
