@@ -81,6 +81,7 @@ from borsApp.admin import TitolInline, SubscripcioInline
 #UserForm = select2_modelform(User,attrs={'exclude':'password'})
 # no cal select2_modelform pq amb django-admin-select2 ja funciona
 class MyUserAdmin(UserAdmin):
+	save_on_top = True
 	#form = UserForm
 	fieldsets = UserAdmin.fieldsets + (
             ("Dades acadèmiques", {
@@ -118,6 +119,20 @@ class MyUserAdmin(UserAdmin):
 			#qs = qs.filter(titols__centre__in=centres).distinct()
 			qs = qs.filter(centre__in=centres).distinct()
 		return qs
+	def save_model(self,request,obj,form,change):
+		# si es admin centre cal associar l'usuari al centre de l'admin
+		if request.user.es_admin_centre:
+			# TODO: revisar que un usuari pot ser admin de 2 centres alhora
+			obj.centre = request.user.centres_admin.first()
+			# permisos d'alumne pel backend i frontend
+			obj.save()
+			galumnes = Group.objects.get(name="alumnes")
+			obj.groups.add(galumnes)
+			obj.is_staff = True
+			obj.save()
+		# si es superuser ho fa tot
+		if request.user.is_superuser:
+			super().save_model(request,obj,form,change)
 
 
 admin.site.register( ModulProfessional, MPAdmin )
