@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.firefox.webdriver import WebDriver
-
+from selenium.common.exceptions import NoSuchElementException
 from core.models import User
 
 # Create your tests here.
@@ -14,6 +14,8 @@ class MySeleniumTests(StaticLiveServerTestCase):
     fixtures = ['testdb.json',]
     #fixtures = ['centres_test.json','groups.json','users.json',]
     loged = False
+    # permisos exclusius de superusuari
+    permisos_only_super = [ 'is_staff','is_superuser','groups','user_permissions']
 
     @classmethod
     def setUpClass(cls):
@@ -55,7 +57,18 @@ class MySeleniumTests(StaticLiveServerTestCase):
         # TODO: millorar test (comprovar no errors/warnings)
         #self.selenium.find_element_by_xpath('//li[@class="success" and contains(text(),"fou afegit amb èxit")]')
         self.selenium.find_element_by_xpath('//li[@class="success"]')
-        # TODO: comprovar que a l'afegir usuari no deixa editar super ni permisos
+        # comprovar que a l'afegir usuari NO deixa editar super ni grups ni permisos
+        for permis in self.permisos_only_super:
+            try:
+                elem = self.selenium.find_element_by_name(permis)
+                if elem:
+                    raise Exception("Usuari admin_centre no ha de poder gestionar permisos ("+permis+") al menu d'usuari")
+            except NoSuchElementException:
+                # si no existeix l'element amb el find, ja és correcte
+                pass
+            except Exception as e:
+                # si és qualsevol altre Exception, sí que la rellancem
+                raise e
 
     def check_alumnes(self,alumnes,adminuser):
         # tornem a menu principal
@@ -80,21 +93,33 @@ class MySeleniumTests(StaticLiveServerTestCase):
             self.selenium.find_element_by_xpath('//a[text()="'+item+'"]')
         # items que NO hi han de ser
         # TODO: activar (comentat per check ràpid)
-        """items = ['Cicles','Moduls Professionals','Python Social Auth','Grups']
+        items = ['Cicles','Moduls Professionals','Python Social Auth','Grups']
         for item in items:
             try:
                 self.selenium.find_element_by_xpath('//a[text()="'+item+'"]')
                 # si trobem l'element prohibit, llancem excepció
                 raise Exception("Usuari admin_centre no pot tenir ("+item+") al menu")
-            except:
-                pass"""
+            except NoSuchElementException:
+                # si no existeix l'element amb el find, ja és correcte
+                pass
+            except Exception as e:
+                # si és qualsevol altre Excepcion, sí que la rellancem
+                raise e
 
     def test_superadmin(self):
         self.backend_login("admin","admin123")
-        # comprovem login fent logout
+        # anem al menu usuari
+        self.selenium.find_element_by_xpath('//a[text()="Usuaris"]').click()
+        # editem un usuari (admin1)
+        self.selenium.find_element_by_xpath('//a[text()="admin1"]').click()
+        # comprovar que super pot editar tot dels usuaris
+        for permis in self.permisos_only_super:
+            elem = self.selenium.find_element_by_name(permis)
+            if not elem:
+                raise Exception("superadmin sí ha de poder gestionar permisos ("+permis+") al menu d'usuari")
+        # sortim
         self.backend_logout()
-        # superadmin pot veure tots els items
-        # TODO...
+        # TODO... superadmin pot veure tots els items d'altres menus
 
     def test_admin_centre1(self):
         self.backend_login("admin1","enric123")

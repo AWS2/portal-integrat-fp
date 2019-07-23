@@ -80,6 +80,9 @@ from borsApp.admin import TitolInline, SubscripcioInline
 #from django_select2.forms import Select2Widget
 #UserForm = select2_modelform(User,attrs={'exclude':'password'})
 # no cal select2_modelform pq amb django-admin-select2 ja funciona
+
+PERMISOS_ONLY_SUPER = ['is_superuser','groups','is_staff','user_permissions']
+
 class MyUserAdmin(UserAdmin):
 	save_on_top = True
 	#form = UserForm
@@ -89,7 +92,7 @@ class MyUserAdmin(UserAdmin):
 			}),
 	)
 	inlines = [ TitolInline, SubscripcioInline, ]
-	readonly_fields = ['mostrar_imatge','last_login','date_joined']
+	readonly_fields = ['mostrar_imatge','last_login','date_joined'] + PERMISOS_ONLY_SUPER
 	def mostra_grups(self,obj):
 		grups = ""
 		for grup in obj.groups.all():
@@ -105,9 +108,16 @@ class MyUserAdmin(UserAdmin):
 		# reset ordering pq a get_queryset si no, dona un error en altres admins (equips...)
 		self.ordering = ('username',)
 		self.list_display += ('mostra_centres_admin','mostra_grups','centre','last_login')
+		# anular els camps de nomes superusuari
 	def ncentres(self,obj):
 		return obj.centres.count()
 	ncentres.admin_order_field = 'ncentres'
+	def get_form(self,request,obj=None,**kwargs):
+		if request.user.is_superuser:
+			self.readonly_fields = ['mostrar_imatge','last_login','date_joined']
+		else:
+			self.readonly_fields = ['mostrar_imatge','last_login','date_joined'] + PERMISOS_ONLY_SUPER
+		return super().get_form(request,obj,**kwargs)
 	def get_queryset(self,request):
 		qs = super().get_queryset(request).annotate(
 			ncentres=Count('centres_admin'))
