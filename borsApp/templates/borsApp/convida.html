@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+{% block extra_css %}
+.select-wrapper input.select-dropdown {
+	display: none;
+}
+{% endblock %}
+
 {% block content %}
 
   <div class="container">
@@ -52,6 +58,6 @@
 	</div>
 </div>
 
-
 {% endblock %}
+
 

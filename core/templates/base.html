@@ -9,6 +9,12 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="/static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="/static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  {{ form.media.css }}
+  <style>
+  {% block extra_css %}
+  {% endblock %}
+  </style>
+
 </head>
 
 
@@ -31,6 +37,10 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="/static/js/materialize.min.js"></script>
     <script src="/static/js/init.js"></script>
+    {{ form.media.js }}
+
+    {% block extra_js %}
+    {% endblock %}
 
   </body>
 </html>

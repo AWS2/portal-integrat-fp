@@ -94,7 +94,7 @@ class Centre(models.Model):
 	# usuaris administradors
 	admins = models.ManyToManyField(User,blank=True,related_name="centres_admin")
 	# només per centres educatius
-	cicles = models.ManyToManyField(Cicle,blank=True)
+	cicles = models.ManyToManyField(Cicle,blank=True,related_name="centres")
 	# logo empresa o centre educatiu
 	imatge = models.ImageField(upload_to='imatgesCentre', blank=True)
 	# si es empresa, adscrita a centres educatius

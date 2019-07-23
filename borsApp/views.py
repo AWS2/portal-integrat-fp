@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import Group
 
+from django_select2.forms import Select2Widget
 from easy_select2 import Select2
 # https://stackoverflow.com/questions/8022530/how-to-check-for-valid-email-address
 from validate_email import validate_email
@@ -16,10 +17,14 @@ from borsApp.models import Titol
 
 
 class ConvidaForm(forms.Form):
-	centre = forms.ModelChoiceField( Centre.objects.none() )#, widget=forms.Select(attrs={'class': 'browser-default'}) )
-	cicle = forms.ModelChoiceField( None )
-	finalitzat = forms.BooleanField( required=False, help_text="Marcar si els alumnes ja han finalitzat el cicle." )
-	emails = forms.CharField(widget=forms.Textarea,help_text="Un email per línia dels alumnes a convidar.")
+	centre = forms.ModelChoiceField( Centre.objects.none(), widget=Select2Widget )
+	cicle = forms.ModelChoiceField( None, widget=Select2Widget )
+	finalitzat = forms.BooleanField( required=False,
+							help_text="Marcar si els alumnes ja han finalitzat el cicle." )
+	#data_finalitzacio = forms.DateField( widget=forms.SelectDateWidget, required=False,
+	#						help_text="Data de graduació de l'alumne")
+	emails = forms.CharField( widget=forms.Textarea,
+							help_text="Un email per línia dels alumnes a convidar.")
 
 
 # Create your views here.
@@ -40,7 +45,9 @@ def convida(request):
 		# dades form
 		cicle = Cicle.objects.get(pk=request.POST["cicle"])
 		centre = Centre.objects.get(pk=request.POST["centre"])
-		finalitzat = request.POST.get("finalitzat",False)
+		finalitzat = False
+		if request.POST.get("finalitzat",False):
+			finalitzat = True
 		# emails
 		emails = request.POST["emails"].split("\n")
 		emails_ok = []
@@ -89,8 +96,12 @@ def convida(request):
 		form.fields["centre"].queryset = Centre.objects.all()
 		form.fields["cicle"].queryset = Cicle.objects.all()
 	else:
-		form.fields["centre"].queryset = request.user.centres_admin.all()
-		form.fields["cicle"].queryset = request.user.centres_admin.first().cicles.all()
+		# només permet convidar als cicles gestionants pel 1r centre
+		# TODO: filtrar correctament
+		centres = request.user.centres_admin.all()
+		form.fields["centre"].queryset = centres
+		form.fields["cicle"].queryset = Cicle.objects.filter(centres__in=centres)
+		#request.user.centres_admin.all().cicles.all()
 	return render(request, 'borsApp/convida.html', {"form":form} )
 
 @login_required
