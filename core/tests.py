@@ -8,9 +8,10 @@ from core.models import User
 
 # Per volcar db per a test cal fer amb dumpdata --natural-foreign --natural-primary
 # https://code.djangoproject.com/ticket/21278#comment:5
+# BEST: ./manage.py dumpdata --indent=4 --natural-foreign --natural-primary > test.json
 
 
-class MySeleniumTests(StaticLiveServerTestCase):
+class CoreTests(StaticLiveServerTestCase):
     fixtures = ['testdb.json',]
     #fixtures = ['centres_test.json','groups.json','users.json',]
     loged = False

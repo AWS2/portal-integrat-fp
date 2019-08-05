@@ -35,11 +35,8 @@ def index(request):
 def es_admin_centre( usuari ):
 	return usuari.es_admin_centre
 
-def es_admin_centre_educatiu( usuari ):
-	return usuari.es_admin_centre_educatiu
-
 @login_required
-@user_passes_test( es_admin_centre_educatiu, login_url="/login" )
+@user_passes_test( es_admin_centre, login_url="/login" )
 def convida(request):
 	if request.method=="POST":
 		# dades form
@@ -105,7 +102,7 @@ def convida(request):
 	return render(request, 'borsApp/convida.html', {"form":form} )
 
 @login_required
-@user_passes_test( es_admin_centre_educatiu, login_url="/login" )
+@user_passes_test( es_admin_centre, login_url="/login" )
 def invitacions(request):
 	return render(request, 'borsApp/invitacions.html')
 

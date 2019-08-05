@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'djrichtextfield',
     'social_django',
     'adminsortable2',
+    #'test_without_migrations',
 ]
 # OAuth -> 
 AUTHENTICATION_BACKENDS = (
@@ -117,24 +118,24 @@ DATABASES = {
     #    'ENGINE': 'django.db.backends.sqlite3',
     #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     #},
-    #'mysql': { # mysql
-        #'ENGINE': 'django.contrib.gis.db.backends.mysql',
+    'mysql': { # mysql
+        'ENGINE': 'django.contrib.gis.db.backends.mysql',
         #'ENGINE': 'django.db.backends.mysql',
         #'ENGINE': 'mysql.connector.django', # MySQL 8 (problemes amb GIS)
-    #    'NAME': settings2.DB_NAME,
-    #    'USER': settings2.DB_USER,
-    #    'PASSWORD': settings2.DB_PASS,
-    #    'HOST': settings2.DB_HOST or "localhost",
-    #    'PORT': settings2.DB_PORT or 3306,
-    #},
-    'postgre': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': settings2.DB_NAME,
-        'USER': 'user001',
-        'PASSWORD': '123456789',
-        'HOST': settings2.DB_HOST or 'localhost',
-        'PORT': settings2.DB_PORT or 5432,
+        'USER': settings2.DB_USER,
+        'PASSWORD': settings2.DB_PASS,
+        'HOST': settings2.DB_HOST or "localhost",
+        'PORT': settings2.DB_PORT or 3306,
     },
+    #'postgre': {
+    #    'ENGINE': 'django.contrib.gis.db.backends.postgis',
+    #    'NAME': settings2.DB_NAME,
+    #    'USER': 'user001',
+    #    'PASSWORD': '123456789',
+    #    'HOST': settings2.DB_HOST or 'localhost',
+    #    'PORT': settings2.DB_PORT or 5432,
+    #},
 }
 
 DATABASES["default"] = DATABASES[settings2.DB_TYPE]
@@ -210,3 +211,5 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = settings2.SOCIAL_AUTH_LOGIN_REDIRECT_URL
 SOCIAL_AUTH_WHITELISTED_EMAILS = ['enric.mieza@gmail.com',]
 
 
+# Ajustos per accelerar testing
+#TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'

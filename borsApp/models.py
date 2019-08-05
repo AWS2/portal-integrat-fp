@@ -11,6 +11,32 @@ from core.models import User, Cicle, Centre, Categoria
 # Create your models here.
 
 
+# Empresa o centre de treball
+class Empresa(models.Model):
+	class Meta:
+		verbose_name_plural = "Empreses"
+	nom = models.CharField(max_length=255)
+	direccio = RichTextField()
+	poblacio = models.CharField(max_length=255)
+	cp = models.CharField(max_length=5)
+	telefon = models.IntegerField()
+	email = models.EmailField()
+	web = models.URLField(blank=True)
+	# loc inicial al mar, enfront al Maresme (2.6875,41.5600)
+	localitzacio = gismodels.PointField(blank=True,default=Point(2.6875,41.5600))
+	descripcio = RichTextField(blank=True)
+	# usuaris administradors
+	admins = models.ManyToManyField(User,blank=True,related_name="empreses_admin")
+	# logo
+	imatge = models.ImageField(upload_to='imatgesCentre', blank=True)
+	# empreses adscrites a centres educatius
+	adscripcio = models.ManyToManyField(Centre,blank=True,related_name="empreses",symmetrical=False,
+					help_text="Centres educatius als que està adscrita l'empresa. ")
+	def __str__(self):
+		return self.nom
+
+
+
 # titol de CF obtingut per un alumne
 class Titol(models.Model):
 	cicle = models.ForeignKey(Cicle,on_delete=models.SET_NULL,null=True)
@@ -29,13 +55,13 @@ class Subscripcio(models.Model):
 	class Meta:
 		verbose_name_plural = "Subscripcions"
 	alumne = models.ForeignKey(User,on_delete=models.CASCADE)
-	# centre al què està adscrit l'alumne (títol) o bé el centre de treball
+	# centre al què està adscrit l'alumne (p.ex. on ha tret el títol)
 	centre_educatiu = models.ForeignKey(Centre,on_delete=models.CASCADE,null=True,blank=True,
 					help_text="Rebre les ofertes dirigides a aquest centre",
-					related_name="subscripcions_educatiu")
-	centre_treball = models.ForeignKey(Centre,on_delete=models.CASCADE,null=True,blank=True,
+					related_name="subscripcions")
+	centre_treball = models.ForeignKey(Empresa,on_delete=models.CASCADE,null=True,blank=True,
 					help_text="Rebre les ofertes d'aquesta empresa",
-					related_name="subscipcions_treball")
+					related_name="subscipcions")
 	categories = models.ManyToManyField(Categoria,blank=True,
 					help_text="Rebre les ofertes que estiguin en aquestes categories")
 	cicles = models.ManyToManyField(Cicle,
@@ -57,7 +83,7 @@ class Oferta(models.Model):
 	# TODO: check timedelta
 	final = models.DateTimeField()
 	activa = models.BooleanField(default=True)
-	empresa = models.ForeignKey(Centre,on_delete=models.CASCADE,null=True)
+	empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE,null=True)
 	cicles = models.ManyToManyField(Cicle)
 	titol = models.CharField(max_length=255)
 	descripcio = RichTextField()

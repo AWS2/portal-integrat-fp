@@ -33,23 +33,22 @@ class User(AbstractUser):
 			return True
 		return False
 	@property
+	def es_profe(self):
+		gprofes = Group.objects.get(name="profes")
+		if gprofes in self.groups.all():
+			return True
+		return False
+	@property
 	def es_admin_centre(self):
 		if self.centres_admin.count() > 0:
 			return True
 		return False
-	@property
-	def es_admin_centre_educatiu(self):
-		if self.is_superuser:
-			return True
-		# nomes retornem true si es administrador de centre educatiu
-		try:
-			for centre in self.centres_admin.all():
-				if centre.educatiu:
-					return True
-		except:
-			return False
-		return False
 
+	@property
+	def es_admin_empresa(self):
+		if self.empreses_admin.count() > 0:
+			return True
+		return False
 
 class Categoria(models.Model):
 	class Meta:
@@ -80,7 +79,6 @@ class Cicle(models.Model):
 
 # centre educatiu o centre de treball (empresa)
 class Centre(models.Model):
-	educatiu = models.BooleanField(help_text="Si no és centre educatiu, és centre de treball.")
 	nom = models.CharField(max_length=255)
 	direccio = RichTextField()
 	poblacio = models.CharField(max_length=255)
@@ -93,12 +91,9 @@ class Centre(models.Model):
 	descripcio = RichTextField(blank=True)
 	# usuaris administradors
 	admins = models.ManyToManyField(User,blank=True,related_name="centres_admin")
-	# només per centres educatius
 	cicles = models.ManyToManyField(Cicle,blank=True,related_name="centres")
-	# logo empresa o centre educatiu
+	# logo centre educatiu
 	imatge = models.ImageField(upload_to='imatgesCentre', blank=True)
-	# si es empresa, adscrita a centres educatius
-	adscripcio = models.ManyToManyField('self',blank=True,related_name="adscrits",symmetrical=False)
 	def __str__(self):
 		return self.nom
 
