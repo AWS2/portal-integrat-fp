@@ -15,7 +15,7 @@ from core.models import User, Cicle, Centre, Categoria
 class Empresa(models.Model):
 	class Meta:
 		verbose_name_plural = "Empreses"
-	nom = models.CharField(max_length=255)
+	nom = models.CharField(max_length=255,unique=True)
 	direccio = RichTextField()
 	poblacio = models.CharField(max_length=255)
 	cp = models.CharField(max_length=5)
@@ -30,7 +30,8 @@ class Empresa(models.Model):
 	# logo
 	imatge = models.ImageField(upload_to='imatgesCentre', blank=True)
 	# empreses adscrites a centres educatius
-	adscripcio = models.ManyToManyField(Centre,blank=True,related_name="empreses",symmetrical=False,
+	adscripcio = models.ManyToManyField(Centre,blank=True,
+					related_name="empreses",symmetrical=False,
 					help_text="Centres educatius als que està adscrita l'empresa. ")
 	def __str__(self):
 		return self.nom

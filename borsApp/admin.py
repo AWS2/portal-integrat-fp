@@ -4,6 +4,7 @@ from django import forms
 # Register your models here.
 
 from borsApp.models import *
+from core.models import Cicle
 from django.contrib.auth.models import Group
 
 # no cal form de select2 pq ho posem per a tot l'admin amb django-admin-select2
@@ -26,9 +27,11 @@ class EmpresaAdmin(admin.ModelAdmin):
             # el admin centre veu totes les empreses q te adscrites
             centres = request.user.centres_admin.all()
             return qs.filter(adscripcio__in=centres)
-        else: # if request.user.es_empresa_admin:
-            # l'empresa nomes es veu a sí mateixa
-            return qs.filter(nom__in=request.user.empresa_admin.all())
+        elif request.user.es_admin_empresa:
+            # l'empresa només es veu a sí mateixa
+            return qs.filter(id__in=request.user.empreses_admin.all())
+        # aqui no hauriem d'arribar
+        raise Exception("ERROR: EmpresaAdmin.get_queryset , permís denegat")
     def get_admins(self,obj):
         res = ""
         for admin in obj.admins.all():
@@ -39,6 +42,12 @@ class EmpresaAdmin(admin.ModelAdmin):
         for centre in obj.adscripcio.all():
             res += centre.nom + ", "
         return res
+    def get_form(self,request,obj=None,**kwargs):
+        self.readonly_fields = ()
+        # l'empresa no pot manipular els admins
+        if request.user.es_admin_empresa:
+            self.readonly_fields = ('admins',)
+        return super().get_form(request,obj,**kwargs)
     def save_related(self,request,form,formset,change):
         # guardem el que s'hagi marcat
         super().save_related(request,form,formset,change)
@@ -145,45 +154,59 @@ class OfertaAdmin(admin.ModelAdmin):
     model = Oferta
     #form = OfertaForm
     filter_horizontal = ('cicles',)
-    exclude = ('creador',)
+    readonly_fields = ('creador',)
     list_display = ('titol','empresa','inici','final','activa',)
     ordering = ('-inici','empresa',)
-    def get_form(self,request,obj=None,**kwargs):
+    """def get_form(self,request,obj=None,**kwargs):
         # l'empresa no pot triar quina empresa fa la oferta. Els admins sí
-        self.exclude = ('creador','empresa',)
+        self.readonly_fields = ('creador','empresa',)
         if request.user.es_admin_centre:
-            print("es admin centre!")
-            self.exclude = ('creador',)
-        return super().get_form(request,obj,**kwargs)
+            self.readonly_fields = ('creador',)
+        return super().get_form(request,obj,**kwargs)"""
     def formfield_for_foreignkey(self,db_field,request=None,**kwargs):
-        # filtre camp alumne
+        # filtre camp empresa
         if db_field.name=="empresa":
             # si es admin_centre, filtrar empreses adscrites al centre
             if request.user.es_admin_centre:
-                # TEST: filtrem per centres NO-educatius
-                centres = request.user.admin_centre.all()
+                centres = request.user.centres_admin.all()
                 kwargs["queryset"] = Empresa.objects.filter(adscripcio__in=centres)
+            elif request.user.es_admin_empresa:
+                # admin empresa pot triar les empreses que administra
+                kwargs["queryset"] = request.user.empreses_admin.all()
         return super().formfield_for_foreignkey(db_field,request=request,**kwargs)
     def formfield_for_manytomany(self,db_field,request=None,**kwargs):
-        # filtre camp alumne
-        if db_field.name=="adscripcio":
-            # filtrar centres educatius
-            kwargs["queryset"] = Centre.objects.filter(educatiu=True)
+        # filtre camp cicles
+        if db_field.name=="cicles":
+            # filtrem per cicles dels centres adscrits a l'empresa/es
+            if request.user.es_admin_empresa:
+                empreses = request.user.empreses_admin.all()
+                centres = Centre.objects.filter(empreses__in=empreses)
+                kwargs["queryset"] = Cicle.objects.filter(centres__in=centres)
+            # si es admin_cicle pot posar l'etiqueta dels cicles del seu centre
+            elif request.user.es_admin_centre:
+                centres = request.user.centres_admin.all()
+                kwargs["queryset"] = Cicle.objects.filter(centres__in=centres)
         return super().formfield_for_foreignkey(db_field,request=request,**kwargs)
     def save_model(self,request,obj,form,change):
         # afegim l'usuari creador de la oferta
         obj.creador = request.user
         # afegim empresa de l'usuari d'empresa
-        empresa = request.user.centre
+        #if request.user.es_admin_empresa:
+        #    obj.empresa = request.user.empreses_admin.first()
         super().save_model(request,obj,form,change)
     def get_queryset(self,request):
-        # super ho veu tot
+        qs = super().get_queryset(request)
         if request.user.is_superuser:
-            return super().get_queryset(request)
-        # els admins centre veuen els seus
-        if request.user.es_admin_centre:
-            # TODO: acabar-ho
-            return super().get_queryset(request)
+            # super ho veu tot
+            return qs
+        elif request.user.es_admin_centre:
+            # els admins centre veuen les ofertes de les empreses adscrites
+            centres = request.user.centres_admin.all()
+            empreses = Empresa.objects.filter(adscripcio__in=centres)
+            return qs.filter(empresa__in=empreses)
+        elif request.user.es_admin_empresa:
+            # les empreses veuen les seves ofertes
+            return qs.filter(empresa__in=request.user.empreses_admin.all())
         # la resta (alumnes) veuen només els que estan subscrits
         subs = Subscripcio.objects.filter(alumne=request.user)
         # filtrem nomes per cicles de moemnt

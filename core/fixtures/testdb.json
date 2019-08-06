@@ -38,21 +38,14 @@
     "model": "contenttypes.contenttype",
     "fields": {
         "app_label": "core",
+        "model": "user"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "core",
         "model": "categoria"
-    }
-},
-{
-    "model": "contenttypes.contenttype",
-    "fields": {
-        "app_label": "core",
-        "model": "unitatformativa"
-    }
-},
-{
-    "model": "contenttypes.contenttype",
-    "fields": {
-        "app_label": "core",
-        "model": "modulprofessional"
     }
 },
 {
@@ -66,14 +59,35 @@
     "model": "contenttypes.contenttype",
     "fields": {
         "app_label": "core",
-        "model": "user"
+        "model": "centre"
     }
 },
 {
     "model": "contenttypes.contenttype",
     "fields": {
         "app_label": "core",
-        "model": "centre"
+        "model": "modulprofessional"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "core",
+        "model": "unitatformativa"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "borsApp",
+        "model": "empresa"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "borsApp",
+        "model": "titol"
     }
 },
 {
@@ -94,14 +108,14 @@
     "model": "contenttypes.contenttype",
     "fields": {
         "app_label": "borsApp",
-        "model": "titol"
+        "model": "demandes"
     }
 },
 {
     "model": "contenttypes.contenttype",
     "fields": {
-        "app_label": "borsApp",
-        "model": "demandes"
+        "app_label": "scrum",
+        "model": "projecte"
     }
 },
 {
@@ -115,7 +129,7 @@
     "model": "contenttypes.contenttype",
     "fields": {
         "app_label": "scrum",
-        "model": "donespec"
+        "model": "spec"
     }
 },
 {
@@ -136,28 +150,7 @@
     "model": "contenttypes.contenttype",
     "fields": {
         "app_label": "scrum",
-        "model": "spec"
-    }
-},
-{
-    "model": "contenttypes.contenttype",
-    "fields": {
-        "app_label": "scrum",
-        "model": "projecte"
-    }
-},
-{
-    "model": "contenttypes.contenttype",
-    "fields": {
-        "app_label": "social_django",
-        "model": "nonce"
-    }
-},
-{
-    "model": "contenttypes.contenttype",
-    "fields": {
-        "app_label": "social_django",
-        "model": "partial"
+        "model": "donespec"
     }
 },
 {
@@ -165,6 +158,13 @@
     "fields": {
         "app_label": "social_django",
         "model": "usersocialauth"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "social_django",
+        "model": "nonce"
     }
 },
 {
@@ -184,8 +184,8 @@
 {
     "model": "contenttypes.contenttype",
     "fields": {
-        "app_label": "borsApp",
-        "model": "empresa"
+        "app_label": "social_django",
+        "model": "partial"
     }
 },
 {
@@ -4716,6 +4716,50 @@
 {
     "model": "auth.permission",
     "fields": {
+        "name": "Can add user",
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "codename": "add_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change user",
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "codename": "change_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete user",
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "codename": "delete_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view user",
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "codename": "view_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
         "name": "Can add categoria",
         "content_type": [
             "core",
@@ -4755,94 +4799,6 @@
             "categoria"
         ],
         "codename": "view_categoria"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can add unitat formativa",
-        "content_type": [
-            "core",
-            "unitatformativa"
-        ],
-        "codename": "add_unitatformativa"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change unitat formativa",
-        "content_type": [
-            "core",
-            "unitatformativa"
-        ],
-        "codename": "change_unitatformativa"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete unitat formativa",
-        "content_type": [
-            "core",
-            "unitatformativa"
-        ],
-        "codename": "delete_unitatformativa"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view unitat formativa",
-        "content_type": [
-            "core",
-            "unitatformativa"
-        ],
-        "codename": "view_unitatformativa"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can add modul professional",
-        "content_type": [
-            "core",
-            "modulprofessional"
-        ],
-        "codename": "add_modulprofessional"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change modul professional",
-        "content_type": [
-            "core",
-            "modulprofessional"
-        ],
-        "codename": "change_modulprofessional"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete modul professional",
-        "content_type": [
-            "core",
-            "modulprofessional"
-        ],
-        "codename": "delete_modulprofessional"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view modul professional",
-        "content_type": [
-            "core",
-            "modulprofessional"
-        ],
-        "codename": "view_modulprofessional"
     }
 },
 {
@@ -4892,50 +4848,6 @@
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can add user",
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "codename": "add_user"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change user",
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "codename": "change_user"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete user",
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "codename": "delete_user"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view user",
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "codename": "view_user"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
         "name": "Can add centre",
         "content_type": [
             "core",
@@ -4975,6 +4887,182 @@
             "centre"
         ],
         "codename": "view_centre"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add modul professional",
+        "content_type": [
+            "core",
+            "modulprofessional"
+        ],
+        "codename": "add_modulprofessional"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change modul professional",
+        "content_type": [
+            "core",
+            "modulprofessional"
+        ],
+        "codename": "change_modulprofessional"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete modul professional",
+        "content_type": [
+            "core",
+            "modulprofessional"
+        ],
+        "codename": "delete_modulprofessional"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view modul professional",
+        "content_type": [
+            "core",
+            "modulprofessional"
+        ],
+        "codename": "view_modulprofessional"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add unitat formativa",
+        "content_type": [
+            "core",
+            "unitatformativa"
+        ],
+        "codename": "add_unitatformativa"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change unitat formativa",
+        "content_type": [
+            "core",
+            "unitatformativa"
+        ],
+        "codename": "change_unitatformativa"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete unitat formativa",
+        "content_type": [
+            "core",
+            "unitatformativa"
+        ],
+        "codename": "delete_unitatformativa"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view unitat formativa",
+        "content_type": [
+            "core",
+            "unitatformativa"
+        ],
+        "codename": "view_unitatformativa"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add empresa",
+        "content_type": [
+            "borsApp",
+            "empresa"
+        ],
+        "codename": "add_empresa"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change empresa",
+        "content_type": [
+            "borsApp",
+            "empresa"
+        ],
+        "codename": "change_empresa"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete empresa",
+        "content_type": [
+            "borsApp",
+            "empresa"
+        ],
+        "codename": "delete_empresa"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view empresa",
+        "content_type": [
+            "borsApp",
+            "empresa"
+        ],
+        "codename": "view_empresa"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add titol",
+        "content_type": [
+            "borsApp",
+            "titol"
+        ],
+        "codename": "add_titol"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change titol",
+        "content_type": [
+            "borsApp",
+            "titol"
+        ],
+        "codename": "change_titol"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete titol",
+        "content_type": [
+            "borsApp",
+            "titol"
+        ],
+        "codename": "delete_titol"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view titol",
+        "content_type": [
+            "borsApp",
+            "titol"
+        ],
+        "codename": "view_titol"
     }
 },
 {
@@ -5068,50 +5156,6 @@
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can add titol",
-        "content_type": [
-            "borsApp",
-            "titol"
-        ],
-        "codename": "add_titol"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change titol",
-        "content_type": [
-            "borsApp",
-            "titol"
-        ],
-        "codename": "change_titol"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete titol",
-        "content_type": [
-            "borsApp",
-            "titol"
-        ],
-        "codename": "delete_titol"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view titol",
-        "content_type": [
-            "borsApp",
-            "titol"
-        ],
-        "codename": "view_titol"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
         "name": "Can add demandes",
         "content_type": [
             "borsApp",
@@ -5151,6 +5195,50 @@
             "demandes"
         ],
         "codename": "view_demandes"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add projecte",
+        "content_type": [
+            "scrum",
+            "projecte"
+        ],
+        "codename": "add_projecte"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change projecte",
+        "content_type": [
+            "scrum",
+            "projecte"
+        ],
+        "codename": "change_projecte"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete projecte",
+        "content_type": [
+            "scrum",
+            "projecte"
+        ],
+        "codename": "delete_projecte"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view projecte",
+        "content_type": [
+            "scrum",
+            "projecte"
+        ],
+        "codename": "view_projecte"
     }
 },
 {
@@ -5200,45 +5288,45 @@
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can add done spec",
+        "name": "Can add spec",
         "content_type": [
             "scrum",
-            "donespec"
+            "spec"
         ],
-        "codename": "add_donespec"
+        "codename": "add_spec"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can change done spec",
+        "name": "Can change spec",
         "content_type": [
             "scrum",
-            "donespec"
+            "spec"
         ],
-        "codename": "change_donespec"
+        "codename": "change_spec"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can delete done spec",
+        "name": "Can delete spec",
         "content_type": [
             "scrum",
-            "donespec"
+            "spec"
         ],
-        "codename": "delete_donespec"
+        "codename": "delete_spec"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can view done spec",
+        "name": "Can view spec",
         "content_type": [
             "scrum",
-            "donespec"
+            "spec"
         ],
-        "codename": "view_donespec"
+        "codename": "view_spec"
     }
 },
 {
@@ -5332,177 +5420,45 @@
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can add spec",
+        "name": "Can add done spec",
         "content_type": [
             "scrum",
-            "spec"
+            "donespec"
         ],
-        "codename": "add_spec"
+        "codename": "add_donespec"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can change spec",
+        "name": "Can change done spec",
         "content_type": [
             "scrum",
-            "spec"
+            "donespec"
         ],
-        "codename": "change_spec"
+        "codename": "change_donespec"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can delete spec",
+        "name": "Can delete done spec",
         "content_type": [
             "scrum",
-            "spec"
+            "donespec"
         ],
-        "codename": "delete_spec"
+        "codename": "delete_donespec"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can view spec",
+        "name": "Can view done spec",
         "content_type": [
             "scrum",
-            "spec"
+            "donespec"
         ],
-        "codename": "view_spec"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can add projecte",
-        "content_type": [
-            "scrum",
-            "projecte"
-        ],
-        "codename": "add_projecte"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change projecte",
-        "content_type": [
-            "scrum",
-            "projecte"
-        ],
-        "codename": "change_projecte"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete projecte",
-        "content_type": [
-            "scrum",
-            "projecte"
-        ],
-        "codename": "delete_projecte"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view projecte",
-        "content_type": [
-            "scrum",
-            "projecte"
-        ],
-        "codename": "view_projecte"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can add nonce",
-        "content_type": [
-            "social_django",
-            "nonce"
-        ],
-        "codename": "add_nonce"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change nonce",
-        "content_type": [
-            "social_django",
-            "nonce"
-        ],
-        "codename": "change_nonce"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete nonce",
-        "content_type": [
-            "social_django",
-            "nonce"
-        ],
-        "codename": "delete_nonce"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view nonce",
-        "content_type": [
-            "social_django",
-            "nonce"
-        ],
-        "codename": "view_nonce"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can add partial",
-        "content_type": [
-            "social_django",
-            "partial"
-        ],
-        "codename": "add_partial"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change partial",
-        "content_type": [
-            "social_django",
-            "partial"
-        ],
-        "codename": "change_partial"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete partial",
-        "content_type": [
-            "social_django",
-            "partial"
-        ],
-        "codename": "delete_partial"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view partial",
-        "content_type": [
-            "social_django",
-            "partial"
-        ],
-        "codename": "view_partial"
+        "codename": "view_donespec"
     }
 },
 {
@@ -5547,6 +5503,50 @@
             "usersocialauth"
         ],
         "codename": "view_usersocialauth"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add nonce",
+        "content_type": [
+            "social_django",
+            "nonce"
+        ],
+        "codename": "add_nonce"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change nonce",
+        "content_type": [
+            "social_django",
+            "nonce"
+        ],
+        "codename": "change_nonce"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete nonce",
+        "content_type": [
+            "social_django",
+            "nonce"
+        ],
+        "codename": "delete_nonce"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view nonce",
+        "content_type": [
+            "social_django",
+            "nonce"
+        ],
+        "codename": "view_nonce"
     }
 },
 {
@@ -5640,45 +5640,45 @@
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can add empresa",
+        "name": "Can add partial",
         "content_type": [
-            "borsApp",
-            "empresa"
+            "social_django",
+            "partial"
         ],
-        "codename": "add_empresa"
+        "codename": "add_partial"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can change empresa",
+        "name": "Can change partial",
         "content_type": [
-            "borsApp",
-            "empresa"
+            "social_django",
+            "partial"
         ],
-        "codename": "change_empresa"
+        "codename": "change_partial"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can delete empresa",
+        "name": "Can delete partial",
         "content_type": [
-            "borsApp",
-            "empresa"
+            "social_django",
+            "partial"
         ],
-        "codename": "delete_empresa"
+        "codename": "delete_partial"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can view empresa",
+        "name": "Can view partial",
         "content_type": [
-            "borsApp",
-            "empresa"
+            "social_django",
+            "partial"
         ],
-        "codename": "view_empresa"
+        "codename": "view_partial"
     }
 },
 {
@@ -5686,6 +5686,11 @@
     "fields": {
         "name": "profes",
         "permissions": [
+            [
+                "view_user",
+                "core",
+                "user"
+            ],
             [
                 "add_donespec",
                 "scrum",
@@ -6097,7 +6102,7 @@
     "model": "core.user",
     "fields": {
         "password": "pbkdf2_sha256$120000$JBwzplDFqglJ$RDQurcUMV0ag4yWkhEy+a8ncb/UZYmNCbUZtc9xnn3A=",
-        "last_login": "2019-08-05T12:10:50.168Z",
+        "last_login": "2019-08-06T19:12:45.790Z",
         "is_superuser": true,
         "username": "admin",
         "first_name": "Enric",
@@ -6178,7 +6183,7 @@
         "telefon": 1,
         "email": "a8016781@xtec.cat",
         "web": "",
-        "localitzacio": "SRID=4326;POINT (2.076832383 41.35630722299996)",
+        "localitzacio": "SRID=4326;POINT (2.076832382999993 41.35630722299994)",
         "descripcio": "",
         "imatge": "",
         "admins": [
@@ -6186,7 +6191,17 @@
                 "admin1"
             ]
         ],
-        "cicles": []
+        "cicles": [
+            13,
+            37,
+            59,
+            68,
+            69,
+            74,
+            86,
+            130,
+            153
+        ]
     }
 },
 {
@@ -6254,7 +6269,7 @@
         "telefon": 1,
         "email": "b7001735@xtec.cat",
         "web": "",
-        "localitzacio": "SRID=4326;POINT (2.826970420999997 41.96438907699999)",
+        "localitzacio": "SRID=4326;POINT (2.826970421000003 41.96438907699998)",
         "descripcio": "",
         "imatge": "",
         "admins": [
@@ -6262,7 +6277,10 @@
                 "admin2"
             ]
         ],
-        "cicles": []
+        "cicles": [
+            68,
+            117
+        ]
     }
 },
 {
@@ -6292,7 +6310,7 @@
         ],
         "provider": "google-oauth2",
         "uid": "enric.mieza@gmail.com",
-        "extra_data": "{\"expires\": 3600, \"auth_time\": 1564007335, \"access_token\": \"ya29.GltQB6__g9wLOtDGrZvb5pWeMEoa0wdBkO_y-0PqIXVG9UzNWVx-n8IZ8tr0dF5wYwTVFAsk_NVz4eR4T-ZCRqlOrSIcDezsuPNr29KWteTrH62onpwZIZ5LA4rv\", \"token_type\": \"Bearer\"}"
+        "extra_data": "{\"token_type\": \"Bearer\", \"auth_time\": 1564007335, \"expires\": 3600, \"access_token\": \"ya29.GltQB6__g9wLOtDGrZvb5pWeMEoa0wdBkO_y-0PqIXVG9UzNWVx-n8IZ8tr0dF5wYwTVFAsk_NVz4eR4T-ZCRqlOrSIcDezsuPNr29KWteTrH62onpwZIZ5LA4rv\"}"
     }
 },
 {
@@ -18425,6 +18443,60 @@
         "object_repr": "profe22",
         "action_flag": 3,
         "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 675,
+    "fields": {
+        "action_time": "2019-08-06T19:14:16.462Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "object_id": "1",
+        "object_repr": "profes",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"permissions\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 676,
+    "fields": {
+        "action_time": "2019-08-06T19:16:24.824Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "centre"
+        ],
+        "object_id": "4850",
+        "object_repr": "Institut Esteve Terradas i Illa",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"cicles\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 677,
+    "fields": {
+        "action_time": "2019-08-06T19:17:03.336Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "centre"
+        ],
+        "object_id": "5228",
+        "object_repr": "Institut Montilivi",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"cicles\"]}}]"
     }
 }
 ]
