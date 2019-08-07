@@ -9,6 +9,9 @@ class Command(BaseCommand):
         subject = 'Hola esto es una prueba para la demo'
         message = 'No respondas a este correo'
         email_from = settings.EMAIL_HOST_USER
-        recipient_list = ['rgarciapaules@iesesteveterradas.cat',]
+        recipient_list = ['emieza@xtec.cat',]
 
-        send_mail( subject, message, email_from, recipient_list )
+        nok = send_mail( subject, message, email_from, recipient_list )
+
+        print("Enviats %i emails"%(nok))
+

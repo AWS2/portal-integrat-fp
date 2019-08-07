@@ -129,7 +129,6 @@ class Tests():
 # tests
 tests = Tests()
 
-"""
 # creem empresa11 (admin1)
 tests.backend_login("admin1","enric123")
 tests.crea_empresa("empresa11")
@@ -140,7 +139,7 @@ tests.backend_login("admin2","enric123")
 tests.crea_empresa("empresa21")
 tests.ajusta_usuari_empresa("empresa21","enric123")
 tests.backend_logout()
-"""
+
 
 # empresa1
 tests.backend_login("empresa11","enric123")
@@ -151,13 +150,13 @@ tests.backend_logout()
 tests.backend_login("admin2","enric123")
 tests.no_veu_oferta_caducada1()
 tests.backend_logout()
-# alumne21
-tests.backend_login("alumne21","enric123")
-tests.no_veu_oferta_caducada1()
-tests.backend_logout()
 # empresa2
 tests.backend_login("empresa21","enric123")
 tests.no_veu_oferta_caducada1()
 tests.backend_logout()
 tests.selenium.close()
+# alumne21
+tests.backend_login("alumne21","enric123")
+tests.no_veu_oferta_caducada1()
+tests.backend_logout()
 

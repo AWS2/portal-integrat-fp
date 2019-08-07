@@ -149,6 +149,8 @@ class SubscripcioInline(admin.StackedInline):
     #form = SubscripcioForm
     extra = 1
 
+from datetime import datetime
+
 #OfertaForm = select2_modelform(Oferta)
 class OfertaAdmin(admin.ModelAdmin):
     model = Oferta
@@ -195,6 +197,7 @@ class OfertaAdmin(admin.ModelAdmin):
         #    obj.empresa = request.user.empreses_admin.first()
         super().save_model(request,obj,form,change)
     def get_queryset(self,request):
+        # Queryset Ofertes
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             # super ho veu tot
@@ -207,20 +210,37 @@ class OfertaAdmin(admin.ModelAdmin):
         elif request.user.es_admin_empresa:
             # les empreses veuen les seves ofertes
             return qs.filter(empresa__in=request.user.empreses_admin.all())
-        # la resta (alumnes) veuen només els que estan subscrits
+
+        # la resta (ALUMNES) veuen només els que estan subscrits
         subs = Subscripcio.objects.filter(alumne=request.user)
         # filtrem nomes per cicles de moemnt
-        # TODO: acabar-ho (afegir filtratge per centre?)
         cicles = []
         for sub in subs.all():
             for cicle in sub.cicles.all():
-                cicles.append(cicle.id) 
-        qs = super().get_queryset(request).filter(cicles__in=cicles,activa=True)
+                cicles.append(cicle.id)
+        # TODO:(revisar, eliminar) només de les empreses que estan adscrites al centre de l'alumne
+        # TODO: distància en km...
+        empreses = Empresa.objects.filter(adscripcio__in=[request.user.centre,])
+        qs = super().get_queryset(request).filter(
+                            cicles__in=cicles,           # cicles subscrits
+                            activa=True,
+                            empresa__in=empreses,        # empreses adscrites TODO: segur?/eliminar?
+                            final__gte=datetime.today(), # eliminem les caducades
+                        )
         return qs
+
+
+class NotificacioAdmin(admin.ModelAdmin):
+    list_display = ('oferta','data_oferta','usuari','email','enviament','confirmacio')
+    readonly_fields = ('oferta','data_oferta','usuari','email','enviament','confirmacio','registre')
+    ordering = ('-enviament',)
+    def data_oferta(self,obj):
+        return obj.oferta.inici
 
 
 admin.site.register( Empresa, EmpresaAdmin )
 admin.site.register( Titol, TitolAdmin )
 admin.site.register( Subscripcio, SubscripcioAdmin )
 admin.site.register( Oferta, OfertaAdmin )
+admin.site.register( Notificacio, NotificacioAdmin )
 
