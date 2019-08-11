@@ -11,6 +11,11 @@
   <link href="/static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   {{ form.media.css }}
   <style>
+  /* fix problem with materialize overlay */
+  .navbar-fixed {
+   z-index: 999; 
+  }
+  
   {% block extra_css %}
   {% endblock %}
   </style>

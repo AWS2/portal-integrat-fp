@@ -118,24 +118,24 @@ DATABASES = {
     #    'ENGINE': 'django.db.backends.sqlite3',
     #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     #},
-    'mysql': { # mysql
-        'ENGINE': 'django.contrib.gis.db.backends.mysql',
-        #'ENGINE': 'django.db.backends.mysql',
-        #'ENGINE': 'mysql.connector.django', # MySQL 8 (problemes amb GIS)
-        'NAME': settings2.DB_NAME,
-        'USER': settings2.DB_USER,
-        'PASSWORD': settings2.DB_PASS,
-        'HOST': settings2.DB_HOST or "localhost",
-        'PORT': settings2.DB_PORT or 3306,
-    },
-    #'postgre': {
-    #    'ENGINE': 'django.contrib.gis.db.backends.postgis',
+    #'mysql': { # mysql
+    #    'ENGINE': 'django.contrib.gis.db.backends.mysql',
+    #    #'ENGINE': 'django.db.backends.mysql',
+    #    #'ENGINE': 'mysql.connector.django', # MySQL 8 (problemes amb GIS)
     #    'NAME': settings2.DB_NAME,
-    #    'USER': 'user001',
-    #    'PASSWORD': '123456789',
-    #    'HOST': settings2.DB_HOST or 'localhost',
-    #    'PORT': settings2.DB_PORT or 5432,
+    #    'USER': settings2.DB_USER,
+    #    'PASSWORD': settings2.DB_PASS,
+    #    'HOST': settings2.DB_HOST or "localhost",
+    #    'PORT': settings2.DB_PORT or 3306,
     #},
+    'postgre': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': settings2.DB_NAME,
+        'USER': 'user001',
+        'PASSWORD': '123456789',
+        'HOST': settings2.DB_HOST or 'localhost',
+        'PORT': settings2.DB_PORT or 5432,
+    },
 }
 
 DATABASES["default"] = DATABASES[settings2.DB_TYPE]
@@ -204,11 +204,16 @@ EMAIL_USE_SSL = settings2.EMAIL_USE_SSL
 
 
 SOCIAL_AUTH_URL_NAMESPACE = settings2.SOCIAL_AUTH_URL_NAMESPACE
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = settings2.SOCIAL_AUTH_LOGIN_REDIRECT_URL
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY =  settings2.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = settings2.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = settings2.SOCIAL_AUTH_LOGIN_REDIRECT_URL
+# Microsoft no present en aquest plugin
+#SOCIAL_AUTH_MICROSOFT_OAUTH2_KEY =  settings2.SOCIAL_AUTH_MICROSOFT_OAUTH2_KEY
+#SOCIAL_AUTH_MICROSOFT_OAUTH2_SECRET = settings2.SOCIAL_AUTH_MICROSOFT_OAUTH2_SECRET
 
-SOCIAL_AUTH_WHITELISTED_EMAILS = ['enric.mieza@gmail.com',]
+
+#no fem servir aquest plugin
+#SOCIAL_AUTH_WHITELISTED_EMAILS = ['enric.mieza@gmail.com',]
 
 
 # Ajustos per accelerar testing
