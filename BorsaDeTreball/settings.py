@@ -28,16 +28,22 @@ SECRET_KEY = 'o(#%baw0jmayi2szr^gww5d09#aalru258l7^tkn)g+=(w3nhr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # plugins
     #'BorsaDeTreball.apps.MyAdminConfig', 
+    #'test_without_migrations',
     'easy_select2',
+    'djrichtextfield',
+    'social_django',
+    'adminsortable2',
     'django_select2',
     'django_admin_select2',
+    # django core
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,13 +51,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    # apps
     'core',
     'borsApp',
     'scrum',
-    'djrichtextfield',
-    'social_django',
-    'adminsortable2',
-    #'test_without_migrations',
 ]
 # OAuth -> 
 AUTHENTICATION_BACKENDS = (
@@ -91,7 +94,7 @@ ROOT_URLCONF = 'BorsaDeTreball.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

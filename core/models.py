@@ -43,7 +43,6 @@ class User(AbstractUser):
 		if self.centres_admin.count() > 0:
 			return True
 		return False
-
 	@property
 	def es_admin_empresa(self):
 		if self.empreses_admin.count() > 0:

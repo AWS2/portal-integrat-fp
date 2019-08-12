@@ -1,5 +1,5 @@
   <ul id="dropdown1" class="dropdown-content">
-    <li><a href="#"><i class="material-icons left">settings</i>Config</a></li>
+    <li><a href="/perfil"><i class="material-icons left">settings</i>Perfil</a></li>
     <li><a href="/logout"><i class="material-icons left">open_in_new</i>Surt</a></li>
   </ul>
 
@@ -19,7 +19,7 @@
   <nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container">
       <a id="logo-container" href="#" class="brand-logo">
-        <img src="/static/img/logo1.jpgx" />
+        <img src="/static/img/logo1.jpg" style="height:2.1em;"/>
       </a>
       <ul class="right hide-on-med-and-down fixed">
         {% if request.user.is_anonymous %}
@@ -37,10 +37,10 @@
                 {{request.user.first_name}} {{request.user.last_name}}
                 <i class="material-icons right">arrow_drop_down</i></a>
             </li>
-            <li><a href="/admin/borsApp">Borsa de Treball</a></li>
+            <li><a href="/admin/borsApp"><i class="material-icons left">work</i>Borsa de Treball</a></li>
 
             {% if request.user.is_staff %}
-            <li><a href="admin/scrum">Scrum / ABP</a></li>
+            <li><a href="admin/scrum"><i class="material-icons left">view_list</i>Scrum / ABP</a></li>
             {% endif %}
 
             {% if request.user.es_admin_centre %}
@@ -76,7 +76,8 @@
         <li>
           <div class="user-view">
             <div class="background">
-              <img src="/static/img/sidenav2.svg">
+              <!--img src="/static/img/sidenav2.svg"-->
+              <img style="width:100%;" src="/media/{{request.user.imatge}}">
             </div>
             <a href="#"><img class="circle" src="/static/img/user1.png"></a>
             <a href="#"><span class="white-text name">{{request.user.first_name}} {{request.user.last_name}}</span></a>
@@ -84,7 +85,7 @@
           </div>
         </li>
         <li><a href="/logout"><i class="material-icons">open_in_new</i>Surt</a></li>
-        <li><a href="#"><i class="material-icons">settings</i>Ajustaments</a></li>
+        <li><a href="/perfil"><i class="material-icons">settings</i>Perfil</a></li>
         <li><a href="/admin/borsApp"><i class="material-icons">work</i>Borsa de Treball</a></li>
           {% if request.user.is_staff %}
           <li><a href="admin/scrum"><i class="material-icons">view_list</i>Scrum / ABP</a></li>
