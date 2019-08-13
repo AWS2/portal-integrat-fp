@@ -254,3 +254,10 @@ class BorsaTests(StaticLiveServerTestCase):
         # els alumnes d'altres cicles NO veuen les ofertes
         pass
 
+"""Afegir
+- admins centre afegint alumne al frontend, tb té titol
+- admins no veuen titols creuats
+- alumnes no veuen titols creuats
+- 
+
+"""

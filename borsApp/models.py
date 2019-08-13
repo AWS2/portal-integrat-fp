@@ -101,6 +101,7 @@ class Notificacio(models.Model):
     """
     class Meta:
         unique_together = (('oferta','usuari'),)
+        verbose_name_plural = "Notificacions"
     oferta = models.ForeignKey(Oferta,on_delete=models.CASCADE)
     usuari = models.ForeignKey(User,on_delete=models.CASCADE)
     email = models.EmailField()

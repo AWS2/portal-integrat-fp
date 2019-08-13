@@ -54,7 +54,9 @@
         {% endblock %}
         {% block nav-global %}{% endblock %}
 
+        {% if request.user.imatge %}
         <img src="/media/{{request.user.imatge}}" style="width:5em;float:right;margin-top:-5px;" />
+        {% endif %}
     </div>
     <!-- END Header -->
     {% block breadcrumbs %}

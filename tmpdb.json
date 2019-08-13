@@ -52,14 +52,14 @@
     "model": "contenttypes.contenttype",
     "fields": {
         "app_label": "core",
-        "model": "cicle"
+        "model": "centre"
     }
 },
 {
     "model": "contenttypes.contenttype",
     "fields": {
         "app_label": "core",
-        "model": "centre"
+        "model": "cicle"
     }
 },
 {
@@ -80,21 +80,7 @@
     "model": "contenttypes.contenttype",
     "fields": {
         "app_label": "borsApp",
-        "model": "empresa"
-    }
-},
-{
-    "model": "contenttypes.contenttype",
-    "fields": {
-        "app_label": "borsApp",
-        "model": "titol"
-    }
-},
-{
-    "model": "contenttypes.contenttype",
-    "fields": {
-        "app_label": "borsApp",
-        "model": "subscripcio"
+        "model": "demandes"
     }
 },
 {
@@ -108,7 +94,28 @@
     "model": "contenttypes.contenttype",
     "fields": {
         "app_label": "borsApp",
-        "model": "demandes"
+        "model": "subscripcio"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "borsApp",
+        "model": "titol"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "scrum",
+        "model": "donespec"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "scrum",
+        "model": "equip"
     }
 },
 {
@@ -122,7 +129,7 @@
     "model": "contenttypes.contenttype",
     "fields": {
         "app_label": "scrum",
-        "model": "equip"
+        "model": "qualificacio"
     }
 },
 {
@@ -137,34 +144,6 @@
     "fields": {
         "app_label": "scrum",
         "model": "sprint"
-    }
-},
-{
-    "model": "contenttypes.contenttype",
-    "fields": {
-        "app_label": "scrum",
-        "model": "qualificacio"
-    }
-},
-{
-    "model": "contenttypes.contenttype",
-    "fields": {
-        "app_label": "scrum",
-        "model": "donespec"
-    }
-},
-{
-    "model": "contenttypes.contenttype",
-    "fields": {
-        "app_label": "social_django",
-        "model": "usersocialauth"
-    }
-},
-{
-    "model": "contenttypes.contenttype",
-    "fields": {
-        "app_label": "social_django",
-        "model": "nonce"
     }
 },
 {
@@ -185,47 +164,115 @@
     "model": "contenttypes.contenttype",
     "fields": {
         "app_label": "social_django",
+        "model": "nonce"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "social_django",
+        "model": "usersocialauth"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "social_django",
         "model": "partial"
     }
 },
 {
-    "model": "sessions.session",
-    "pk": "12psyl87wcb1dchahusoyjap9bx9kg4n",
+    "model": "contenttypes.contenttype",
     "fields": {
-        "session_data": "ZDNmMzA5MTA4OTNjYWVlZjk3OTc5YjdhZWI0NGQxNDJhZjQ1ZmU5ODp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjQiLCJfYXV0aF91c2VyX2hhc2giOiI4NDA4ZDAyYTMyZWI4OGUxOGQxNjkyMDI1NzVlMmY3MTg4ZWM3OGU1In0=",
-        "expire_date": "2019-08-19T16:39:38.623Z"
+        "app_label": "borsApp",
+        "model": "empresa"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "borsApp",
+        "model": "notificacio"
     }
 },
 {
     "model": "sessions.session",
-    "pk": "1m3yuvjtd1bs96cj7mye3b9pmv048o4z",
+    "pk": "1krkhnxao1e85w81q8xfrgcdxbliwxhp",
     "fields": {
-        "session_data": "MjgyZGVmZWZlOTk3NTY0MTc0NzNjMDI1ZmMzMzA4ZDgwYWVkMDlhYzp7Il9hdXRoX3VzZXJfaGFzaCI6IjFhMWI0OWFhN2M2YjM0ZGZiYTcxYzA1N2NiNWFlODJhNDAzMDU0Y2UiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=",
-        "expire_date": "2019-08-19T12:10:50.195Z"
+        "session_data": "ODliYmI5NjYyODllNjNmZDMzMTc0Y2Y4NGVmYTAyNjg0MGVmYmJmZDp7Il9hdXRoX3VzZXJfaWQiOiI1IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIwYzM1MTBjM2IyYzRmZDNkNDc4NDRhNTY2Y2JiMjhjOGNiYjc4MDUyIn0=",
+        "expire_date": "2019-08-26T21:06:41.765Z"
     }
 },
 {
     "model": "sessions.session",
-    "pk": "e4mw9g47z7o5kvl3zj09hsohsr4nh83v",
-    "fields": {
-        "session_data": "NDZiMDE1NTBiYjVjOGFlMTdmOTc4MjAxMWQzMDRkMGMzNWQ2ZjEzYzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9oYXNoIjoiMWExYjQ5YWE3YzZiMzRkZmJhNzFjMDU3Y2I1YWU4MmE0MDMwNTRjZSIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=",
-        "expire_date": "2019-08-21T00:10:20.886Z"
-    }
-},
-{
-    "model": "sessions.session",
-    "pk": "g1qlf8w34pn63ockgjlylq5t4ek7qpmh",
+    "pk": "4t404d19jtrg7pd4uefmojf4v9tkjpbe",
     "fields": {
         "session_data": "ZWVjNDg2OWRhYzY4Yjc3NTc4ZDc2YzY0NzRjOWJkZTdhNDU3MDNmYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxYTFiNDlhYTdjNmIzNGRmYmE3MWMwNTdjYjVhZTgyYTQwMzA1NGNlIn0=",
-        "expire_date": "2019-08-04T21:17:31.024Z"
+        "expire_date": "2019-08-06T11:01:27.731Z"
     }
 },
 {
     "model": "sessions.session",
-    "pk": "hl9kmed0obhfax927tm207c21zyzjqqu",
+    "pk": "8yn2bssakmi6dejw6c3ucqill6xxjrkf",
     "fields": {
-        "session_data": "MGRiOWM4MGVkODFkMGRmYzY5OTRkMDY3YWI1NmQ2NGZjNGExMGI3ZDp7Il9hdXRoX3VzZXJfaGFzaCI6IjI5Y2M5NmE5NDljYjJkODgyM2ExY2ZlMzU4NTY3YjU1Y2I3ZDQ1YmIiLCJfYXV0aF91c2VyX2lkIjoiNiIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=",
-        "expire_date": "2019-08-21T00:23:44.098Z"
+        "session_data": "ZWVjNDg2OWRhYzY4Yjc3NTc4ZDc2YzY0NzRjOWJkZTdhNDU3MDNmYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxYTFiNDlhYTdjNmIzNGRmYmE3MWMwNTdjYjVhZTgyYTQwMzA1NGNlIn0=",
+        "expire_date": "2019-08-22T12:47:51.404Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "c31qssc6ki2yqflu1pfbnuq5joxiebbi",
+    "fields": {
+        "session_data": "OTUyMDg1NWM5NjdiYTgyNGMzMGUyODg1MWJjN2FiZGQ3ZmIxOGRlYTp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI4NDA4ZDAyYTMyZWI4OGUxOGQxNjkyMDI1NzVlMmY3MTg4ZWM3OGU1In0=",
+        "expire_date": "2019-08-06T11:43:13.126Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "fhopxbp601qu3rksbafw5hv4m3tk7fyo",
+    "fields": {
+        "session_data": "OTUyMDg1NWM5NjdiYTgyNGMzMGUyODg1MWJjN2FiZGQ3ZmIxOGRlYTp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI4NDA4ZDAyYTMyZWI4OGUxOGQxNjkyMDI1NzVlMmY3MTg4ZWM3OGU1In0=",
+        "expire_date": "2019-08-27T15:31:38.190Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "jjp7xgqxqagcic1foe5ztwbhgpqho6jj",
+    "fields": {
+        "session_data": "NDNlZDU2MTI1MTU1NmM3NzAzMzlmZTRjZjBmNThiNjIwOTQ2Y2RmNDp7Imdvb2dsZS1vYXV0aDJfc3RhdGUiOiI0WGVibldKZ0szRTdXa01oZUhhYldTZXpJNUNQU3NSaCIsIl9hdXRoX3VzZXJfaWQiOiIyMiIsIl9hdXRoX3VzZXJfYmFja2VuZCI6InNvY2lhbF9jb3JlLmJhY2tlbmRzLmdvb2dsZS5Hb29nbGVPQXV0aDIiLCJfYXV0aF91c2VyX2hhc2giOiJhMWRlMjM0MWQwYzZhMzZmODQyMjFhMDY5MjRjN2MxN2RkNjY2YTEwIiwic29jaWFsX2F1dGhfbGFzdF9sb2dpbl9iYWNrZW5kIjoiZ29vZ2xlLW9hdXRoMiJ9",
+        "expire_date": "2019-08-27T15:30:41.736Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "o9v8gf6tdhzzk27hi51b5hz1l6oua6r5",
+    "fields": {
+        "session_data": "ZWVjNDg2OWRhYzY4Yjc3NTc4ZDc2YzY0NzRjOWJkZTdhNDU3MDNmYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxYTFiNDlhYTdjNmIzNGRmYmE3MWMwNTdjYjVhZTgyYTQwMzA1NGNlIn0=",
+        "expire_date": "2019-08-05T11:19:05.771Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "vmqjmz99l3zniphqodiz22lblzryfgf3",
+    "fields": {
+        "session_data": "OTUyMDg1NWM5NjdiYTgyNGMzMGUyODg1MWJjN2FiZGQ3ZmIxOGRlYTp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI4NDA4ZDAyYTMyZWI4OGUxOGQxNjkyMDI1NzVlMmY3MTg4ZWM3OGU1In0=",
+        "expire_date": "2019-08-04T23:14:01.506Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "xnwoyetud5xxastsdig2t6zx76oz1jef",
+    "fields": {
+        "session_data": "ZWVjNDg2OWRhYzY4Yjc3NTc4ZDc2YzY0NzRjOWJkZTdhNDU3MDNmYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxYTFiNDlhYTdjNmIzNGRmYmE3MWMwNTdjYjVhZTgyYTQwMzA1NGNlIn0=",
+        "expire_date": "2019-08-05T21:14:18.554Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "yd9cjr7egtlddi7dq7bybrq4k1kvziqx",
+    "fields": {
+        "session_data": "Y2MzNGU0ZGVmZWM2MjI0YjAwZGRlMTY3ODE5OGJiZGEyOGNhOTZhNDp7Imdvb2dsZS1vYXV0aDJfc3RhdGUiOiJFMUlOak1uelRjOVpreFRiMXhPZFlvNkpSSWR0OVl4SCJ9",
+        "expire_date": "2019-08-26T11:40:55.165Z"
     }
 },
 {
@@ -4820,50 +4867,6 @@
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can add cicle",
-        "content_type": [
-            "core",
-            "cicle"
-        ],
-        "codename": "add_cicle"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change cicle",
-        "content_type": [
-            "core",
-            "cicle"
-        ],
-        "codename": "change_cicle"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete cicle",
-        "content_type": [
-            "core",
-            "cicle"
-        ],
-        "codename": "delete_cicle"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view cicle",
-        "content_type": [
-            "core",
-            "cicle"
-        ],
-        "codename": "view_cicle"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
         "name": "Can add centre",
         "content_type": [
             "core",
@@ -4903,6 +4906,50 @@
             "centre"
         ],
         "codename": "view_centre"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add cicle",
+        "content_type": [
+            "core",
+            "cicle"
+        ],
+        "codename": "add_cicle"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change cicle",
+        "content_type": [
+            "core",
+            "cicle"
+        ],
+        "codename": "change_cicle"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete cicle",
+        "content_type": [
+            "core",
+            "cicle"
+        ],
+        "codename": "delete_cicle"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view cicle",
+        "content_type": [
+            "core",
+            "cicle"
+        ],
+        "codename": "view_cicle"
     }
 },
 {
@@ -4996,133 +5043,45 @@
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can add empresa",
+        "name": "Can add demandes",
         "content_type": [
             "borsApp",
-            "empresa"
+            "demandes"
         ],
-        "codename": "add_empresa"
+        "codename": "add_demandes"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can change empresa",
+        "name": "Can change demandes",
         "content_type": [
             "borsApp",
-            "empresa"
+            "demandes"
         ],
-        "codename": "change_empresa"
+        "codename": "change_demandes"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can delete empresa",
+        "name": "Can delete demandes",
         "content_type": [
             "borsApp",
-            "empresa"
+            "demandes"
         ],
-        "codename": "delete_empresa"
+        "codename": "delete_demandes"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can view empresa",
+        "name": "Can view demandes",
         "content_type": [
             "borsApp",
-            "empresa"
+            "demandes"
         ],
-        "codename": "view_empresa"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can add titol",
-        "content_type": [
-            "borsApp",
-            "titol"
-        ],
-        "codename": "add_titol"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change titol",
-        "content_type": [
-            "borsApp",
-            "titol"
-        ],
-        "codename": "change_titol"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete titol",
-        "content_type": [
-            "borsApp",
-            "titol"
-        ],
-        "codename": "delete_titol"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view titol",
-        "content_type": [
-            "borsApp",
-            "titol"
-        ],
-        "codename": "view_titol"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can add subscripcio",
-        "content_type": [
-            "borsApp",
-            "subscripcio"
-        ],
-        "codename": "add_subscripcio"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change subscripcio",
-        "content_type": [
-            "borsApp",
-            "subscripcio"
-        ],
-        "codename": "change_subscripcio"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete subscripcio",
-        "content_type": [
-            "borsApp",
-            "subscripcio"
-        ],
-        "codename": "delete_subscripcio"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view subscripcio",
-        "content_type": [
-            "borsApp",
-            "subscripcio"
-        ],
-        "codename": "view_subscripcio"
+        "codename": "view_demandes"
     }
 },
 {
@@ -5172,45 +5131,177 @@
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can add demandes",
+        "name": "Can add subscripcio",
         "content_type": [
             "borsApp",
-            "demandes"
+            "subscripcio"
         ],
-        "codename": "add_demandes"
+        "codename": "add_subscripcio"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can change demandes",
+        "name": "Can change subscripcio",
         "content_type": [
             "borsApp",
-            "demandes"
+            "subscripcio"
         ],
-        "codename": "change_demandes"
+        "codename": "change_subscripcio"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can delete demandes",
+        "name": "Can delete subscripcio",
         "content_type": [
             "borsApp",
-            "demandes"
+            "subscripcio"
         ],
-        "codename": "delete_demandes"
+        "codename": "delete_subscripcio"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can view demandes",
+        "name": "Can view subscripcio",
         "content_type": [
             "borsApp",
-            "demandes"
+            "subscripcio"
         ],
-        "codename": "view_demandes"
+        "codename": "view_subscripcio"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add titol",
+        "content_type": [
+            "borsApp",
+            "titol"
+        ],
+        "codename": "add_titol"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change titol",
+        "content_type": [
+            "borsApp",
+            "titol"
+        ],
+        "codename": "change_titol"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete titol",
+        "content_type": [
+            "borsApp",
+            "titol"
+        ],
+        "codename": "delete_titol"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view titol",
+        "content_type": [
+            "borsApp",
+            "titol"
+        ],
+        "codename": "view_titol"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add done spec",
+        "content_type": [
+            "scrum",
+            "donespec"
+        ],
+        "codename": "add_donespec"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change done spec",
+        "content_type": [
+            "scrum",
+            "donespec"
+        ],
+        "codename": "change_donespec"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete done spec",
+        "content_type": [
+            "scrum",
+            "donespec"
+        ],
+        "codename": "delete_donespec"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view done spec",
+        "content_type": [
+            "scrum",
+            "donespec"
+        ],
+        "codename": "view_donespec"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add equip",
+        "content_type": [
+            "scrum",
+            "equip"
+        ],
+        "codename": "add_equip"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change equip",
+        "content_type": [
+            "scrum",
+            "equip"
+        ],
+        "codename": "change_equip"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete equip",
+        "content_type": [
+            "scrum",
+            "equip"
+        ],
+        "codename": "delete_equip"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view equip",
+        "content_type": [
+            "scrum",
+            "equip"
+        ],
+        "codename": "view_equip"
     }
 },
 {
@@ -5260,45 +5351,45 @@
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can add equip",
+        "name": "Can add qualificacio",
         "content_type": [
             "scrum",
-            "equip"
+            "qualificacio"
         ],
-        "codename": "add_equip"
+        "codename": "add_qualificacio"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can change equip",
+        "name": "Can change qualificacio",
         "content_type": [
             "scrum",
-            "equip"
+            "qualificacio"
         ],
-        "codename": "change_equip"
+        "codename": "change_qualificacio"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can delete equip",
+        "name": "Can delete qualificacio",
         "content_type": [
             "scrum",
-            "equip"
+            "qualificacio"
         ],
-        "codename": "delete_equip"
+        "codename": "delete_qualificacio"
     }
 },
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can view equip",
+        "name": "Can view qualificacio",
         "content_type": [
             "scrum",
-            "equip"
+            "qualificacio"
         ],
-        "codename": "view_equip"
+        "codename": "view_qualificacio"
     }
 },
 {
@@ -5392,182 +5483,6 @@
 {
     "model": "auth.permission",
     "fields": {
-        "name": "Can add qualificacio",
-        "content_type": [
-            "scrum",
-            "qualificacio"
-        ],
-        "codename": "add_qualificacio"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change qualificacio",
-        "content_type": [
-            "scrum",
-            "qualificacio"
-        ],
-        "codename": "change_qualificacio"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete qualificacio",
-        "content_type": [
-            "scrum",
-            "qualificacio"
-        ],
-        "codename": "delete_qualificacio"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view qualificacio",
-        "content_type": [
-            "scrum",
-            "qualificacio"
-        ],
-        "codename": "view_qualificacio"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can add done spec",
-        "content_type": [
-            "scrum",
-            "donespec"
-        ],
-        "codename": "add_donespec"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change done spec",
-        "content_type": [
-            "scrum",
-            "donespec"
-        ],
-        "codename": "change_donespec"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete done spec",
-        "content_type": [
-            "scrum",
-            "donespec"
-        ],
-        "codename": "delete_donespec"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view done spec",
-        "content_type": [
-            "scrum",
-            "donespec"
-        ],
-        "codename": "view_donespec"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can add user social auth",
-        "content_type": [
-            "social_django",
-            "usersocialauth"
-        ],
-        "codename": "add_usersocialauth"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change user social auth",
-        "content_type": [
-            "social_django",
-            "usersocialauth"
-        ],
-        "codename": "change_usersocialauth"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete user social auth",
-        "content_type": [
-            "social_django",
-            "usersocialauth"
-        ],
-        "codename": "delete_usersocialauth"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view user social auth",
-        "content_type": [
-            "social_django",
-            "usersocialauth"
-        ],
-        "codename": "view_usersocialauth"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can add nonce",
-        "content_type": [
-            "social_django",
-            "nonce"
-        ],
-        "codename": "add_nonce"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can change nonce",
-        "content_type": [
-            "social_django",
-            "nonce"
-        ],
-        "codename": "change_nonce"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can delete nonce",
-        "content_type": [
-            "social_django",
-            "nonce"
-        ],
-        "codename": "delete_nonce"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
-        "name": "Can view nonce",
-        "content_type": [
-            "social_django",
-            "nonce"
-        ],
-        "codename": "view_nonce"
-    }
-},
-{
-    "model": "auth.permission",
-    "fields": {
         "name": "Can add association",
         "content_type": [
             "social_django",
@@ -5656,6 +5571,94 @@
 {
     "model": "auth.permission",
     "fields": {
+        "name": "Can add nonce",
+        "content_type": [
+            "social_django",
+            "nonce"
+        ],
+        "codename": "add_nonce"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change nonce",
+        "content_type": [
+            "social_django",
+            "nonce"
+        ],
+        "codename": "change_nonce"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete nonce",
+        "content_type": [
+            "social_django",
+            "nonce"
+        ],
+        "codename": "delete_nonce"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view nonce",
+        "content_type": [
+            "social_django",
+            "nonce"
+        ],
+        "codename": "view_nonce"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add user social auth",
+        "content_type": [
+            "social_django",
+            "usersocialauth"
+        ],
+        "codename": "add_usersocialauth"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change user social auth",
+        "content_type": [
+            "social_django",
+            "usersocialauth"
+        ],
+        "codename": "change_usersocialauth"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete user social auth",
+        "content_type": [
+            "social_django",
+            "usersocialauth"
+        ],
+        "codename": "delete_usersocialauth"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view user social auth",
+        "content_type": [
+            "social_django",
+            "usersocialauth"
+        ],
+        "codename": "view_usersocialauth"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
         "name": "Can add partial",
         "content_type": [
             "social_django",
@@ -5698,15 +5701,98 @@
     }
 },
 {
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add empresa",
+        "content_type": [
+            "borsApp",
+            "empresa"
+        ],
+        "codename": "add_empresa"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change empresa",
+        "content_type": [
+            "borsApp",
+            "empresa"
+        ],
+        "codename": "change_empresa"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete empresa",
+        "content_type": [
+            "borsApp",
+            "empresa"
+        ],
+        "codename": "delete_empresa"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view empresa",
+        "content_type": [
+            "borsApp",
+            "empresa"
+        ],
+        "codename": "view_empresa"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add notificacio",
+        "content_type": [
+            "borsApp",
+            "notificacio"
+        ],
+        "codename": "add_notificacio"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change notificacio",
+        "content_type": [
+            "borsApp",
+            "notificacio"
+        ],
+        "codename": "change_notificacio"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete notificacio",
+        "content_type": [
+            "borsApp",
+            "notificacio"
+        ],
+        "codename": "delete_notificacio"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view notificacio",
+        "content_type": [
+            "borsApp",
+            "notificacio"
+        ],
+        "codename": "view_notificacio"
+    }
+},
+{
     "model": "auth.group",
     "fields": {
         "name": "profes",
         "permissions": [
-            [
-                "view_user",
-                "core",
-                "user"
-            ],
             [
                 "add_donespec",
                 "scrum",
@@ -5881,6 +5967,11 @@
                 "subscripcio"
             ],
             [
+                "view_titol",
+                "borsApp",
+                "titol"
+            ],
+            [
                 "view_donespec",
                 "scrum",
                 "donespec"
@@ -5962,6 +6053,16 @@
                 "view_empresa",
                 "borsApp",
                 "empresa"
+            ],
+            [
+                "change_notificacio",
+                "borsApp",
+                "notificacio"
+            ],
+            [
+                "view_notificacio",
+                "borsApp",
+                "notificacio"
             ],
             [
                 "add_oferta",
@@ -6092,7 +6193,17 @@
         "name": "admin_empresa",
         "permissions": [
             [
+                "view_demandes",
+                "borsApp",
+                "demandes"
+            ],
+            [
                 "change_empresa",
+                "borsApp",
+                "empresa"
+            ],
+            [
+                "view_empresa",
                 "borsApp",
                 "empresa"
             ],
@@ -6123,18 +6234,18 @@
     "model": "core.user",
     "fields": {
         "password": "pbkdf2_sha256$120000$JBwzplDFqglJ$RDQurcUMV0ag4yWkhEy+a8ncb/UZYmNCbUZtc9xnn3A=",
-        "last_login": "2019-08-07T00:10:20.855Z",
+        "last_login": "2019-08-08T12:47:51.397Z",
         "is_superuser": true,
         "username": "admin",
-        "first_name": "Enric",
-        "last_name": "Mieza",
+        "first_name": "super",
+        "last_name": "",
         "email": "",
         "is_staff": true,
         "is_active": true,
         "date_joined": "2019-07-21T18:49:44.492Z",
         "imatge": "",
         "arxiu": "",
-        "descripcio": null,
+        "descripcio": "",
         "localitzacio": "SRID=4326;POINT (0 0)",
         "centre": null,
         "groups": [],
@@ -6144,8 +6255,60 @@
 {
     "model": "core.user",
     "fields": {
+        "password": "pbkdf2_sha256$120000$0fA8TJt5dV69$iz5TIW7wOektvX4dg0XqH8HpmB1bUQOdGmLkSP6ScU4=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "profe11",
+        "first_name": "Profe1",
+        "last_name": "del Terradas",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2019-07-21T19:01:16.623Z",
+        "imatge": "",
+        "arxiu": "",
+        "descripcio": "",
+        "localitzacio": "SRID=4326;POINT (0 0)",
+        "centre": 4850,
+        "groups": [
+            [
+                "profes"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "core.user",
+    "fields": {
+        "password": "pbkdf2_sha256$120000$dDH6SmakpsQi$YWoTSpXfip3E7P/xxeOdC7D4ZK/z6EEO3wghq7O4Nkc=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "profe12",
+        "first_name": "Profe2",
+        "last_name": "del Terradas",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2019-07-21T19:05:06.706Z",
+        "imatge": "",
+        "arxiu": "",
+        "descripcio": "",
+        "localitzacio": "SRID=4326;POINT (0 0)",
+        "centre": 4850,
+        "groups": [
+            [
+                "profes"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "core.user",
+    "fields": {
         "password": "pbkdf2_sha256$120000$iluo36bxWAoN$TMhVtDHiu9+m4sCKuNUMai2FlQ2vWFSal3N7Ng0lHiQ=",
-        "last_login": "2019-08-07T00:09:26.632Z",
+        "last_login": "2019-08-13T15:31:38.185Z",
         "is_superuser": false,
         "username": "admin1",
         "first_name": "Admin1",
@@ -6171,7 +6334,7 @@
     "model": "core.user",
     "fields": {
         "password": "pbkdf2_sha256$120000$g9RRlvCJ3BGA$ukMIrZryEGuMpbOMokWVECmOe1lEUuyv6+Mx2Aj7nuY=",
-        "last_login": "2019-08-07T00:08:27.952Z",
+        "last_login": "2019-08-12T21:06:41.758Z",
         "is_superuser": false,
         "username": "admin2",
         "first_name": "Admin2",
@@ -6196,16 +6359,68 @@
 {
     "model": "core.user",
     "fields": {
-        "password": "pbkdf2_sha256$120000$vV0ywGzmWcOl$c1Ex0OB0TYA02UhOhcl+sJT7aKlA+6A2QRA6g1Z1WO0=",
-        "last_login": "2019-08-07T00:05:16.715Z",
+        "password": "pbkdf2_sha256$120000$7eH5B045sUCM$Upuey8Z3jKrrnLCpOoYwHF23wR3Y4X6K7nQ4cN1Xtls=",
+        "last_login": null,
         "is_superuser": false,
-        "username": "empresa11",
-        "first_name": "empresa11",
-        "last_name": "",
-        "email": "info@empresa11.com",
+        "username": "profe21",
+        "first_name": "Profe1",
+        "last_name": "del Montilivi",
+        "email": "",
         "is_staff": true,
         "is_active": true,
-        "date_joined": "2019-08-07T00:03:55.932Z",
+        "date_joined": "2019-07-21T19:14:47.340Z",
+        "imatge": "",
+        "arxiu": "",
+        "descripcio": "",
+        "localitzacio": "SRID=4326;POINT (0 0)",
+        "centre": 5228,
+        "groups": [
+            [
+                "profes"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "core.user",
+    "fields": {
+        "password": "pbkdf2_sha256$120000$8wh4RSvnEaDm$rB5cKw1H1Pj8LJgCnOWyF43tKr2MiVlh9tx0H+E7iF0=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "profe22",
+        "first_name": "Profe2",
+        "last_name": "del Montilivi",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2019-07-21T19:15:42.318Z",
+        "imatge": "",
+        "arxiu": "",
+        "descripcio": "",
+        "localitzacio": "SRID=4326;POINT (0 0)",
+        "centre": 5228,
+        "groups": [
+            [
+                "profes"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "core.user",
+    "fields": {
+        "password": "",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "Empresa_2",
+        "first_name": "Empresa 2",
+        "last_name": "",
+        "email": "b@b.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2019-08-12T19:59:23.236Z",
         "imatge": "",
         "arxiu": "",
         "descripcio": null,
@@ -6222,94 +6437,16 @@
 {
     "model": "core.user",
     "fields": {
-        "password": "pbkdf2_sha256$120000$RlktH1xS7Cxu$FjWIrVznfbDFXKcQHc5LjfsB3bf7uPYg5kFQvZ96ju0=",
-        "last_login": null,
+        "password": "",
+        "last_login": "2019-08-12T20:37:16.622Z",
         "is_superuser": false,
-        "username": "empresa21",
-        "first_name": "empresa21",
-        "last_name": "",
-        "email": "info@empresa21.com",
+        "username": "emieza_xtec.cat",
+        "first_name": "Enric",
+        "last_name": "MIEZA SANCHEZ",
+        "email": "emieza@xtec.cat",
         "is_staff": true,
         "is_active": true,
-        "date_joined": "2019-08-07T00:03:59.602Z",
-        "imatge": "",
-        "arxiu": "",
-        "descripcio": null,
-        "localitzacio": "SRID=4326;POINT (0 0)",
-        "centre": null,
-        "groups": [
-            [
-                "admin_empresa"
-            ]
-        ],
-        "user_permissions": []
-    }
-},
-{
-    "model": "core.user",
-    "fields": {
-        "password": "pbkdf2_sha256$120000$9bJ7SoQbnmh7$GxNn7ymFGwFLMj4uj2sqTxHIK7KJ3impG8KOQ6Cu5kY=",
-        "last_login": "2019-08-07T00:23:44.063Z",
-        "is_superuser": false,
-        "username": "alumne11",
-        "first_name": "",
-        "last_name": "",
-        "email": "",
-        "is_staff": true,
-        "is_active": true,
-        "date_joined": "2019-08-07T00:07:08.355Z",
-        "imatge": "",
-        "arxiu": "",
-        "descripcio": "",
-        "localitzacio": "SRID=4326;POINT (0 0)",
-        "centre": 4850,
-        "groups": [
-            [
-                "alumnes"
-            ]
-        ],
-        "user_permissions": []
-    }
-},
-{
-    "model": "core.user",
-    "fields": {
-        "password": "pbkdf2_sha256$120000$zZBEQfP2bYKG$9FnDE5cQ9iFI6VXei0wlais3JpC2AvlLal6eu/SPZ1I=",
-        "last_login": null,
-        "is_superuser": false,
-        "username": "alumne12",
-        "first_name": "",
-        "last_name": "",
-        "email": "",
-        "is_staff": true,
-        "is_active": true,
-        "date_joined": "2019-08-07T00:07:41.264Z",
-        "imatge": "",
-        "arxiu": "",
-        "descripcio": "",
-        "localitzacio": "SRID=4326;POINT (0 0)",
-        "centre": 4850,
-        "groups": [
-            [
-                "alumnes"
-            ]
-        ],
-        "user_permissions": []
-    }
-},
-{
-    "model": "core.user",
-    "fields": {
-        "password": "pbkdf2_sha256$120000$MKSSImjpFVyi$ng88xUSrBwTsqU/AQ0JtMzMWbnBzPkjCBqHZ7py4CUU=",
-        "last_login": "2019-08-07T00:12:56.434Z",
-        "is_superuser": false,
-        "username": "alumne21",
-        "first_name": "",
-        "last_name": "",
-        "email": "",
-        "is_staff": true,
-        "is_active": true,
-        "date_joined": "2019-08-07T00:08:39.254Z",
+        "date_joined": "2019-08-12T20:02:34.645Z",
         "imatge": "",
         "arxiu": "",
         "descripcio": "",
@@ -6326,16 +6463,42 @@
 {
     "model": "core.user",
     "fields": {
-        "password": "pbkdf2_sha256$120000$0A07yM9RA5Jh$HYzckM1aar5MOYnTvDZOehP8Mv1vKuftuWLHDSwyysc=",
+        "password": "pbkdf2_sha256$120000$2NdnkpsnIou9$8I+B1OBu3pDkO75eCLWh7urP78uni2EAngg9poeqI4w=",
         "last_login": null,
         "is_superuser": false,
-        "username": "alumne22",
+        "username": "alumne21",
         "first_name": "",
         "last_name": "",
         "email": "",
         "is_staff": true,
         "is_active": true,
-        "date_joined": "2019-08-07T00:08:53.212Z",
+        "date_joined": "2019-08-12T20:06:17.748Z",
+        "imatge": "",
+        "arxiu": "",
+        "descripcio": null,
+        "localitzacio": "SRID=4326;POINT (0 0)",
+        "centre": 5228,
+        "groups": [
+            [
+                "alumnes"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "core.user",
+    "fields": {
+        "password": "",
+        "last_login": "2019-08-13T15:30:41.731Z",
+        "is_superuser": false,
+        "username": "enric.mieza_gmail.com",
+        "first_name": "Enric",
+        "last_name": "Mieza",
+        "email": "enric.mieza@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2019-08-12T20:49:24.456Z",
         "imatge": "",
         "arxiu": "",
         "descripcio": null,
@@ -6360,7 +6523,7 @@
         "telefon": 1,
         "email": "a8016781@xtec.cat",
         "web": "",
-        "localitzacio": "SRID=4326;POINT (2.076832382999993 41.35630722299994)",
+        "localitzacio": "SRID=4326;POINT (2.076832383 41.35630722299996)",
         "descripcio": "",
         "imatge": "",
         "admins": [
@@ -6370,14 +6533,9 @@
         ],
         "cicles": [
             13,
-            37,
-            59,
             68,
-            69,
-            74,
-            86,
             130,
-            153
+            157
         ]
     }
 },
@@ -6446,7 +6604,7 @@
         "telefon": 1,
         "email": "b7001735@xtec.cat",
         "web": "",
-        "localitzacio": "SRID=4326;POINT (2.826970421000003 41.96438907699998)",
+        "localitzacio": "SRID=4326;POINT (2.826970420999997 41.96438907699999)",
         "descripcio": "",
         "imatge": "",
         "admins": [
@@ -6455,7 +6613,6 @@
             ]
         ],
         "cicles": [
-            68,
             117
         ]
     }
@@ -6482,21 +6639,17 @@
     "model": "borsApp.empresa",
     "pk": 1,
     "fields": {
-        "nom": "empresa11",
-        "direccio": "<p>c. Tal, 1</p>",
-        "poblacio": "Cornell\u00e0",
-        "cp": "08940",
-        "telefon": 931112233,
-        "email": "info@empresa11.com",
+        "nom": "Empresa 1",
+        "direccio": "<p>c. Tal,1&nbsp;</p>",
+        "poblacio": "Aaa",
+        "cp": "1",
+        "telefon": 1,
+        "email": "a@a.com",
         "web": "",
-        "localitzacio": "SRID=4326;POINT (2.687499999999997 41.55999999999999)",
+        "localitzacio": "SRID=4326;POINT (2.576496010519981 41.61011082979913)",
         "descripcio": "",
         "imatge": "",
-        "admins": [
-            [
-                "empresa11"
-            ]
-        ],
+        "admins": [],
         "adscripcio": [
             4850
         ]
@@ -6506,19 +6659,19 @@
     "model": "borsApp.empresa",
     "pk": 2,
     "fields": {
-        "nom": "empresa21",
-        "direccio": "<p>c. Tal, 1</p>",
-        "poblacio": "Cornell\u00e0",
-        "cp": "08940",
-        "telefon": 931112233,
-        "email": "info@empresa21.com",
+        "nom": "Empresa 2",
+        "direccio": "<p>c. Qual 2</p>",
+        "poblacio": "BBB",
+        "cp": "2",
+        "telefon": 2,
+        "email": "b@b.com",
         "web": "",
-        "localitzacio": "SRID=4326;POINT (2.687499999999997 41.55999999999999)",
+        "localitzacio": "SRID=4326;POINT (2.6875 41.56)",
         "descripcio": "",
         "imatge": "",
         "admins": [
             [
-                "empresa21"
+                "Empresa_2"
             ]
         ],
         "adscripcio": [
@@ -6527,56 +6680,48 @@
     }
 },
 {
-    "model": "borsApp.subscripcio",
-    "pk": 1,
+    "model": "borsApp.titol",
+    "pk": 6,
     "fields": {
+        "cicle": 117,
+        "centre": 5228,
+        "graduat": false,
+        "data": null,
         "alumne": [
-            "alumne11"
+            "emieza_xtec.cat"
         ],
-        "centre_educatiu": null,
-        "centre_treball": null,
-        "distancia": 0.0,
-        "creat": "2019-08-07T00:12:23.886Z",
-        "modificat": "2019-08-07T00:24:19.978Z",
-        "categories": [],
-        "cicles": [
-            150
-        ]
+        "descripcio": ""
     }
 },
 {
-    "model": "borsApp.subscripcio",
-    "pk": 2,
+    "model": "borsApp.titol",
+    "pk": 7,
     "fields": {
+        "cicle": 117,
+        "centre": 5228,
+        "graduat": false,
+        "data": null,
         "alumne": [
-            "alumne21"
+            "enric.mieza_gmail.com"
         ],
-        "centre_educatiu": null,
-        "centre_treball": null,
-        "distancia": 0.0,
-        "creat": "2019-08-07T00:13:16.284Z",
-        "modificat": "2019-08-07T00:13:16.284Z",
-        "categories": [],
-        "cicles": [
-            68
-        ]
+        "descripcio": ""
     }
 },
 {
     "model": "borsApp.oferta",
     "pk": 1,
     "fields": {
-        "inici": "2019-01-01T10:30:00Z",
-        "final": "2019-02-10T10:30:00Z",
+        "inici": "2019-08-12T20:36:07Z",
+        "final": "2019-08-26T20:36:26Z",
         "activa": true,
-        "empresa": 1,
-        "titol": "oferta test caducada 1",
-        "descripcio": "<p>oferta test caducada.</p>\r\n<p>bla bla...</p>",
+        "empresa": 2,
+        "titol": "Oferta 21",
+        "descripcio": "<p>Aquicultura mOntilivi</p>",
         "creador": [
-            "empresa11"
+            "admin2"
         ],
         "cicles": [
-            68
+            117
         ]
     }
 },
@@ -6584,31 +6729,18 @@
     "model": "borsApp.oferta",
     "pk": 2,
     "fields": {
-        "inici": "2019-08-07T00:05:42Z",
-        "final": "2019-08-26T00:05:55Z",
+        "inici": "2019-08-12T21:06:08Z",
+        "final": "2019-08-26T21:06:12Z",
         "activa": true,
         "empresa": 1,
-        "titol": "oferta web i mecanitzacio",
-        "descripcio": "<p>oferta <strong>web</strong> i mecanitzacio</p>",
+        "titol": "Oferta 11 web",
+        "descripcio": "<p>lala web</p>",
         "creador": [
-            "empresa11"
+            "admin1"
         ],
         "cicles": [
-            68,
-            69
+            68
         ]
-    }
-},
-{
-    "model": "social_django.usersocialauth",
-    "pk": 1,
-    "fields": {
-        "user": [
-            "admin"
-        ],
-        "provider": "google-oauth2",
-        "uid": "enric.mieza@gmail.com",
-        "extra_data": "{\"expires\": 3600, \"token_type\": \"Bearer\", \"auth_time\": 1564007335, \"access_token\": \"ya29.GltQB6__g9wLOtDGrZvb5pWeMEoa0wdBkO_y-0PqIXVG9UzNWVx-n8IZ8tr0dF5wYwTVFAsk_NVz4eR4T-ZCRqlOrSIcDezsuPNr29KWteTrH62onpwZIZ5LA4rv\"}"
     }
 },
 {
@@ -10071,7 +10203,7 @@
     "model": "admin.logentry",
     "pk": 193,
     "fields": {
-        "action_time": "2019-07-21T21:22:48Z",
+        "action_time": "2019-07-21T21:22:48.000Z",
         "user": [
             "admin"
         ],
@@ -17685,16 +17817,16 @@
     "model": "admin.logentry",
     "pk": 616,
     "fields": {
-        "action_time": "2019-08-05T11:04:19.014Z",
+        "action_time": "2019-07-21T22:24:57.558Z",
         "user": [
-            "admin1"
+            "admin"
         ],
         "content_type": [
             "core",
-            "centre"
+            "user"
         ],
-        "object_id": "5328",
-        "object_repr": "empresa1",
+        "object_id": "8",
+        "object_repr": "alumne3",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -17703,16 +17835,16 @@
     "model": "admin.logentry",
     "pk": 617,
     "fields": {
-        "action_time": "2019-08-05T11:27:27.042Z",
+        "action_time": "2019-07-21T22:41:32.112Z",
         "user": [
-            "admin1"
+            "admin"
         ],
         "content_type": [
             "core",
             "user"
         ],
         "object_id": "9",
-        "object_repr": "empresa1",
+        "object_repr": "alumne4",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -17721,1051 +17853,43 @@
     "model": "admin.logentry",
     "pk": 618,
     "fields": {
-        "action_time": "2019-08-05T12:10:22.801Z",
+        "action_time": "2019-07-21T23:36:51.255Z",
         "user": [
             "admin1"
         ],
         "content_type": [
             "core",
-            "centre"
+            "user"
         ],
-        "object_id": "5328",
-        "object_repr": "empresa1",
-        "action_flag": 3,
-        "change_message": ""
+        "object_id": "10",
+        "object_repr": "alumneX",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
     }
 },
 {
     "model": "admin.logentry",
     "pk": 619,
     "fields": {
-        "action_time": "2019-08-05T12:32:05.918Z",
+        "action_time": "2019-07-21T23:45:56.084Z",
         "user": [
-            "admin"
+            "admin1"
         ],
         "content_type": [
-            "auth",
-            "group"
+            "core",
+            "user"
         ],
-        "object_id": "3",
-        "object_repr": "admin_borsa",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"permissions\"]}}]"
+        "object_id": "11",
+        "object_repr": "alumneY",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
     }
 },
 {
     "model": "admin.logentry",
     "pk": 620,
     "fields": {
-        "action_time": "2019-08-05T13:14:20.492Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "9",
-        "object_repr": "empresa1",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 621,
-    "fields": {
-        "action_time": "2019-08-05T13:47:15.250Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "2",
-        "object_repr": "empresa2",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 622,
-    "fields": {
-        "action_time": "2019-08-05T13:52:16.721Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "13",
-        "object_repr": "<django.forms.fields.CharField object at 0x7f1dd37534a8>",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 623,
-    "fields": {
-        "action_time": "2019-08-05T13:52:28.513Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "2",
-        "object_repr": "empresa2",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 624,
-    "fields": {
-        "action_time": "2019-08-05T13:54:17.382Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "3",
-        "object_repr": "empresa3",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 625,
-    "fields": {
-        "action_time": "2019-08-05T13:58:20.626Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "auth",
-            "group"
-        ],
-        "object_id": "4",
-        "object_repr": "admin_empresa",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 626,
-    "fields": {
-        "action_time": "2019-08-05T14:02:18.857Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "4",
-        "object_repr": "empresa4",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 627,
-    "fields": {
-        "action_time": "2019-08-05T14:03:58.917Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "5",
-        "object_repr": "empresa5",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 628,
-    "fields": {
-        "action_time": "2019-08-05T14:06:48.512Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "5",
-        "object_repr": "empresa5",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"localitzacio\", \"admins\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 629,
-    "fields": {
-        "action_time": "2019-08-05T14:21:31.842Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "5",
-        "object_repr": "empresa5",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"adscripcio\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 630,
-    "fields": {
-        "action_time": "2019-08-05T14:28:57.177Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "7",
-        "object_repr": "empresa6",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 631,
-    "fields": {
-        "action_time": "2019-08-05T14:46:06.651Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "8",
-        "object_repr": "empresa7",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 632,
-    "fields": {
-        "action_time": "2019-08-05T14:49:49.318Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "14",
-        "object_repr": "empresa3",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 633,
-    "fields": {
-        "action_time": "2019-08-05T14:49:49.345Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "16",
-        "object_repr": "empresa4",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 634,
-    "fields": {
-        "action_time": "2019-08-05T14:49:49.369Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "17",
-        "object_repr": "empresa5",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 635,
-    "fields": {
-        "action_time": "2019-08-05T14:49:49.395Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "20",
-        "object_repr": "empresa6",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 636,
-    "fields": {
-        "action_time": "2019-08-05T14:49:49.420Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "21",
-        "object_repr": "empresa7",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 637,
-    "fields": {
-        "action_time": "2019-08-05T14:50:04.537Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "8",
-        "object_repr": "empresa7",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 638,
-    "fields": {
-        "action_time": "2019-08-05T14:50:04.571Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "7",
-        "object_repr": "empresa6",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 639,
-    "fields": {
-        "action_time": "2019-08-05T14:50:04.604Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "5",
-        "object_repr": "empresa5",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 640,
-    "fields": {
-        "action_time": "2019-08-05T14:50:04.638Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "4",
-        "object_repr": "empresa4",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 641,
-    "fields": {
-        "action_time": "2019-08-05T14:50:04.671Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "3",
-        "object_repr": "empresa3",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 642,
-    "fields": {
-        "action_time": "2019-08-05T14:50:37.330Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "9",
-        "object_repr": "empresa1",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 643,
-    "fields": {
-        "action_time": "2019-08-05T14:54:40.443Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "9",
-        "object_repr": "empresa1",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"admins\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 644,
-    "fields": {
-        "action_time": "2019-08-05T14:55:12.526Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "9",
-        "object_repr": "empresa1",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"adscripcio\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 645,
-    "fields": {
-        "action_time": "2019-08-05T14:55:34.287Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "9",
-        "object_repr": "empresa1",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"admins\", \"adscripcio\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 646,
-    "fields": {
-        "action_time": "2019-08-05T14:55:46.914Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "9",
-        "object_repr": "empresa1",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"admins\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 647,
-    "fields": {
-        "action_time": "2019-08-05T14:55:55.852Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "9",
-        "object_repr": "empresa1",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"adscripcio\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 648,
-    "fields": {
-        "action_time": "2019-08-05T15:19:13.728Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "14",
-        "object_repr": "empresa2",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 649,
-    "fields": {
-        "action_time": "2019-08-05T15:19:40.469Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "15",
-        "object_repr": "emp3",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 650,
-    "fields": {
-        "action_time": "2019-08-05T15:20:01.681Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "15",
-        "object_repr": "emp3",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 651,
-    "fields": {
-        "action_time": "2019-08-05T15:20:01.720Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "14",
-        "object_repr": "empresa2",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 652,
-    "fields": {
-        "action_time": "2019-08-05T15:20:01.745Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "9",
-        "object_repr": "empresa1",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 653,
-    "fields": {
-        "action_time": "2019-08-05T15:20:55.494Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "16",
-        "object_repr": "empresa2",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 654,
-    "fields": {
-        "action_time": "2019-08-05T15:24:46.148Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "17",
-        "object_repr": "empre3",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 655,
-    "fields": {
-        "action_time": "2019-08-05T15:26:02.635Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "18",
-        "object_repr": "empresa 4 la pera",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 656,
-    "fields": {
-        "action_time": "2019-08-05T15:34:13.421Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "19",
-        "object_repr": "empresa la 5",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 657,
-    "fields": {
-        "action_time": "2019-08-05T15:34:31.565Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "26",
-        "object_repr": "emp3",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 658,
-    "fields": {
-        "action_time": "2019-08-05T15:34:31.589Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "27",
-        "object_repr": "empresa 4 la pera",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 659,
-    "fields": {
-        "action_time": "2019-08-05T15:34:31.622Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "22",
-        "object_repr": "empresa1",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 660,
-    "fields": {
-        "action_time": "2019-08-05T15:34:31.655Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "25",
-        "object_repr": "empresa2",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 661,
-    "fields": {
-        "action_time": "2019-08-05T15:34:31.690Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "28",
-        "object_repr": "empresa_la_5",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 662,
-    "fields": {
-        "action_time": "2019-08-05T15:34:42.422Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "19",
-        "object_repr": "empresa la 5",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 663,
-    "fields": {
-        "action_time": "2019-08-05T15:34:42.530Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "18",
-        "object_repr": "empresa 4 la pera",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 664,
-    "fields": {
-        "action_time": "2019-08-05T15:34:42.591Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "17",
-        "object_repr": "empre3",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 665,
-    "fields": {
-        "action_time": "2019-08-05T15:34:42.624Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "16",
-        "object_repr": "empresa2",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 666,
-    "fields": {
-        "action_time": "2019-08-05T15:36:28.983Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "20",
-        "object_repr": "empresa1",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 667,
-    "fields": {
-        "action_time": "2019-08-05T16:39:38.549Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "29",
-        "object_repr": "empresa1",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"password\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 668,
-    "fields": {
-        "action_time": "2019-08-05T16:50:35.038Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "20",
-        "object_repr": "empresa1",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 669,
-    "fields": {
-        "action_time": "2019-08-05T16:51:19.091Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "29",
-        "object_repr": "empresa1",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 670,
-    "fields": {
-        "action_time": "2019-08-05T16:51:19.134Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "8",
-        "object_repr": "enric.mieza_gmail.com",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 671,
-    "fields": {
-        "action_time": "2019-08-05T16:51:19.168Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "2",
-        "object_repr": "profe11",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 672,
-    "fields": {
-        "action_time": "2019-08-05T16:51:19.201Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "3",
-        "object_repr": "profe12",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 673,
-    "fields": {
-        "action_time": "2019-08-05T16:51:19.226Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "6",
-        "object_repr": "profe21",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 674,
-    "fields": {
-        "action_time": "2019-08-05T16:51:19.251Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "7",
-        "object_repr": "profe22",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 675,
-    "fields": {
-        "action_time": "2019-08-06T19:14:16.462Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "auth",
-            "group"
-        ],
-        "object_id": "1",
-        "object_repr": "profes",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"permissions\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 676,
-    "fields": {
-        "action_time": "2019-08-06T19:16:24.824Z",
+        "action_time": "2019-07-22T11:20:38.602Z",
         "user": [
             "admin"
         ],
@@ -18781,9 +17905,207 @@
 },
 {
     "model": "admin.logentry",
-    "pk": 677,
+    "pk": 621,
     "fields": {
-        "action_time": "2019-08-06T19:17:03.336Z",
+        "action_time": "2019-07-22T21:17:00.065Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "8",
+        "object_repr": "alumne3",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 622,
+    "fields": {
+        "action_time": "2019-07-22T21:17:00.071Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "9",
+        "object_repr": "alumne4",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 623,
+    "fields": {
+        "action_time": "2019-07-22T21:17:00.076Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "10",
+        "object_repr": "alumneX",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 624,
+    "fields": {
+        "action_time": "2019-07-22T21:17:00.081Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "11",
+        "object_repr": "alumneY",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 625,
+    "fields": {
+        "action_time": "2019-07-22T21:17:00.085Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "13",
+        "object_repr": "emieza_xtec.cat",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 626,
+    "fields": {
+        "action_time": "2019-07-22T21:17:00.090Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "12",
+        "object_repr": "enric.mieza_gmail.com",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 627,
+    "fields": {
+        "action_time": "2019-07-22T21:53:47.931Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "14",
+        "object_repr": "pepe",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 628,
+    "fields": {
+        "action_time": "2019-07-23T11:55:24.772Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "1",
+        "object_repr": "admin",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"first_name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 629,
+    "fields": {
+        "action_time": "2019-07-23T14:50:05.529Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "16",
+        "object_repr": "emieza_xtec.cat",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 630,
+    "fields": {
+        "action_time": "2019-07-23T14:50:05.535Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "15",
+        "object_repr": "enric.mieza_gmail.com",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 631,
+    "fields": {
+        "action_time": "2019-07-23T14:50:05.539Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "14",
+        "object_repr": "pepe",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 632,
+    "fields": {
+        "action_time": "2019-07-23T14:54:22.227Z",
         "user": [
             "admin"
         ],
@@ -18799,243 +18121,27 @@
 },
 {
     "model": "admin.logentry",
-    "pk": 678,
+    "pk": 633,
     "fields": {
-        "action_time": "2019-08-07T00:03:55.939Z",
+        "action_time": "2019-07-23T14:54:36.392Z",
         "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "1",
-        "object_repr": "empresa11",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 679,
-    "fields": {
-        "action_time": "2019-08-07T00:03:57.440Z",
-        "user": [
-            "admin1"
+            "admin"
         ],
         "content_type": [
             "core",
-            "user"
+            "centre"
         ],
-        "object_id": "4",
-        "object_repr": "empresa11",
+        "object_id": "5228",
+        "object_repr": "Institut Montilivi",
         "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"password\"]}}]"
+        "change_message": "[{\"changed\": {\"fields\": [\"admins\"]}}]"
     }
 },
 {
     "model": "admin.logentry",
-    "pk": 680,
+    "pk": 634,
     "fields": {
-        "action_time": "2019-08-07T00:03:59.724Z",
-        "user": [
-            "admin2"
-        ],
-        "content_type": [
-            "borsApp",
-            "empresa"
-        ],
-        "object_id": "2",
-        "object_repr": "empresa21",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 681,
-    "fields": {
-        "action_time": "2019-08-07T00:04:01.299Z",
-        "user": [
-            "admin2"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "5",
-        "object_repr": "empresa21",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"password\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 682,
-    "fields": {
-        "action_time": "2019-08-07T00:04:04.700Z",
-        "user": [
-            "empresa11"
-        ],
-        "content_type": [
-            "borsApp",
-            "oferta"
-        ],
-        "object_id": "1",
-        "object_repr": "Oferta object (1)",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 683,
-    "fields": {
-        "action_time": "2019-08-07T00:06:20.823Z",
-        "user": [
-            "empresa11"
-        ],
-        "content_type": [
-            "borsApp",
-            "oferta"
-        ],
-        "object_id": "2",
-        "object_repr": "Oferta object (2)",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 684,
-    "fields": {
-        "action_time": "2019-08-07T00:07:08.455Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "6",
-        "object_repr": "alumne21",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 685,
-    "fields": {
-        "action_time": "2019-08-07T00:07:19.893Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "6",
-        "object_repr": "alumne11",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"username\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 686,
-    "fields": {
-        "action_time": "2019-08-07T00:07:41.427Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "7",
-        "object_repr": "alumne12",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 687,
-    "fields": {
-        "action_time": "2019-08-07T00:07:46.614Z",
-        "user": [
-            "admin1"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "7",
-        "object_repr": "alumne12",
-        "action_flag": 2,
-        "change_message": "[]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 688,
-    "fields": {
-        "action_time": "2019-08-07T00:08:39.430Z",
-        "user": [
-            "admin2"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "8",
-        "object_repr": "alumne21",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 689,
-    "fields": {
-        "action_time": "2019-08-07T00:08:44.560Z",
-        "user": [
-            "admin2"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "8",
-        "object_repr": "alumne21",
-        "action_flag": 2,
-        "change_message": "[]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 690,
-    "fields": {
-        "action_time": "2019-08-07T00:08:53.372Z",
-        "user": [
-            "admin2"
-        ],
-        "content_type": [
-            "core",
-            "user"
-        ],
-        "object_id": "9",
-        "object_repr": "alumne22",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 691,
-    "fields": {
-        "action_time": "2019-08-07T00:10:49.415Z",
+        "action_time": "2019-08-11T15:15:43.633Z",
         "user": [
             "admin"
         ],
@@ -19051,92 +18157,296 @@
 },
 {
     "model": "admin.logentry",
-    "pk": 692,
+    "pk": 635,
     "fields": {
-        "action_time": "2019-08-07T00:12:23.889Z",
+        "action_time": "2019-08-11T23:05:22.755Z",
         "user": [
-            "alumne11"
+            "admin"
         ],
         "content_type": [
-            "borsApp",
-            "subscripcio"
-        ],
-        "object_id": "1",
-        "object_repr": "Subscripcio object (1)",
-        "action_flag": 1,
-        "change_message": "[{\"added\": {}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 693,
-    "fields": {
-        "action_time": "2019-08-07T00:13:16.362Z",
-        "user": [
-            "alumne21"
-        ],
-        "content_type": [
-            "borsApp",
-            "subscripcio"
+            "auth",
+            "group"
         ],
         "object_id": "2",
-        "object_repr": "Subscripcio object (2)",
+        "object_repr": "alumnes",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"permissions\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 636,
+    "fields": {
+        "action_time": "2019-08-11T23:06:31.578Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "object_id": "2",
+        "object_repr": "alumnes",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"permissions\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 637,
+    "fields": {
+        "action_time": "2019-08-11T23:08:14.803Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "18",
+        "object_repr": "emieza_xtec.cat",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"imatge\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 638,
+    "fields": {
+        "action_time": "2019-08-12T19:30:01.370Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "borsApp",
+            "empresa"
+        ],
+        "object_id": "1",
+        "object_repr": "Empresa 1",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
 },
 {
     "model": "admin.logentry",
-    "pk": 694,
+    "pk": 639,
     "fields": {
-        "action_time": "2019-08-07T00:23:06.391Z",
+        "action_time": "2019-08-12T19:32:07.138Z",
         "user": [
             "admin"
+        ],
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "object_id": "3",
+        "object_repr": "admin_borsa",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"permissions\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 640,
+    "fields": {
+        "action_time": "2019-08-12T19:32:51.593Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "object_id": "3",
+        "object_repr": "admin_borsa",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"permissions\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 641,
+    "fields": {
+        "action_time": "2019-08-12T19:44:57.496Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "object_id": "4",
+        "object_repr": "admin_empresa",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 642,
+    "fields": {
+        "action_time": "2019-08-12T19:59:23.269Z",
+        "user": [
+            "admin2"
         ],
         "content_type": [
             "borsApp",
             "empresa"
         ],
-        "object_id": "1",
-        "object_repr": "empresa11",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"adscripcio\"]}}]"
+        "object_id": "2",
+        "object_repr": "Empresa 2",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
     }
 },
 {
     "model": "admin.logentry",
-    "pk": 695,
+    "pk": 643,
     "fields": {
-        "action_time": "2019-08-07T00:23:24.271Z",
+        "action_time": "2019-08-12T20:01:12.103Z",
         "user": [
             "admin"
         ],
         "content_type": [
-            "borsApp",
-            "empresa"
+            "core",
+            "user"
         ],
-        "object_id": "1",
-        "object_repr": "empresa11",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"adscripcio\"]}}]"
+        "object_id": "18",
+        "object_repr": "emieza_xtec.cat",
+        "action_flag": 3,
+        "change_message": ""
     }
 },
 {
     "model": "admin.logentry",
-    "pk": 696,
+    "pk": 644,
     "fields": {
-        "action_time": "2019-08-07T00:24:19.984Z",
+        "action_time": "2019-08-12T20:01:12.109Z",
         "user": [
-            "alumne11"
+            "admin"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "17",
+        "object_repr": "enric.mieza_gmail.com",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 645,
+    "fields": {
+        "action_time": "2019-08-12T20:06:17.920Z",
+        "user": [
+            "admin2"
+        ],
+        "content_type": [
+            "core",
+            "user"
+        ],
+        "object_id": "21",
+        "object_repr": "alumne21",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 646,
+    "fields": {
+        "action_time": "2019-08-12T20:36:46.795Z",
+        "user": [
+            "admin2"
         ],
         "content_type": [
             "borsApp",
-            "subscripcio"
+            "oferta"
         ],
         "object_id": "1",
-        "object_repr": "Subscripcio object (1)",
+        "object_repr": "Oferta 21 (Empresa 2)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 647,
+    "fields": {
+        "action_time": "2019-08-12T20:37:58.794Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "object_id": "2",
+        "object_repr": "alumnes",
         "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"cicles\"]}}]"
+        "change_message": "[{\"changed\": {\"fields\": [\"permissions\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 648,
+    "fields": {
+        "action_time": "2019-08-12T21:02:17.299Z",
+        "user": [
+            "admin1"
+        ],
+        "content_type": [
+            "core",
+            "centre"
+        ],
+        "object_id": "5228",
+        "object_repr": "Institut Montilivi",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"admins\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 649,
+    "fields": {
+        "action_time": "2019-08-12T21:06:28.231Z",
+        "user": [
+            "admin1"
+        ],
+        "content_type": [
+            "borsApp",
+            "oferta"
+        ],
+        "object_id": "2",
+        "object_repr": "Oferta 11 web (Empresa 1)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "social_django.usersocialauth",
+    "pk": 4,
+    "fields": {
+        "user": [
+            "emieza_xtec.cat"
+        ],
+        "provider": "google-oauth2",
+        "uid": "emieza@xtec.cat",
+        "extra_data": "{\"auth_time\": 1565642236, \"expires\": 3599, \"token_type\": \"Bearer\", \"access_token\": \"ya29.GlxiB0Xs1rfxFEW560w9Ftb7KB9i-zraaAZqpjSw0QkrvZGSXdp2AfooYtsD1aSWo8cG_DoXsyEUxzlZWFJZfg8bCl46rktb4z8m2QHp0Db3AeuUXzEY-H5zECQNZA\"}"
+    }
+},
+{
+    "model": "social_django.usersocialauth",
+    "pk": 5,
+    "fields": {
+        "user": [
+            "enric.mieza_gmail.com"
+        ],
+        "provider": "google-oauth2",
+        "uid": "enric.mieza@gmail.com",
+        "extra_data": "{\"auth_time\": 1565710241, \"expires\": 3600, \"token_type\": \"Bearer\", \"access_token\": \"ya29.GltjB8VhukxkJuWXe43deuGIEiGsy8QRL2zfTG-qDKKIOaQNOH9rR9rA6SM3n7SoC129Nt8Df71XC7ZKmQLkc9WN5E3LVLL2CNgUmbx9YWAElT5b2EyoHiAfPIPV\"}"
     }
 }
 ]

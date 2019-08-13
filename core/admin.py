@@ -31,8 +31,8 @@ class CicleAdmin(admin.ModelAdmin):
     inlines = ( MPInline, )
 
 class CentreAdmin(OSMGeoAdmin):
-    list_display = ('nom','te_admin','noms_admins','nempreses','get_empreses')
-    #ordering = ('te_admin','nom')
+    list_display = ('nom','nadmins','noms_admins','nempreses','get_empreses')
+    #ordering = ('nadmins','nom')
     search_fields = ('nom','direccio','poblacio','empreses__nom')
     filter_horizontal = ('admins','cicles',)
     readonly_fields = ('get_empreses',)
@@ -41,25 +41,31 @@ class CentreAdmin(OSMGeoAdmin):
         for admin in obj.admins.all():
             res += admin.username+"<br>"
         return mark_safe(res)
-    def te_admin(self,obj):
+    def nadmins(self,obj):
         return obj.admins.count()
-    te_admin.boolean = True
-    te_admin.admin_order_field = "nadmins"
+    #te_admin.boolean = True
+    nadmins.admin_order_field = "nadmins"
     def nempreses(self,obj):
         return obj.empreses.count()
-    nempreses.admin_order_field = "nempreses"
+    #nempreses.admin_order_field = "nempreses"
     def get_empreses(self,obj):
         res = ""
         for empresa in obj.empreses.all():
             res += empresa.nom+"<br>"
         return mark_safe(res)
     def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        queryset = queryset.annotate(
+        qs = super().get_queryset(request)
+        qs = qs.annotate(
                         nadmins=Count("admins"),
                         nempreses=Count("empreses"),
                     ).order_by("-nadmins","-nempreses","nom")
-        return queryset
+        if request.user.is_superuser:
+            # super ho veu tot
+            return qs
+        elif request.user.es_admin_centre:
+            # admin centre veu el seu centre i prou
+            return qs.filter(admins__in=[request.user,])
+        #ERROR: cap altre usuari pot veure Centres
 
 # no cal select2_modelform pq amb django-admin-select2 ja funciona
 #UFForm = select2_modelform(UnitatFormativa)

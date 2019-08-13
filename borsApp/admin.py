@@ -4,6 +4,7 @@ from django import forms
 # Register your models here.
 
 from borsApp.models import *
+from borsApp.views import filtra_ofertes_alumne
 from core.models import Cicle
 from django.contrib.auth.models import Group
 
@@ -88,6 +89,20 @@ class TitolAdmin(admin.ModelAdmin):
     #form = TitolForm
     def nom(self,obj):
         return obj.alumne.first_name+" "+obj.alumne.last_name+" (email: "+obj.alumne.email+")"
+    def get_queryset(self,request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            # super ho veu tot
+            return qs
+        elif request.user.es_admin_centre:
+            # admins centre veuen els titols dels seus alumnes
+            centres = request.user.centres_admin.all()
+            return qs.filter(centre__in=centres)
+        elif request.user.es_admin_empresa:
+            # els admin empresa no han de veure res
+            return Titol.objects.none()
+        # si és alumne només veu els seus títols
+        return qs.filter(alumne=request.user)
 
 class SubscripcioAdmin(admin.ModelAdmin):
     list_display = ('alumne','centre_educatiu','centre_treball','get_cats','get_cicles','distancia')
@@ -211,23 +226,8 @@ class OfertaAdmin(admin.ModelAdmin):
             # les empreses veuen les seves ofertes
             return qs.filter(empresa__in=request.user.empreses_admin.all())
 
-        # la resta (ALUMNES) veuen només els que estan subscrits
-        subs = Subscripcio.objects.filter(alumne=request.user)
-        # filtrem nomes per cicles de moemnt
-        cicles = []
-        for sub in subs.all():
-            for cicle in sub.cicles.all():
-                cicles.append(cicle.id)
-        # TODO:(revisar, eliminar) només de les empreses que estan adscrites al centre de l'alumne
-        # TODO: distància en km...
-        empreses = Empresa.objects.filter(adscripcio__in=[request.user.centre,])
-        qs = super().get_queryset(request).filter(
-                            cicles__in=cicles,           # cicles subscrits
-                            activa=True,
-                            empresa__in=empreses,        # empreses adscrites TODO: segur?/eliminar?
-                            final__gte=datetime.today(), # eliminem les caducades
-                        )
-        return qs
+        # la resta (ALUMNES) veuen només les ofertes dels seus estudis
+        return filtra_ofertes_alumne(request.user)
 
 
 class NotificacioAdmin(admin.ModelAdmin):
@@ -236,11 +236,19 @@ class NotificacioAdmin(admin.ModelAdmin):
     ordering = ('-enviament',)
     def data_oferta(self,obj):
         return obj.oferta.inici
+    def get_queryset(self,request):
+        qs = super().get_queryset(request)
+        # super ho veu tot
+        if request.user.is_superuser:
+            return qs
+        elif request.user.es_admin_centre:
+            # els admin centres veuen els relacionats amb el seu centre
+            return qs.filter(usuari__centre__in=request.user.centres_admin.all())
 
 
 admin.site.register( Empresa, EmpresaAdmin )
 admin.site.register( Titol, TitolAdmin )
-admin.site.register( Subscripcio, SubscripcioAdmin )
+#admin.site.register( Subscripcio, SubscripcioAdmin )
 admin.site.register( Oferta, OfertaAdmin )
 admin.site.register( Notificacio, NotificacioAdmin )
 

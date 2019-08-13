@@ -10,8 +10,9 @@ from validate_email import validate_email
 import re
 
 from core.models import Centre, User, Cicle
-from borsApp.models import Titol
+from borsApp.models import Empresa, Titol, Oferta
 
+from datetime import datetime
 # Create your views here.
 
 
@@ -34,6 +35,26 @@ def index(request):
 
 def es_admin_centre( usuari ):
 	return usuari.es_admin_centre
+
+
+def filtra_ofertes_alumne(alumne):
+	# TODO: resoldre per subscripcions
+	# HO RESOLEM PELS TÍTOLS DE L'ALUMNE
+    # cicles que ha cursat l'alumne
+    cicles = [ titol.cicle for titol in alumne.titols.all() ]
+    centres = [ titol.centre for titol in alumne.titols.all() ]
+    # TODO:(revisar, eliminar) només de les empreses que estan adscrites al centre de l'alumne
+    # TODO: distància en km...
+    empreses = Empresa.objects.filter(adscripcio__in=centres)
+    # qs final (ofertes)
+    qs = Oferta.objects.filter(
+                        cicles__in=cicles,           # cicles subscrits
+                        activa=True,
+                        empresa__in=empreses,        # empreses adscrites TODO: segur?/eliminar?
+                        final__gte=datetime.today(), # eliminem les caducades
+                    )
+    return qs
+
 
 @login_required
 @user_passes_test( es_admin_centre, login_url="/login" )
