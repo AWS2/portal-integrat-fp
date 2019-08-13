@@ -56,7 +56,7 @@ class EmpresaAdmin(admin.ModelAdmin):
             # el superuser pot fer tot, i no li afegim ni traiem res
             return
         # si no és super, forcem a que es crein usuari d'empresa i adscripcio de centre
-        if not form.cleaned_data["admins"]:
+        if 'admins' in form.cleaned_data and not form.cleaned_data.get("admins"):
             # afegim usuari d'empresa si no en te
             # busquem email/empresa si ja existeix
             nom = form.cleaned_data["nom"]
@@ -75,7 +75,7 @@ class EmpresaAdmin(admin.ModelAdmin):
             user.groups.add(gempresa)
             # associem usuari a l'empresa
             form.instance.admins.add(user)
-        if not form.cleaned_data["adscripcio"]:
+        if 'adscripcio' in form.cleaned_data and not form.cleaned_data.get("adscripcio"):
             # associem empresa al(s) centre(s) del nostre usuari, si es admin centres
             if request.user.es_admin_centre and not form.instance.adscripcio.all():
                 centres = request.user.centres_admin.all()
@@ -84,7 +84,7 @@ class EmpresaAdmin(admin.ModelAdmin):
                         form.instance.adscripcio.add(centre)
 
 class TitolAdmin(admin.ModelAdmin):
-    list_display = ('alumne','nom','cicle','centre')
+    list_display = ('alumne','nom','cicle','centre','graduat','data')
     # no cal form de select2 pq ho posem per a tot l'admin amb django-admin-select2
     #form = TitolForm
     def nom(self,obj):
@@ -164,22 +164,40 @@ class SubscripcioInline(admin.StackedInline):
     #form = SubscripcioForm
     extra = 1
 
-from datetime import datetime
+#from django.utils import timezone
+from django.utils.safestring import mark_safe
 
-#OfertaForm = select2_modelform(Oferta)
 class OfertaAdmin(admin.ModelAdmin):
-    model = Oferta
-    #form = OfertaForm
     filter_horizontal = ('cicles',)
     readonly_fields = ('creador',)
     list_display = ('titol','empresa','inici','final','activa',)
     ordering = ('-inici','empresa',)
-    """def get_form(self,request,obj=None,**kwargs):
-        # l'empresa no pot triar quina empresa fa la oferta. Els admins sí
-        self.readonly_fields = ('creador','empresa',)
-        if request.user.es_admin_centre:
-            self.readonly_fields = ('creador',)
-        return super().get_form(request,obj,**kwargs)"""
+    def get_form(self,request,obj=None,**kwargs):
+        # tots els camps del model
+        self.fields = [ field.name for field in Oferta._meta.fields ]
+        self.fields.remove("id")
+        if request.user.es_alumne:
+            # readonly, afegim descripcio_html
+            #self.fields.insert(0,'descripcio_html')
+            self.fields = ('empresa','titol','descripcio_html','inici','final','dades_empresa')
+        form = super().get_form(request,obj,**kwargs)
+        return form
+    def descripcio_html(self,obj):
+        return mark_safe(obj.descripcio)
+    def dades_empresa(self,obj):
+        text = "<p style='float:left;'><img style='max-width:8em;' src='/media/%s'></p>\
+                <p>Email: %s</p>\
+                <p>Telèfon: %s</p>\
+                <p>Adreça: %s</p>\
+                <p>Poblacio: %s</p>\
+                <p>Web: <a href=''>%s</a></p>\
+                <p>Localització: %s</p>\
+                Descripcio:%s<br>"    % (
+                    obj.empresa.imatge,  obj.empresa.email,
+                    obj.empresa.telefon, obj.empresa.direccio,
+                    obj.empresa.poblacio,obj.empresa.web,
+                    "...coming soon...", obj.empresa.descripcio)
+        return mark_safe(text)
     def formfield_for_foreignkey(self,db_field,request=None,**kwargs):
         # filtre camp empresa
         if db_field.name=="empresa":
@@ -231,9 +249,11 @@ class OfertaAdmin(admin.ModelAdmin):
 
 
 class NotificacioAdmin(admin.ModelAdmin):
-    list_display = ('oferta','data_oferta','usuari','email','enviament','confirmacio')
-    readonly_fields = ('oferta','data_oferta','usuari','email','enviament','confirmacio','registre')
+    list_display = ('oferta','data_oferta','usuari','mostra_email','enviament','confirmacio')
+    readonly_fields = ('oferta','data_oferta','usuari','enviament','confirmacio','registre')
     ordering = ('-enviament',)
+    def mostra_email(self,obj):
+        return obj.usuari.email
     def data_oferta(self,obj):
         return obj.oferta.inici
     def get_queryset(self,request):

@@ -37,6 +37,8 @@ def es_admin_centre( usuari ):
 	return usuari.es_admin_centre
 
 
+# LIB
+###############################################
 def filtra_ofertes_alumne(alumne):
 	# TODO: resoldre per subscripcions
 	# HO RESOLEM PELS TÍTOLS DE L'ALUMNE

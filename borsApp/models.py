@@ -104,7 +104,6 @@ class Notificacio(models.Model):
         verbose_name_plural = "Notificacions"
     oferta = models.ForeignKey(Oferta,on_delete=models.CASCADE)
     usuari = models.ForeignKey(User,on_delete=models.CASCADE)
-    email = models.EmailField()
     registre = models.TextField(blank=True)
     enviament = models.DateTimeField(blank=True,null=True)
     confirmacio = models.DateTimeField(blank=True,null=True)
