@@ -28,7 +28,7 @@ SECRET_KEY = 'o(#%baw0jmayi2szr^gww5d09#aalru258l7^tkn)g+=(w3nhr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*',]
+ALLOWED_HOSTS = ['borsa.ieti.cat','*',]
 
 
 # Application definition

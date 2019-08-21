@@ -36,7 +36,7 @@ PERMISOS = {
     "profes":{
         "done spec": ["add","change","delete","view"],
         "equip": ["add","change","delete","view"],
-        "projecte": ["change","view"],
+        "projecte": ["add","change","delete","view"],
         "qualificacio": ["add","change","delete","view"],
         "spec": ["add","change","delete","view"],
         "sprint": ["add","change","delete","view"],
