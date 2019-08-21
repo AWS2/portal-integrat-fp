@@ -174,8 +174,9 @@ class OfertaAdmin(admin.ModelAdmin):
     ordering = ('-inici','empresa',)
     def get_form(self,request,obj=None,**kwargs):
         # tots els camps del model
-        self.fields = [ field.name for field in Oferta._meta.fields ]
+        self.fields = [ field.name for field in Oferta._meta.get_fields(include_hidden=False) ]
         self.fields.remove("id")
+        self.fields.remove("notificacio")
         if request.user.es_alumne:
             # readonly, afegim descripcio_html
             #self.fields.insert(0,'descripcio_html')

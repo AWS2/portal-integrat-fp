@@ -92,7 +92,7 @@ class Oferta(models.Model):
     def __str__(self):
         return self.titol+" ("+self.empresa.nom+")"
 
-class Demandes(models.Model):
+class Demanda(models.Model):
     pass
 
 

@@ -20,11 +20,15 @@ Com a BD no ens servirà utilitzar SQLite, haurem d'utilitzar MySQL o bé PostGi
 
     $ docker run --name=postgis -d -e POSTGRES_USER=user001 -e POSTGRES_PASS=123456789 -e POSTGRES_DBNAME=gis -p 5432:5432 kartoza/postgis:9.6-2.4
 
+Cal crear un arxiu settings2.py amb les dades en producció:
+    $ cp BorsaDeTreball/settings2example.py BorsaDeTreball/settings2.py
+    $ vi BorsaDeTreball/settings2.py
 
-Seguim creant la BD, carregant dades de prova i posant en marxa l'aplicació:
+Seguim creant la BD, carregant permisos i posant en marxa l'aplicació:
 
     (env)$ python manage.py migrate
     (env)$ python manage.py createsuperuser
+    (env)$ python manage.py permisos
     (env)$ python manage.py runserver
 
 Si volem importar dades d'inici:
@@ -35,13 +39,15 @@ Si volem importar dades d'inici:
     (env)$ python manage.py loaddata mps
     (env)$ python manage.py loaddata ufs
 
+## CRON
+Per que funcioni l'enviament d'emails amb el resum (digest) de les ofertes acumulades, caldrà afegir una línia al CRON a la hora convenient i executar la comanda //digest//
+
+    $ python manage.py digest
 
 
 ## Seguiment del projecte
 Pots trobar més informació del desenvolupament del projecte a la wiki de l'Esteve Terradas:
     https://wiket.esteveterradas.cat/index.php/Projecte_Borsa_de_Treball
 
-## Usuarios
+## Usuaris
 
-# Correo
-Nombre de usuario: aws2Borsapp@gmail.com

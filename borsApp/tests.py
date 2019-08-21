@@ -7,7 +7,7 @@ from core.models import User
 
 # Create your tests here.
 
-
+from core.tests import BaseCoreTest
 from borsApp.models import *
 
 
@@ -120,15 +120,16 @@ class BorsaTests(StaticLiveServerTestCase):
         #self.selenium.find_element_by_xpath('//li[@class="success" and contains(text(),"fou afegit amb èxit")]')
         self.selenium.find_element_by_xpath('//li[@class="success"]')
 
-    def crea_oferta_caducada(self):
+    def crea_oferta_caducada1(self):
         self.ves_al_menu_principal()
         # menu ofertes
         self.selenium.find_element_by_xpath('//a[@href="/admin/borsApp/oferta/add/"]').click()
-        # omplim form
+        # buidem form
         self.selenium.find_element_by_name('inici_0').clear()
         self.selenium.find_element_by_name('inici_1').clear()
         self.selenium.find_element_by_name('final_0').clear()
         self.selenium.find_element_by_name('final_1').clear()
+        # omplim form
         self.selenium.find_element_by_name('inici_0').send_keys("01/01/2019")
         self.selenium.find_element_by_name('inici_1').send_keys("10:30:00")
         self.selenium.find_element_by_name('final_0').send_keys("10/02/2019")
@@ -151,6 +152,40 @@ class BorsaTests(StaticLiveServerTestCase):
         # comprovem oferta creada OK
         self.selenium.find_element_by_xpath('//li[@class="success"]')
 
+    def crea_oferta_vigent11(self):
+        self.ves_al_menu_principal()
+        # menu ofertes
+        self.selenium.find_element_by_xpath('//a[@href="/admin/borsApp/oferta/add/"]').click()
+        # omplim form
+        # per defecte la data d'inici la oferta és ara mateix
+        #self.selenium.find_element_by_name('inici_0').clear()
+        #self.selenium.find_element_by_name('inici_1').clear()
+        self.selenium.find_element_by_name('final_0').clear()
+        self.selenium.find_element_by_name('final_1').clear()
+        # data final d'aqui 1 setmana (7 dies timedelta)
+        from datetime import datetime, date, timedelta
+        final = date.today() + timedelta(days=7)
+        finalstr = final.strftime("%d/%m/%Y")
+        self.selenium.find_element_by_name('final_0').send_keys(finalstr)
+        self.selenium.find_element_by_name('final_1').send_keys("10:30:00")
+        self.selenium.find_element_by_name('titol').send_keys("oferta test vigent 11")
+        # select2 empresa (FK)
+        self.selenium.find_element_by_xpath('//span[@id="select2-id_empresa-container"]').click()
+        self.selenium.find_element_by_xpath('//li[text()="'+self.username+'"]').click()
+        # select2 cicles (m2m)
+        self.selenium.find_element_by_xpath('//div[@class="form-row field-cicles"]').click()
+        self.selenium.find_element_by_xpath('//input[@class="select2-search__field"]').send_keys("web\n")
+        # direccio té el RichTextField amb un iframe pel mig
+        # accedir dins iframe direcció
+        self.selenium.switch_to_frame("id_descripcio_ifr")
+        self.selenium.find_element_by_xpath('//body').send_keys("oferta test vigent.\nbla bla...")
+        # tornar al main frame
+        self.selenium.switch_to_default_content()
+        # submit
+        self.selenium.find_element_by_xpath('//input[@value="Desar"]').click()
+        # comprovem oferta creada OK
+        self.selenium.find_element_by_xpath('//li[@class="success"]')
+
     def veu_oferta_caducada1(self):
         self.ves_al_menu_principal()
         self.selenium.find_element_by_xpath('//a[text()="Ofertes"]').click()
@@ -161,12 +196,45 @@ class BorsaTests(StaticLiveServerTestCase):
         try:
             self.selenium.find_element_by_xpath('//a[text()="Ofertes"]').click()
             self.selenium.find_element_by_xpath('//a[text()="oferta test caducada 1"]').click()
+            raise Exception("ERROR: l'usuari no autoritzat '%s' pot veure les ofertes (caducades) de l'empresa 1"%(self.username,))
+        except NoSuchElementException as e:
+            # si no el troba, esta OK
+            pass
+        except Exception as e:
+            raise e
+
+    def veu_oferta_vigent11(self):
+        self.ves_al_menu_principal()
+        self.selenium.find_element_by_xpath('//a[text()="Ofertes"]').click()
+        self.selenium.find_element_by_xpath('//a[text()="oferta test vigent 11"]').click()
+
+    def no_veu_oferta_vigent11(self):
+        self.ves_al_menu_principal()
+        try:
+            self.selenium.find_element_by_xpath('//a[text()="Ofertes"]').click()
+            self.selenium.find_element_by_xpath('//a[text()="oferta test vigent 11"]').click()
             raise Exception("ERROR: l'usuari no autoritzat '%s' pot veure les ofertes de l'empresa 1"%(self.username,))
         except NoSuchElementException as e:
             # si no el troba, esta OK
             pass
         except Exception as e:
             raise e
+
+    def backend_modifica_usuari(self,username):
+        self.ves_al_menu_principal()
+        self.selenium.find_element_by_xpath('//a[text()="Usuaris"]').click()
+        self.selenium.find_element_by_xpath('//th[@class="field-username"]/a[text()="'+username+'"]').click()
+
+    def backend_titol_alumne(self,username,cerca_cicle,cerca_centre):
+        self.backend_modifica_usuari(username)
+        # select2 centre (FK)
+        self.selenium.find_element_by_xpath('//span[@id="select2-id_titols-0-centre-container"]').click()
+        self.selenium.find_element_by_xpath('//input[@class="select2-search__field"]').send_keys(cerca_centre+"\n")
+        # select2 cicles (FK)
+        self.selenium.find_element_by_xpath('//span[@id="select2-id_titols-0-cicle-container"]').click()
+        self.selenium.find_element_by_xpath('//input[@class="select2-search__field"]').send_keys(cerca_cicle+"\n")
+        # desem
+        self.selenium.find_element_by_xpath('//input[@value="Desar"]').click()
 
 
     # TESTS
@@ -177,6 +245,8 @@ class BorsaTests(StaticLiveServerTestCase):
         # centre 1
         self.backend_login("admin1","enric123")
         self.backend_crea_alumne("alumne11","enric123")
+        # alumne11 te el cicle de web
+        self.backend_titol_alumne("alumne11","web","terradas")
         self.backend_crea_alumne("alumne12","enric123")
         # usuari i empresa es diran igual pels tests
         # ULL: no posar noms d'empresa amb espais per tests!!!
@@ -224,25 +294,35 @@ class BorsaTests(StaticLiveServerTestCase):
         #def test_4_empresa1_oferta_caducada(self):
         # empresa1
         self.backend_login("empresa11","enric123")
-        self.crea_oferta_caducada()
+        self.crea_oferta_caducada1()
+        self.crea_oferta_vigent11()
         self.veu_oferta_caducada1()
+        self.veu_oferta_vigent11()
+        self.backend_logout()
+        # alumne11
+        self.backend_login("alumne11","enric123")
+        self.no_veu_oferta_caducada1()
+        self.veu_oferta_vigent11()
         self.backend_logout()
         # admin2
         self.backend_login("admin2","enric123")
         self.no_veu_oferta_caducada1()
+        self.no_veu_oferta_vigent11()
         self.backend_logout()
         # alumne21
         self.backend_login("alumne21","enric123")
         self.no_veu_oferta_caducada1()
+        self.no_veu_oferta_vigent11()
         self.backend_logout()
         # empresa2
         self.backend_login("empresa21","enric123")
         self.no_veu_oferta_caducada1()
+        self.no_veu_oferta_vigent11()
         self.backend_logout()
 
     def xtest_5_empresa1_oferta_ok(self):
         self.backend_login("empresa11","enric123")
-        self.crea_oferta_ok()
+        self.crea_oferta_vigent11()
         self.backend_logout()
         # alumne1 sí veu l'oferta ok
 
