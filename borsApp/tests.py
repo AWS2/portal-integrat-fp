@@ -248,6 +248,8 @@ class BorsaTests(StaticLiveServerTestCase):
         # alumne11 te el cicle de web
         self.backend_titol_alumne("alumne11","web","terradas")
         self.backend_crea_alumne("alumne12","enric123")
+        # alumne11 te el cicle de mecanització
+        self.backend_titol_alumne("alumne12","mecanitza","terradas")
         # usuari i empresa es diran igual pels tests
         # ULL: no posar noms d'empresa amb espais per tests!!!
         self.crea_empresa("empresa11")
@@ -259,6 +261,8 @@ class BorsaTests(StaticLiveServerTestCase):
         self.backend_login("admin2","enric123")
         self.backend_crea_alumne("alumne21","enric123")
         self.backend_crea_alumne("alumne22","enric123")
+        # alumne21 te el cicle de web
+        self.backend_titol_alumne("alumne21","web","montilivi")
         # empresa2
         self.crea_empresa("empresa21")
         self.ajusta_usuari_empresa("empresa21","enric123")
@@ -295,21 +299,26 @@ class BorsaTests(StaticLiveServerTestCase):
         # empresa1
         self.backend_login("empresa11","enric123")
         self.crea_oferta_caducada1()
-        self.crea_oferta_vigent11()
+        self.crea_oferta_vigent11() # oferta de web visible
         self.veu_oferta_caducada1()
         self.veu_oferta_vigent11()
         self.backend_logout()
-        # alumne11
+        # alumne11 (es de web i del terradas, veu la oferta vigent)
         self.backend_login("alumne11","enric123")
         self.no_veu_oferta_caducada1()
         self.veu_oferta_vigent11()
+        self.backend_logout()
+        # alumne12 (es del terradas però no de web, no veu la oferta vigent)
+        self.backend_login("alumne12","enric123")
+        self.no_veu_oferta_caducada1()
+        self.no_veu_oferta_vigent11()
         self.backend_logout()
         # admin2
         self.backend_login("admin2","enric123")
         self.no_veu_oferta_caducada1()
         self.no_veu_oferta_vigent11()
         self.backend_logout()
-        # alumne21
+        # alumne21 (es de web, pero no del terradas, no veu la oferta)
         self.backend_login("alumne21","enric123")
         self.no_veu_oferta_caducada1()
         self.no_veu_oferta_vigent11()
