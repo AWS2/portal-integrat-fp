@@ -9,18 +9,17 @@ from adminsortable2.admin import SortableInlineAdminMixin
 # Register your models here.
 
 from scrum.models import *
-
+"""# Ja no cal pq hem posat plugin
 ProjecteForm = select2_modelform(Projecte)
 SprintForm = select2_modelform(Sprint)
 EquipForm = select2_modelform(Equip)
 SpecForm = select2_modelform(Spec)
-
+"""
 class EquipAdmin(admin.ModelAdmin):
     model = Equip
-    form = EquipForm
+    #form = EquipForm
     filter_horizontal = ('membres',)
     list_display = ('nom','projecte','centre','show_membres',)
-    #form = EquipForm
     def centre(self,obj):
         return obj.projecte.centre.nom
     def cicle(self,obj):
@@ -42,10 +41,11 @@ class EquipAdmin(admin.ModelAdmin):
         qs = qs.filter( Q(projecte__admins__in=[request.user])
                         | Q(projecte__centre__in=cids)
                         | Q(membres__in=[request.user]) )
-        return qs
+        return qs.distinct()
     def formfield_for_foreignkey(slef,db_field,request=None,**kwargs):
         if db_field.name=="projecte" and not request.user.is_superuser:
             # restringir a projectes del propi centre/s
+            # TODO: restringir dates projectes en curs
             centres = Centre.objects.filter(admins__in=[request.user])
             if request.user.centre:
                 centres |= Centre.objects.filter(pk=request.user.centre.id)
@@ -62,7 +62,7 @@ class EquipAdmin(admin.ModelAdmin):
 
 class SpecInline(SortableInlineAdminMixin,admin.TabularInline):
     model = Spec
-    form = SpecForm
+    #form = SpecForm
     exclude = ('descripcio','pare')
     extra = 2
     # restrict mps al cicle
@@ -86,10 +86,10 @@ class SpecInline(SortableInlineAdminMixin,admin.TabularInline):
         return super().formfield_for_manytomany(db_field, request=request, **kwargs)
 class SprintInline(admin.TabularInline):
     model = Sprint
-    form = SprintForm
+    #form = SprintForm
     ordering = ('inici',)
     exclude = ('notes',)
-    extra = 0
+    extra = 1
     # restrict specs al proj
     def formfield_for_manytomany(self, db_field, request=None, **kwargs):
         if db_field.name == 'specs':
@@ -110,7 +110,7 @@ class SprintInline(admin.TabularInline):
 from django.db.models import Q
 class ProjecteAdmin(admin.ModelAdmin):
     model = Projecte
-    form = ProjecteForm
+    #form = ProjecteForm
     list_display = ('nom','centre','inici','final','cicle')
     ordering = ('centre','cicle','-inici')
     search_fields = ('nom','centre__nom','cicle__nom',)
@@ -178,7 +178,7 @@ class SpecAdmin(SortableAdminMixin,admin.ModelAdmin):
     filter_horizontal = ('mp',)
     list_display = ('nom','projecte','moduls','ordre',)
     ordering = ('ordre',)
-    form = SpecForm
+    #form = SpecForm
     def get_queryset(self,request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
