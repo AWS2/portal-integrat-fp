@@ -28,7 +28,7 @@ SECRET_KEY = 'o(#%baw0jmayi2szr^gww5d09#aalru258l7^tkn)g+=(w3nhr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['borsa.ieti.cat','*',]
+ALLOWED_HOSTS = ['borsa.ieti.cat',]
 
 
 # Application definition
@@ -121,16 +121,16 @@ DATABASES = {
     #    'ENGINE': 'django.db.backends.sqlite3',
     #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     #},
-    #'mysql': { # mysql
-    #    'ENGINE': 'django.contrib.gis.db.backends.mysql',
-    #    #'ENGINE': 'django.db.backends.mysql',
-    #    #'ENGINE': 'mysql.connector.django', # MySQL 8 (problemes amb GIS)
-    #    'NAME': settings2.DB_NAME,
-    #    'USER': settings2.DB_USER,
-    #    'PASSWORD': settings2.DB_PASS,
-    #    'HOST': settings2.DB_HOST or "localhost",
-    #    'PORT': settings2.DB_PORT or 3306,
-    #},
+    'mysql': { # mysql
+        'ENGINE': 'django.contrib.gis.db.backends.mysql',
+        #'ENGINE': 'django.db.backends.mysql',
+        #'ENGINE': 'mysql.connector.django', # MySQL 8 (problemes amb GIS)
+        'NAME': settings2.DB_NAME,
+        'USER': settings2.DB_USER,
+        'PASSWORD': settings2.DB_PASS,
+        'HOST': settings2.DB_HOST or "localhost",
+        'PORT': settings2.DB_PORT or 3306,
+    },
     'postgre': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': settings2.DB_NAME,
@@ -193,8 +193,8 @@ DJRICHTEXTFIELD_CONFIG = {
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_ROOT = 'media/'
-STATIC_ROOT = os.path.join(REPOSITORY_ROOT, 'static/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL = '/media/'
 
 

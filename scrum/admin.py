@@ -42,7 +42,7 @@ class EquipAdmin(admin.ModelAdmin):
         qs = qs.filter( Q(projecte__admins__in=[request.user])
                         | Q(projecte__centre__in=cids)
                         | Q(membres__in=[request.user]) )
-        return qs
+        return qs.distinct()
     def formfield_for_foreignkey(slef,db_field,request=None,**kwargs):
         if db_field.name=="projecte" and not request.user.is_superuser:
             # restringir a projectes del propi centre/s
