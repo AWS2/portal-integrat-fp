@@ -27,6 +27,7 @@ PERMISOS = {
         "oferta": ["view"],
         "subscripcio": ["add","change","delete","view"],
         "titol": ["view"],
+        "projecte": ["view"],
         "done spec": ["view"],
         "equip": ["add","change","view"],
         "qualificacio": ["view"],

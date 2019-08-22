@@ -23,12 +23,12 @@ REPOSITORY_ROOT = os.path.dirname(BASE_DIR)
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'o(#%baw0jmayi2szr^gww5d09#aalru258l7^tkn)g+=(w3nhr'
+SECRET_KEY = settings2.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = settings2.DEBUG
 
-ALLOWED_HOSTS = ['borsa.ieti.cat',]
+ALLOWED_HOSTS = settings2.ALLOWED_HOSTS
 
 
 # Application definition

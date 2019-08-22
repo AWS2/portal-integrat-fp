@@ -295,15 +295,21 @@ class QualificacioAdmin(admin.ModelAdmin):
     def get_queryset(self,request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
+            # super ho veu tot
             return qs
+        elif request.user.es_alumne:
+            # alumne només veu qualificacions dels seus grups
+            qs = qs.filter(equip__membres__in=[request.user])
+            return qs
+        # altres (admins centre, profes)
         # filtrem projectes propis (profe)
         # + (OR) projectes dels centres on soc admin <- TODO: treure aquest?
-        # + (OR) projectes en els que participo com a alumne
-        cids = [ centre.id for centre in request.user.centres_admin.all() ]
+        # + (OR) projectes en els que participo com a membre (alumnes, TODO: treure-ho?)
+        centres = request.user.centres_admin.all()
         qs = qs.filter( Q(sprint__projecte__admins__in=[request.user])
-                | Q(sprint__projecte__centre__in=cids)
+                | Q(sprint__projecte__centre__in=centres)
                 | Q(sprint__projecte__equips__membres__in=[request.user]) )
-        return qs
+        return qs.distinct()
 """
 class DoneSpecAdmin(admin.ModelAdmin):
     model = DoneSpec

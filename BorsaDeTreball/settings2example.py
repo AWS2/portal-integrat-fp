@@ -1,3 +1,9 @@
+# global
+# crear random SECRET_KEY
+SECRET_KEY = 'o(#%baw0jmayi2szr^gww5d09#aalru258l7^tkn)g+=(w3nhr'
+ALLOWED_HOSTS = ['*']
+DEBUG = True
+
 # set2 example
 EMAIL_HOST = "Asignar el host por el cual se enviaran los mails"
 EMAIL_PORT = "Asignar el puerto por el que se envia el mail"
