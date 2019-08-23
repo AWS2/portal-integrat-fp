@@ -129,7 +129,7 @@ class ProjecteAdmin(admin.ModelAdmin):
         qs = qs.filter( Q(admins__in=[request.user])
                         | Q(centre__in=cids)
                         | Q(equips__membres__in=[request.user]) ).distinct()
-        return qs
+        return qs.distinct()
     def formfield_for_foreignkey(self,db_field,request=None,**kwargs):
         # filtre camp alumne
         if db_field.name=="centre":
