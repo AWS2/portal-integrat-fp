@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django import forms
+from django.contrib.gis.admin import OSMGeoAdmin
 
 # Register your models here.
 
@@ -16,7 +17,7 @@ TitolForm = select2_modelform(Titol)#,attrs={"width":"450px"})
 SubscripcioForm = select2_modelform(Subscripcio)"""
 
 
-class EmpresaAdmin(admin.ModelAdmin):
+class EmpresaAdmin(OSMGeoAdmin):
     list_display = ('nom','poblacio','get_admins','get_centres')
     filter_horizontal = ('admins','adscripcio')
     def get_queryset(self,request):
