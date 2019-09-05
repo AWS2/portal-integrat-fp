@@ -30,6 +30,7 @@ DEBUG = settings2.DEBUG
 
 ALLOWED_HOSTS = settings2.ALLOWED_HOSTS
 
+SESSION_COOKIE_AGE = 4 * 60 * 60 # les sessions duren 4 hores per defecte
 
 # Application definition
 
