@@ -15,11 +15,19 @@ SprintForm = select2_modelform(Sprint)
 EquipForm = select2_modelform(Equip)
 SpecForm = select2_modelform(Spec)
 """
+
+class QualificacioInline(admin.TabularInline):
+    model = Qualificacio
+    extra = 0
+    fields = ('sprint','nota','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
+    readonly_fields = ('sprint','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
+
 class EquipAdmin(admin.ModelAdmin):
     model = Equip
     #form = EquipForm
     filter_horizontal = ('membres',)
     list_display = ('nom','projecte','centre','show_membres',)
+    inlines = [ QualificacioInline, ]
     def centre(self,obj):
         return obj.projecte.centre.nom
     def cicle(self,obj):
@@ -176,9 +184,20 @@ class SpecAdmin(SortableAdminMixin,admin.ModelAdmin):
     model = Spec
     search_fields = ('projecte__nom','mp__nom',)
     filter_horizontal = ('mp',)
-    list_display = ('nom','projecte','moduls','ordre',)
+    list_display = ('nom','projecte','hores_estimades','moduls','ordre',)
+    list_editable = ('hores_estimades',)
     ordering = ('ordre',)
     #form = SpecForm
+    def get_list_display(self,request):
+        # TODO: falla (ordre apareix en num enlloc de control). arreglar
+        # per a admins i super
+        """self.list_display = ('nom','projecte','hores_estimades','moduls','ordre',)
+        self.list_editable = ('hores_estimades',)
+        # modifiquem per alumnes
+        if request.user.es_alumne:
+            self.list_display = ('nom','projecte','hores_estimades','moduls',)
+            self.list_editable = ()"""
+        return super().get_list_display(request)
     def get_queryset(self,request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -255,40 +274,10 @@ class DoneSpecInline(admin.TabularInline):
         return mark_safe(mps)
 class QualificacioAdmin(admin.ModelAdmin):
     model = Qualificacio
-    list_display = ('__str__','projecte','sprint','equip','nota','comepletat','completat_mps')
+    list_display = ('__str__','projecte','sprint','equip','nota','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
     search_fields = ('sprint__projecte__nom','sprint__nom','equip__nom')
-    readonly_fields = ('comepletat','equip','sprint','completat_mps')
+    readonly_fields = ('sprint','equip','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
     inlines = [ DoneSpecInline, ]
-    def projecte(self,obj):
-        return obj.sprint.projecte.nom
-    def comepletat(self,obj):
-        total = 0
-        done = 0
-        for spec in obj.done_specs.all():
-            total += 1
-            if spec.done:
-                done += 1
-        if total==0:
-            return "-"
-        return str(100*done/total)+" %"
-    def completat_mps(self,obj):
-        mps = {}
-        for dspec in obj.done_specs.all():
-            for mp in dspec.spec.mp.all():
-                # si no hi ha dict, el creem
-                if mp.id not in mps:
-                    mps[mp.id] = { "obj": mp, "total": 0, "done": 0 }
-                # afegim estadístiques
-                mps[mp.id]["total"] += 1
-                if dspec.done:
-                    mps[mp.id]["done"] += 1
-        # construim return string
-        ret = ""
-        for mpid in mps:
-            dades = mps[mpid]
-            mp = mps[mpid]["obj"]
-            ret += mp.nom + " : "+str(100*dades["done"]/dades["total"])+ " %<br>"
-        return mark_safe(ret)
     def get_list_display(self,*args,**kwargs):
         actualitza_qualificacions()
         return super().get_list_display(*args,**kwargs)
