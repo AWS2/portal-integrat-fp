@@ -71,8 +71,17 @@ class EquipAdmin(admin.ModelAdmin):
 class SpecInline(SortableInlineAdminMixin,admin.TabularInline):
     model = Spec
     #form = SpecForm
-    exclude = ('descripcio','pare')
+    exclude = ('pare','descripcio')
+    #TODO: no exclude descripcio pero adaptar-ho be en amplada
     extra = 2
+    """def get_form(self,request,obj=None,**kwargs):
+        form = super().get_form(request,obj,**kwargs)
+        form.fields["descripcio"].widget.field_settings={'width':'300'}
+        return form"""
+    """def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        print(dir(self.form))
+        self.form.visible_fields["descripcio"].widget.field_settings={'width':'300'}"""
     # restrict mps al cicle
     def formfield_for_manytomany(self, db_field, request=None, **kwargs):
         if db_field.name == 'mp':
@@ -182,12 +191,35 @@ class ProjecteAdmin(admin.ModelAdmin):
 from urllib.parse import urlsplit
 class SpecAdmin(SortableAdminMixin,admin.ModelAdmin):
     model = Spec
-    search_fields = ('projecte__nom','mp__nom',)
+    search_fields = ('projecte__nom','mp__nom','sprints__nom')
     filter_horizontal = ('mp',)
-    list_display = ('nom','projecte','hores_estimades','moduls','ordre',)
+    list_display = ('nom','descripcio_html','projecte','mostra_sprints','hores_estimades','moduls','ordre',)
     list_editable = ('hores_estimades',)
+    readonly_fields = ('descripcio_html',)
     ordering = ('ordre',)
     #form = SpecForm
+    def mostra_sprints(self,obj):
+        ret = ""
+        for sprint in obj.sprints.all():
+            ret += sprint.nom + "<br>"
+        return mark_safe(ret)
+    def moduls(self,obj):
+        mps = ""
+        for mp in obj.mp.all():
+            mps += mp.nom + "<br>"
+        return mark_safe(mps)
+    def descripcio_html(self,obj):
+        return mark_safe(obj.descripcio)
+    def get_form(self,request,obj=None,**kwargs):
+        if request.user.es_alumne:
+            # mostrem read-only i amaguem desc field (renderitzem html)
+            self.exclude = ('descripcio',)
+            self.readonly_fields = ('descripcio_html',)
+        else:
+            # mostrem tot normal (editable)
+            self.exclude = ()
+            self.readonly_fields = ()
+        return super().get_form(request,obj,**kwargs)
     def get_list_display(self,request):
         # TODO: falla (ordre apareix en num enlloc de control). arreglar
         # per a admins i super
@@ -210,11 +242,6 @@ class SpecAdmin(SortableAdminMixin,admin.ModelAdmin):
                 | Q(projecte__centre__in=cids)
                 | Q(projecte__equips__membres__in=[request.user]) ).distinct()
         return qs
-    def moduls(self,obj):
-        mps = ""
-        for mp in obj.mp.all():
-            mps += mp.nom + "<br>"
-        return mark_safe(mps)
     def formfield_for_manytomany(self, db_field, request=None, **kwargs):
         if db_field.name == 'mp':
             try:
@@ -233,14 +260,36 @@ class SpecAdmin(SortableAdminMixin,admin.ModelAdmin):
                 print("ERROR in formfield_for_manytomany (SpecAdmin)")
         return super().formfield_for_manytomany(db_field, request=request, **kwargs)
 
-""" # deprecated (no registrem pel backend, ho fem inline al Projecte admin)
+# deprecated (no registrem pel backend, ho fem inline al Projecte admin)
+class SpecInline(admin.TabularInline):
+    model = Sprint.specs.through
 class SprintAdmin(admin.ModelAdmin):
     model = Sprint
     list_display = ('nom','projecte','inici','final')
-    form = SprintForm
+    #form = SprintForm
     filter_horizontal = ('specs',)
     ordering = ['inici',]
     search_fields = ('projecte__nom',)
+    #inlines = [ SpecInline, ]
+    #exclude = ('specs',)
+    #fields = ('nom','notes','projecte','inici','final','show_specs')
+    readonly_fields = ('notes_html','show_specs',)
+    def get_form(self,request,obj=None,**kwargs):
+        if request.user.es_alumne:
+            self.exclude = ('notes')
+        else:
+            self.exclude = ('notes_html',)
+        return super().get_form(request,obj,**kwargs)
+    def notes_html(self,obj):
+        return mark_safe(obj.notes)
+    def show_specs(self,obj):
+        ret = "<ol>\n"
+        for spec in obj.specs.all():
+            ret += '<li>{}<dl><dd>{}</dd></dl></li>\n'.format(spec.nom,spec.descripcio)
+            print(spec.nom)
+            #print(spec.notes)
+        ret += '</ol>\n'
+        return mark_safe(ret)
     def formfield_for_manytomany(self, db_field, request=None, **kwargs):
         if db_field.name == 'specs':
             try:
@@ -257,16 +306,20 @@ class SprintAdmin(admin.ModelAdmin):
             except:
                 print("ERROR in formfield_for_manytomany (SprintAdmin)")
         return super().formfield_for_manytomany(db_field, request=request, **kwargs)
-"""
+
 
 class DoneSpecInline(admin.TabularInline):
     model = DoneSpec
     extra = 0
     can_delete = False
-    readonly_fields = ('is_done','spec','mps')
+    readonly_fields = ('is_done','spec','hores_estimades','descripcio','mps')
     def is_done(self,obj):
         return obj.done
     is_done.boolean = True
+    def hores_estimades(self,obj):
+        return obj.spec.hores_estimades
+    def descripcio(self,obj):
+        return mark_safe(obj.spec.descripcio)
     def mps(self,obj):
         mps = ""
         for mp in obj.spec.mp.all():
@@ -346,7 +399,7 @@ def actualitza_qualificacions():
 
 admin.site.register( Projecte, ProjecteAdmin )
 admin.site.register( Spec, SpecAdmin )
-#admin.site.register( Sprint, SprintAdmin )
+admin.site.register( Sprint, SprintAdmin )
 admin.site.register( Equip, EquipAdmin )
 admin.site.register( Qualificacio, QualificacioAdmin )
 #admin.site.register( DoneSpec, DoneSpecAdmin )

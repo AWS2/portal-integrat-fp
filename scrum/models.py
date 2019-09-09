@@ -1,6 +1,8 @@
 from django.db import models
 from djrichtextfield.models import RichTextField
 import datetime
+from django.utils.safestring import mark_safe
+from django import forms
 
 # Create your models here.
 
@@ -31,7 +33,7 @@ class Spec(models.Model):
     class Meta:
         ordering = ['ordre',]
     nom = models.CharField(max_length=255)
-    descripcio = RichTextField(blank=True)
+    descripcio = RichTextField(blank=True)#field_settings={'width':'300'} aqui si q funciona
     pare = models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True)
     projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
     ordre = models.IntegerField(default=0)
@@ -40,13 +42,15 @@ class Spec(models.Model):
     def __str__(self):
         return self.nom
 
+
 class Sprint(models.Model):
     nom = models.CharField(max_length=255)
     notes = RichTextField(blank=True)
     projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
     inici = models.DateField()
     final = models.DateField()
-    specs = models.ManyToManyField(Spec,blank=True,help_text="NOTA: no apareixeran a en la CREACIÓ del Sprint, sinó en l'EDICIÓ")
+    specs = models.ManyToManyField(Spec,related_name="sprints",blank=True,
+                        help_text="NOTA: no apareixeran a en la CREACIÓ del Sprint, sinó en l'EDICIÓ")
     def __str__(self):
         return self.nom
 
