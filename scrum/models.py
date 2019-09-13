@@ -122,7 +122,7 @@ class Qualificacio(models.Model):
             dades = mps[mpid]
             mp = mps[mpid]["obj"]
             if dades["total"] == 0:
-                ret += mp.nom[:4] + " -<br>"
+                ret += mp.nom[:4] + " : -<br>"
             else:
                 ret += mp.nom[:4] + " : "+str(100*dades["done"]/dades["total"])+ " %<br>"
         return mark_safe(ret)

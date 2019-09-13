@@ -9,18 +9,33 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # esborrem tots els centres
-        Centre.objects.all().delete()
+        #Centre.objects.all().delete()
 
         with open('misc/Directori_de_centres_docents.csv') as csvfile:
             csv_reader = csv.DictReader( csvfile )
             for row in csv_reader:
+                # incialitzem centre
+                centre = None
+                # filtrem centres del curs actual
                 if row["Curs"] != "2018/2019" or "institut" not in row["Denominació completa"].lower():
                     continue
+                # filtrem casos erronis
+                if not row["Codi centre"] or row["Codi centre"]==0:
+                    print("--- CODI DE CENTRE ERRONI: "+row["Denominació completa"])
+                    continue
+                # si és el mateix centre, actualitzem dades
+                """qs = Centre.objects.filter(codi=row["Codi centre"])
+                if qs:
+                    print("--- ACTUALITZANT : "+row["Denominació completa"])
+                    centre = qs[0]
+                 si té el mateix nom q un altre centre, els distingim"""
                 qs = Centre.objects.filter(nom=row["Denominació completa"])
                 if qs:
-                    print("--- SALTANT (ja existeix) : "+row["Denominació completa"])
-                    continue
-                centre = Centre()
+                    print("--- *ACT / SALTANT (ja existeix) : "+row["Denominació completa"])
+                    #continue
+                    centre = qs[0]
+                if not centre:
+                    centre = Centre()
                 centre.educatiu = True
                 centre.codi = row["Codi centre"]
                 centre.nom = row["Denominació completa"]
@@ -30,6 +45,7 @@ class Command(BaseCommand):
                 centre.telefon = 1 #row["Telèfon"]
                 centre.email = row["E-mail centre"]
                 centre.web = ""
+                centre.codi = row["Codi centre"]
                 x = row["Coordenades GEO X"]
                 y = row["Coordenades GEO Y"]
                 if( x and y ):

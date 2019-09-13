@@ -17,15 +17,18 @@ from datetime import datetime
 
 
 
-class ConvidaForm(forms.Form):
+class ConvidaProfesForm(forms.Form):
 	centre = forms.ModelChoiceField( Centre.objects.none(), widget=Select2Widget )
+	emails = forms.CharField( widget=forms.Textarea,
+							help_text="Un email per línia dels alumnes a convidar.")
+
+class ConvidaAlumnesForm(ConvidaProfesForm):
+	# els alumnes cal afegir tb el centre per posar-los al títol adequat
 	cicle = forms.ModelChoiceField( None, widget=Select2Widget )
 	finalitzat = forms.BooleanField( required=False,
 							help_text="Marcar si els alumnes ja han finalitzat el cicle." )
 	#data_finalitzacio = forms.DateField( widget=forms.SelectDateWidget, required=False,
 	#						help_text="Data de graduació de l'alumne")
-	emails = forms.CharField( widget=forms.Textarea,
-							help_text="Un email per línia dels alumnes a convidar.")
 
 
 # Create your views here.
@@ -33,8 +36,8 @@ def index(request):
     return render(request, 'borsApp/index.html', {} )
 
 
-def es_admin_centre( usuari ):
-	return usuari.es_admin_centre
+def pot_convidar( usuari ):
+	return usuari.es_admin_centre or usuari.is_superuser
 
 
 # LIB
@@ -59,8 +62,8 @@ def filtra_ofertes_alumne(alumne):
 
 
 @login_required
-@user_passes_test( es_admin_centre, login_url="/login" )
-def convida(request):
+@user_passes_test( pot_convidar , login_url="/login" )
+def convida_alumnes(request):
 	if request.method=="POST":
 		# dades form
 		cicle = Cicle.objects.get(pk=request.POST["cicle"])
@@ -106,26 +109,81 @@ def convida(request):
 				emails_erronis.append(email)
 			# TODO: enviar email a l'alumne
 		return render(request,'borsApp/convida.html',
-			{	"cicle":cicle, "centre":centre,
+			{	"tipus": "alumnes",
+				"cicle":cicle, "centre":centre,
 				"emails_ok":emails_ok,
 				"emails_repetits":emails_repetits,
 				"emails_erronis":emails_erronis} )
 	# GET: creem form per introduir emails d'invitació
-	form = ConvidaForm(request.GET)
+	form = ConvidaAlumnesForm(request.GET)
 	if request.user.is_superuser:
 		form.fields["centre"].queryset = Centre.objects.all()
 		form.fields["cicle"].queryset = Cicle.objects.all()
 	else:
-		# només permet convidar als cicles gestionants pel 1r centre
-		# TODO: filtrar correctament
+		# filtrem cicles dels centres implicats
+		# TODO: selects encadenats
 		centres = request.user.centres_admin.all()
 		form.fields["centre"].queryset = centres
 		form.fields["cicle"].queryset = Cicle.objects.filter(centres__in=centres)
 		#request.user.centres_admin.all().cicles.all()
-	return render(request, 'borsApp/convida.html', {"form":form} )
+	return render(request, 'borsApp/convida.html', {"form":form,"tipus":"alumnes"} )
 
 @login_required
-@user_passes_test( es_admin_centre, login_url="/login" )
+@user_passes_test( pot_convidar, login_url="/login" )
 def invitacions(request):
 	return render(request, 'borsApp/invitacions.html')
 
+
+@login_required
+@user_passes_test( pot_convidar , login_url="/login" )
+def convida_profes(request):
+	if request.method=="POST":
+		# dades form
+		centre = Centre.objects.get(pk=request.POST["centre"])
+		finalitzat = False
+		if request.POST.get("finalitzat",False):
+			finalitzat = True
+		# emails
+		emails = request.POST["emails"].split("\n")
+		emails_ok = []
+		emails_repetits = []
+		emails_erronis = []
+		# grup alumnes
+		gprofes = Group.objects.get(name="profes")
+		for email in emails:
+			email = email.strip()
+			#print("("+email+")")
+			# comprovar si repetit
+			users = User.objects.filter(email=email)
+			if not validate_email(email):
+				emails_erronis.append(email)
+			elif users:
+				usuari = users[0]
+				# no cal crear usuari
+				emails_repetits.append(email)
+				# afegim al grup profes
+				gprofes.user_set.add(usuari)
+			elif validate_email(email,verify=True):
+				# crear usuari (al grup profes)
+				user = User(username=email.replace("@","_"),email=email,is_staff=True,centre=centre)
+				user.save()
+				emails_ok.append(email)
+				# afegir al grup alumnes
+				gprofes.user_set.add(user)
+			else:
+				emails_erronis.append(email)
+			# TODO: enviar email al profe
+		return render(request,'borsApp/convida.html',
+			{	"tipus":"profes",
+				"centre":centre,
+				"emails_ok":emails_ok,
+				"emails_repetits":emails_repetits,
+				"emails_erronis":emails_erronis} )
+	# GET: creem form per introduir emails d'invitació
+	form = ConvidaProfesForm(request.GET)
+	if request.user.is_superuser:
+		form.fields["centre"].queryset = Centre.objects.all()
+	else:
+		centres = request.user.centres_admin.all()
+		form.fields["centre"].queryset = centres
+	return render(request, 'borsApp/convida.html', {"form":form,"tipus":"profes"} )

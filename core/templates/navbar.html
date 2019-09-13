@@ -9,9 +9,9 @@
   </ul>
 
   <ul id="dropdown3" class="dropdown-content">
-    <li><a href="/borsa/convida"><i class="material-icons left">email</i>Convida alumnes a la borsa</a></li>
-    <li><a href="/borsa/convida"><i class="material-icons left">mail_outline</i>Convida alumnes a ABP/Scrum</a></li>
-    <li><a href="#"><i class="material-icons left">email</i>Convida professors a ABP/Scrum</a></li>
+    <li><a href="/borsa/convida_alumnes"><i class="material-icons left">email</i>Convida alumnes a la borsa</a></li>
+    <li><a href="/borsa/convida_alumnes"><i class="material-icons left">mail_outline</i>Convida alumnes a ABP/Scrum</a></li>
+    <li><a href="/borsa/convida_profes"><i class="material-icons left">email</i>Convida professors a ABP/Scrum</a></li>
   </ul>
 
 <div class="navbar-fixed">
@@ -40,10 +40,10 @@
             <li><a href="/admin/borsApp"><i class="material-icons left">work</i>Borsa de Treball</a></li>
 
             {% if request.user.is_staff %}
-            <li><a href="admin/scrum"><i class="material-icons left">view_list</i>Scrum / ABP</a></li>
+            <li><a href="/admin/scrum"><i class="material-icons left">view_list</i>Scrum / ABP</a></li>
             {% endif %}
 
-            {% if request.user.es_admin_centre %}
+            {% if request.user.es_admin_centre or request.user.is_superuser %}
             <li>
               <a class="dropdown-trigger" data-target="dropdown3" href="#">
                 Admin centre
@@ -98,9 +98,9 @@
                 <a class="collapsible-header">Administra centre<i class="material-icons">settings</i></a>
                 <div class="collapsible-body">
                   <ul>
-                    <li><a href="/borsa/convida"><i class="material-icons left">mail</i>Convida alumnes a ABP/Scrum</a></li>
-                    <li><a href="/borsa/convida"><i class="material-icons left">mail_outline</i>Convida alumnes a la Borsa de Treball</a></li>
-                    <li><a href="/borsa/convida"><i class="material-icons left">mail</i>Convida professors a ABP/Scrum</a></li>
+                    <li><a href="/borsa/convida_alumnes"><i class="material-icons left">mail</i>Convida alumnes a ABP/Scrum</a></li>
+                    <li><a href="/borsa/convida_alumnes"><i class="material-icons left">mail_outline</i>Convida alumnes a la Borsa de Treball</a></li>
+                    <li><a href="/borsa/convida_profes"><i class="material-icons left">mail</i>Convida professors a ABP/Scrum</a></li>
                   </ul>
                 </div>
               </li>

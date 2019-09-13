@@ -83,6 +83,7 @@ class Centre(models.Model):
 	poblacio = models.CharField(max_length=255)
 	cp = models.CharField(max_length=5)
 	telefon = models.IntegerField()
+	codi = models.IntegerField(default=0)
 	email = models.EmailField()
 	web = models.URLField(blank=True)
 	# loc inicial al mar, enfront al Maresme (2.6875,41.5600)
