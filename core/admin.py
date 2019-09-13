@@ -31,7 +31,7 @@ class CicleAdmin(admin.ModelAdmin):
     inlines = ( MPInline, )
 
 class CentreAdmin(OSMGeoAdmin):
-    list_display = ('nom','nadmins','noms_admins','nempreses','get_empreses')
+    list_display = ('nom','poblacio','nadmins','noms_admins','nempreses','get_empreses')
     #ordering = ('nadmins','nom')
     search_fields = ('nom','direccio','poblacio','empreses__nom')
     filter_horizontal = ('admins','cicles',)

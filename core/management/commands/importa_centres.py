@@ -24,16 +24,15 @@ class Command(BaseCommand):
                     print("--- CODI DE CENTRE ERRONI: "+row["Denominació completa"])
                     continue
                 # si és el mateix centre, actualitzem dades
-                """qs = Centre.objects.filter(codi=row["Codi centre"])
+                qs = Centre.objects.filter(codi=row["Codi centre"])
                 if qs:
                     print("--- ACTUALITZANT : "+row["Denominació completa"])
                     centre = qs[0]
-                 si té el mateix nom q un altre centre, els distingim"""
+                # si té el mateix nom q un altre centre, els distingim el nom
                 qs = Centre.objects.filter(nom=row["Denominació completa"])
                 if qs:
-                    print("--- *ACT / SALTANT (ja existeix) : "+row["Denominació completa"])
+                    print("--- Centre amb el mateix nom : "+row["Denominació completa"])
                     #continue
-                    centre = qs[0]
                 if not centre:
                     centre = Centre()
                 centre.educatiu = True

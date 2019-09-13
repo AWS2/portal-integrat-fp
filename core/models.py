@@ -95,7 +95,7 @@ class Centre(models.Model):
 	# logo centre educatiu
 	imatge = models.ImageField(upload_to='imatgesCentre', blank=True)
 	def __str__(self):
-		return self.nom
+		return "{} ({})".format( self.nom, self.poblacio )
 
 
 class ModulProfessional(models.Model):
