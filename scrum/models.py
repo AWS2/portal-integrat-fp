@@ -38,7 +38,7 @@ class Spec(models.Model):
     projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
     ordre = models.IntegerField(default=0)
     mp = models.ManyToManyField(ModulProfessional,blank=True,help_text="Mòduls Professionals. NOTA: no apareixeran a en la CREACIÓ de la Spec, sinó en l'EDICIÓ")
-    hores_estimades = models.FloatField(blank=True)
+    hores_estimades = models.FloatField(blank=True,default=0.0)
     def __str__(self):
         return self.nom
 
