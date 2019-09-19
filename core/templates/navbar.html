@@ -31,17 +31,12 @@
           </a>
         </li>
         {% else %}
-            <li class="active">
-              <a class='dropdown-trigger' href="#" data-target="dropdown1">
-                <i class="material-icons left">person</i>
-                {{request.user.first_name}} {{request.user.last_name}}
-                <i class="material-icons right">arrow_drop_down</i></a>
-            </li>
-            <li><a href="/admin/borsApp"><i class="material-icons left">work</i>Borsa de Treball</a></li>
 
             {% if request.user.is_staff %}
             <li><a href="/admin/scrum"><i class="material-icons left">view_list</i>Scrum / ABP</a></li>
             {% endif %}
+
+            <li><a href="/admin/borsApp"><i class="material-icons left">work</i>Borsa de Treball</a></li>
 
             {% if request.user.es_admin_centre or request.user.is_superuser %}
             <li>
@@ -52,6 +47,12 @@
             </li>
             {% endif %}
 
+            <li class="active">
+              <a class='dropdown-trigger' href="#" data-target="dropdown1">
+                <i class="material-icons left">person</i>
+                {{request.user.first_name}} {{request.user.last_name}}
+                <i class="material-icons right">arrow_drop_down</i></a>
+            </li>
 
         {% endif %}
 

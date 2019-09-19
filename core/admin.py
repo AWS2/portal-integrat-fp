@@ -117,7 +117,8 @@ class MyUserAdmin(UserAdmin):
             'classes': ('wide',),
             'fields': ('email', 'username', 'password1', 'password2',)
         }),)"""
-    inlines = [ TitolInline, SubscripcioInline, ]
+    #inlines = [ TitolInline, SubscripcioInline, ]
+    inlines = [ TitolInline, ]
     readonly_fields = ['mostrar_imatge','last_login','date_joined'] + PERMISOS_ONLY_SUPER
     def mostra_grups(self,obj):
         grups = ""
