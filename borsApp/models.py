@@ -89,6 +89,7 @@ class Oferta(models.Model):
     titol = models.CharField(max_length=255)
     descripcio = RichTextField()
     creador = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+    categories = models.ManyToManyField(Categoria,blank=True)
     def __str__(self):
         return self.titol+" ("+self.empresa.nom+")"
 

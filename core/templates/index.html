@@ -29,6 +29,7 @@
         <!-- section 1 -->
         <div class="col s12 m4">
           <div class="icon-block">
+      {% if not request.user.es_admin_empresa %}
             <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
       {% if not request.user.is_anonymous %}
             <div class="row center">
@@ -38,6 +39,7 @@
             <h5 class="center">Scrum / ABP</h5>
       {% endif %}
             <p class="light">Gestiona els projectes a l'aula amb metodologia Scrum.</p>
+      {% endif %}
           </div>
         </div>
 
@@ -59,10 +61,12 @@
         <!-- section 3 -->
         <div class="col s12 m4">
           <div class="icon-block">
+      {% if not request.user.es_admin_empresa %}
             <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
             <h5 class="center">Portal integral</h5>
 
             <p class="light">El projecte ha començant entorn de diverses necessitats concretes dels institus que imparteixen cicles formatius, però pensem en un portal que integri la gestió del centre educatiu i que la faci més eficient.</p>
+      {% endif %}
           </div>
         </div>
 

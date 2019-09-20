@@ -32,7 +32,7 @@
         </li>
         {% else %}
 
-            {% if request.user.is_staff %}
+            {% if request.user.is_staff and not request.user.es_admin_empresa %}
             <li><a href="/admin/scrum"><i class="material-icons left">view_list</i>Scrum / ABP</a></li>
             {% endif %}
 
