@@ -15,7 +15,7 @@ from borsApp.models import Empresa, Titol, Oferta
 from datetime import datetime
 # Create your views here.
 
-
+from core.views import accepta_tos
 
 class ConvidaProfesForm(forms.Form):
 	centre = forms.ModelChoiceField( Centre.objects.none(), widget=Select2Widget )
@@ -62,6 +62,7 @@ def filtra_ofertes_alumne(alumne):
 
 
 @login_required
+@accepta_tos
 @user_passes_test( pot_convidar , login_url="/login" )
 def convida_alumnes(request):
 	if request.method=="POST":
@@ -129,12 +130,14 @@ def convida_alumnes(request):
 	return render(request, 'borsApp/convida.html', {"form":form,"tipus":"alumnes"} )
 
 @login_required
+@accepta_tos
 @user_passes_test( pot_convidar, login_url="/login" )
 def invitacions(request):
 	return render(request, 'borsApp/invitacions.html')
 
 
 @login_required
+@accepta_tos
 @user_passes_test( pot_convidar , login_url="/login" )
 def convida_profes(request):
 	if request.method=="POST":

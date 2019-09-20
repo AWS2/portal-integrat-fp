@@ -38,14 +38,20 @@ def tos(request):
 @login_required
 def tos_accepta(request):
 	# guardem que l'usuari ha validat les condicions d'ús
+	# Deixem constància del refús
+	request.user.descripcio += "<p>L'usuari ACCEPTAT els termes d'ús el {}</p>".format(timezone.now())
 	request.user.tos = True
+	# obrim accés al backend
+	request.user.is_staff = True
 	request.user.save()
 	return render( request, 'index.html', {} )
 
 @login_required
 def tos_refusa(request):
 	# Deixem constància del refús
-	request.user.descripcio += "<p>L'usuari ha refusat els termes d'ús el {}</p>".format(timezone.now())
+	request.user.descripcio += "<p>L'usuari ha REFUSAT els termes d'ús el {}</p>".format(timezone.now())
+	# tanquem accés al backend
+	request.user.is_staff = False
 	request.user.save()
 	logout(request)
 	return render( request, 'index.html', {} )
@@ -64,6 +70,7 @@ class PerfilForm(forms.ModelForm):
 			'imatge','arxiu','descripcio',]
 
 @login_required
+@accepta_tos
 def perfil(request):
 	print("ID user="+str(request.user.id))
 	form = None
