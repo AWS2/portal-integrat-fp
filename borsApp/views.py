@@ -166,6 +166,10 @@ def convida_profes(request):
 				emails_repetits.append(email)
 				# afegim al grup profes
 				gprofes.user_set.add(usuari)
+				# resetejem els permisos fins q accepti el TOS
+				usuari.is_staff = False
+				usuari.tos = False
+				usuari.save()
 			elif validate_email(email,verify=True):
 				# crear usuari (al grup profes)
 				user = User(username=email.replace("@","_"),email=email,is_staff=True,centre=centre)
@@ -173,6 +177,10 @@ def convida_profes(request):
 				emails_ok.append(email)
 				# afegir al grup alumnes
 				gprofes.user_set.add(user)
+				# resetejem els permisos fins q accepti el TOS
+				usuari.is_staff = False
+				usuari.tos = False
+				usuari.save()
 			else:
 				emails_erronis.append(email)
 			# TODO: enviar email al profe

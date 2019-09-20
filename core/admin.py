@@ -134,7 +134,7 @@ class MyUserAdmin(UserAdmin):
         super().__init__(*args,**kwargs)
         # reset ordering pq a get_queryset si no, dona un error en altres admins (equips...)
         self.ordering = ('username',)
-        self.list_display += ('mostra_centres_admin','mostra_grups','centre','last_login')
+        self.list_display += ('mostra_centres_admin','mostra_grups','centre','tos','last_login')
         # anular els camps de nomes superusuari
     #def ncentres(self,obj):
     #   return obj.centres.count()

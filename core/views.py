@@ -9,28 +9,18 @@ from core.models import *
 
 # Create your views here.
 
-def accepta_tos(func):
-	def wrapper(request):
-		if request.user.tos:
-			func(request)
-		else:
-			return render( request, 'tos.html', {} )
-	return wrapper
-    
-def login(request):
-	return render( request, 'login.html', {} )
-
-def logout_view(request):
-	logout(request)
-	return redirect("/")
-
-@accepta_tos
-def index(request):
-	return render( request, 'index.html', {} )
-
 #
 # TOS (Termes d'ús)
 ##########################################
+# Decorator util @accepta_tos
+def accepta_tos(func):
+	def wrapper(request):
+		if request.user.is_anonymous or request.user.tos:
+			return func(request)
+		else:
+			return render( request, 'tos.html', {} )
+	return wrapper
+
 @login_required
 def tos(request):
 	return render( request, 'tos.html', {} )
@@ -56,11 +46,23 @@ def tos_refusa(request):
 	logout(request)
 	return render( request, 'index.html', {} )
 
-
 #
 # VIEWS
 ##########################################
 
+# Basic login and mainpage
+def login(request):
+	return render( request, 'login.html', {} )
+
+def logout_view(request):
+	logout(request)
+	return redirect("/")
+
+@accepta_tos
+def index(request):
+	return render( request, 'index.html', {} )
+
+# Perfil
 class PerfilForm(forms.ModelForm):
 	class Meta:
 		model = User

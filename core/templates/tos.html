@@ -6,13 +6,22 @@
     <div class="container">
       <br><br>
       <h1 class="header center orange-text">Portal Integrat FP</h1>
-      <div class="row center">
-        <h5 class="header col s12 light">Acceptació de termes d'ús</h5>
-        <p>Per poder utiltizar el portal has d'acceptar els termes d'ús</p>
-        <ol>
-          <li>primer</li>
-          <li>segon</li>
-        </ol>
+      <div class="row">
+
+        <div class="col s12 m3 center">
+        </div>
+
+        <div class="col s12 m6">
+          <h5 class="center header col s12 light">Acceptació de termes d'ús</h5>
+          <p class="center">Per poder utilitzar el portal has d'acceptar els termes d'ús</p>
+          <p>Consento que les meves dades personals s'incorporin a un arxiu informàtic de IETI (Institut Esteve Terradas i Illa, Generalitat de Catalunya) única i exclusivament per als serveis oferts per aquest portal:</p>
+          <ol class="collection">
+            <li class="collection-item">la gestió d'ofertes laborals mitjançant la borsa de treball</li>
+            {% if request.user.es_alumne or request.user.es_profe %}
+            <li class="collection-item">la participació en projectes amb metodologia scrum.</li>
+            {% endif %}
+          </ol>
+        </div>
       </div>
       <div class="row center">
         <a href="/tos-accepta" id="init-button" class="btn-large waves-effect waves-light">Accepto</a>
