@@ -23,6 +23,7 @@ class User(AbstractUser):
 	centre = models.ForeignKey('Centre',on_delete=models.SET_NULL,null=True,blank=True,
 						help_text="Centre on està actualment matriculat l'alumne o el darrer centre on hi va estar.")
 	tos = models.BooleanField(default=False)
+	data_notificacio_tos = models.DateTimeField(null=True,blank=True,default=None)
 	def mostrar_imatge(self):
 		return mark_safe('<img src="'+settings.MEDIA_URL+'%s" width="90" />' % (self.imatge))
 	mostrar_imatge.short_description = 'Avatar'

@@ -20,9 +20,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         print("OFERTES per dia %s" % (timezone.now(),))
-        # iterem alumnes i enviem email amb ofertes pertinents
+        # iterem alumnes que hagin acceptat el TOS
+        # per enviar email amb ofertes pertinents
         galumnes = Group.objects.get(name="alumnes")
-        for alumne in User.objects.filter(groups__in=[galumnes,]):
+        for alumne in User.objects.filter(groups__in=[galumnes,],tos=True):
             print(alumne)
             ofertes = filtra_ofertes_alumne(alumne)
             if not ofertes:
@@ -74,7 +75,8 @@ class Command(BaseCommand):
                     email_from = settings.EMAIL_HOST_USER
                     email_to = [ alumne.email, ]
                     plain_body = strip_tags(body)
-                    enviat = send_mail( subject, plain_body, email_from, email_to, html_message=body )
+                    #enviat = send_mail( subject, plain_body, email_from, email_to, html_message=body )
+                    enviat = 0
                     # 4) si l'email s'envia correctament, es marquen totes les notificacions com OK
                     for noti in notis:
                         temps = timezone.now()

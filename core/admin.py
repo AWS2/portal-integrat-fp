@@ -109,7 +109,7 @@ class MyUserAdmin(UserAdmin):
     #add_form = UserCreationFormExtended
     fieldsets = UserAdmin.fieldsets + (
             ("Dades acadèmiques", {
-                'fields': ('centre','tos','imatge','mostrar_imatge','arxiu','descripcio'),
+                'fields': ('centre','imatge','mostrar_imatge','arxiu','descripcio','tos','data_notificacio_tos'),
             }),
     )
     """add_fieldsets = (

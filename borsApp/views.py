@@ -90,6 +90,11 @@ def convida_alumnes(request):
 				usuari = users[0]
 				# no cal crear usuari
 				emails_repetits.append(email)
+				# resetejem TOS
+				usuari.is_staff = False
+				usuari.tos = False
+				usuari.data_notificacio_tos = None
+				usuari.save()
 				# creem titol si necessari
 				if Titol.objects.filter(cicle=cicle,centre=centre,alumne=usuari).count()==0:
 					titol = Titol( cicle=cicle, centre=centre, graduat=finalitzat, alumne=usuari )
@@ -99,6 +104,9 @@ def convida_alumnes(request):
 			elif validate_email(email,check_mx=True):
 				# crear usuari (al grup alumnes)
 				user = User(username=email.replace("@","_"),email=email,is_staff=True,centre=centre)
+				user.is_staff = False
+				user.tos = False
+				user.data_notificacio_tos = None
 				user.save()
 				emails_ok.append(email)
 				# crear títol de l'alumne
@@ -169,8 +177,9 @@ def convida_profes(request):
 				# resetejem els permisos fins q accepti el TOS
 				usuari.is_staff = False
 				usuari.tos = False
+				usuari.data_notificacio_tos = None
 				usuari.save()
-			elif validate_email(email,verify=True):
+			elif validate_email(email,check_mx=True):
 				# crear usuari (al grup profes)
 				user = User(username=email.replace("@","_"),email=email,is_staff=True,centre=centre)
 				user.save()
@@ -180,6 +189,7 @@ def convida_profes(request):
 				# resetejem els permisos fins q accepti el TOS
 				usuari.is_staff = False
 				usuari.tos = False
+				usuari.data_notificacio_tos = None
 				usuari.save()
 			else:
 				emails_erronis.append(email)
