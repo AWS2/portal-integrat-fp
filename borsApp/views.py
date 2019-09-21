@@ -58,7 +58,7 @@ def filtra_ofertes_alumne(alumne):
                         empresa__in=empreses,        # empreses adscrites TODO: segur?/eliminar?
                         final__gte=datetime.today(), # eliminem les caducades
                     )
-    return qs
+    return qs.distinct()
 
 
 @login_required

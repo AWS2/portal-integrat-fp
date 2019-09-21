@@ -86,6 +86,7 @@ class EmpresaAdmin(OSMGeoAdmin):
 
 class TitolAdmin(admin.ModelAdmin):
     list_display = ('alumne','nom','cicle','centre','graduat','data')
+    search_fields = ('alumne__first_name','alumne__last_name','alumne__email','cicle__nom','centre__nom')
     # no cal form de select2 pq ho posem per a tot l'admin amb django-admin-select2
     #form = TitolForm
     def nom(self,obj):
@@ -171,8 +172,13 @@ from django.utils.safestring import mark_safe
 class OfertaAdmin(admin.ModelAdmin):
     filter_horizontal = ('cicles',)
     readonly_fields = ('creador',)
-    list_display = ('titol','empresa','inici','final','activa',)
+    list_display = ('titol','empresa','mostra_cicles','inici','final','activa',)
     ordering = ('-inici','empresa',)
+    def mostra_cicles(self,obj):
+        ret = ""
+        for cicles in obj.cicles.all():
+            ret += str(cicles.nom) +", "
+        return ret
     def get_form(self,request,obj=None,**kwargs):
         # tots els camps del model
         self.fields = [ field.name for field in Oferta._meta.get_fields(include_hidden=False) ]
@@ -252,7 +258,7 @@ class OfertaAdmin(admin.ModelAdmin):
 
 class NotificacioAdmin(admin.ModelAdmin):
     list_display = ('oferta','data_oferta','usuari','mostra_email','enviament','confirmacio')
-    readonly_fields = ('oferta','data_oferta','usuari','enviament','confirmacio','registre')
+    readonly_fields = ('oferta','data_oferta','usuari','confirmacio','registre')
     ordering = ('-enviament',)
     def mostra_email(self,obj):
         return obj.usuari.email

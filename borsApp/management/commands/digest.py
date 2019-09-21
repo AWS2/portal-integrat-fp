@@ -24,7 +24,6 @@ class Command(BaseCommand):
         # per enviar email amb ofertes pertinents
         galumnes = Group.objects.get(name="alumnes")
         for alumne in User.objects.filter(groups__in=[galumnes,],tos=True):
-            print(alumne)
             ofertes = filtra_ofertes_alumne(alumne)
             if not ofertes:
                 print("\tAlumne %s: no té ofertes avui" % (alumne,))
@@ -37,10 +36,10 @@ class Command(BaseCommand):
                 notis = []
                 # iterem ofertes actives i generem notificacions
                 for oferta in ofertes:
-                    print("\t"+oferta.titol)
+                    #print("\t"+oferta.titol)
                     noti = Notificacio.objects.filter(usuari=alumne,oferta=oferta)
                     if not noti:
-                        print("\t\tCreant notificació...")
+                        #print("\t\tCreant notificació...")
                         noti = Notificacio(
                                     usuari=alumne,
                                     oferta=oferta,
@@ -50,10 +49,11 @@ class Command(BaseCommand):
                         noti = noti[0]
                     # enviem email només si no ha estat enviat prèviament
                     if not noti.enviament:
-                        print("\t\t\tNo ha estat notificada. Reintentem.")
+                        #print("\t\t\tNo ha estat notificada. Reintentem.")
                         notis.append(noti)
                 # si hi ha notificacions pendents, fem email
                 if notis:
+                    print(alumne)
                     # 2) creem cos de l'email amb totes les ofertes
                     body = "<p>Borsa de treball IETI.cat</p>\
                             <p>Avui tens %i ofertes de treball</p><br>\n" % (len(notis))
@@ -65,18 +65,23 @@ class Command(BaseCommand):
                                                 (alumne.email, str(timezone.now()))
                         noti.save()
                         # afegim al body html email
-                        body += "<br>" +\
+                        body += "<div style='border:1px black solid;border-radius:1em;margin:1em;padding:1em;'><br>" +\
                                 noti.oferta.titol + "<br>" +\
                                 str(noti.oferta.empresa) + "<br>" +\
-                                noti.oferta.descripcio + "<br>"
+                                noti.oferta.descripcio + "<br>" +\
+                                "</div>";
                                 #TODO: noti.oferta.dades_empresa()
+                                #TODO: botó enviar CV
                     # 3) notifiacions pendents: s'intenten enviar
                     subject = "Borsa de treball. Tens %i ofertes de treball" % (len(notis),)
                     email_from = settings.EMAIL_HOST_USER
                     email_to = [ alumne.email, ]
                     plain_body = strip_tags(body)
-                    #enviat = send_mail( subject, plain_body, email_from, email_to, html_message=body )
-                    enviat = 0
+                    enviat = send_mail( subject, plain_body, email_from, email_to, html_message=body )
+                    if enviat:
+                        print("\tEmail enviat amb {} ofertes".format(enviat))
+                    else:
+                        print("\tError enviant email amb {} ofertes".format(enviat))
                     # 4) si l'email s'envia correctament, es marquen totes les notificacions com OK
                     for noti in notis:
                         temps = timezone.now()
@@ -85,6 +90,7 @@ class Command(BaseCommand):
                             noti.registre += "\tEnviament correcte (%s)\n" % (str(temps),)
                         else:
                             noti.registre += "\tEnviament fallit (%s)\n" % (str(temps),)
+                        print("\t\t{}".format(noti.oferta.titol))
                         # guardem dades de registre d'enviament
                         noti.save()
 
