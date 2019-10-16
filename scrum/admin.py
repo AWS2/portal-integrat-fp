@@ -315,7 +315,8 @@ class SprintAdmin(admin.ModelAdmin):
     def show_specs(self,obj):
         ret = "<ol>\n"
         for spec in obj.specs.all():
-            ret += '<li>{}<dl><dd>{}</dd></dl></li>\n'.format(spec.nom,spec.descripcio)
+            ret += '<li>{}<dl><dd>Hores estimades: {}</dd><dd>{}</dd></dl></li>\n'.format(
+                        spec.nom, spec.hores_estimades, spec.descripcio )
             print(spec.nom)
             #print(spec.notes)
         ret += '</ol>\n'
