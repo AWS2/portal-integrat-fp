@@ -19,6 +19,8 @@ class Projecte(models.Model):
     cicle = models.ForeignKey(Cicle,on_delete=models.SET_NULL,null=True)
     def __str__(self):
         return self.nom
+    def descripcio_html(self):
+        return mark_safe(self.descripcio)
 
 class Equip(models.Model):
     nom = models.CharField(max_length=255)
@@ -41,7 +43,11 @@ class Spec(models.Model):
     hores_estimades = models.FloatField(blank=True,default=0.0)
     def __str__(self):
         return self.nom
-
+    def show_sprints(self):
+        ret = ""
+        for sprint in self.sprints.all():
+            ret += str(sprint.nom) + " , "
+        return ret
 
 class Sprint(models.Model):
     nom = models.CharField(max_length=255)

@@ -71,7 +71,9 @@ class EquipAdmin(admin.ModelAdmin):
 class SpecInline(SortableInlineAdminMixin,admin.TabularInline):
     model = Spec
     #form = SpecForm
-    exclude = ('pare','descripcio')
+    fields = ('nom','mp','hores_estimades','show_sprints')
+    readonly_fields = ('show_sprints',)
+    #exclude = ('pare','descripcio')
     #TODO: no exclude descripcio pero adaptar-ho be en amplada
     extra = 2
     """def get_form(self,request,obj=None,**kwargs):
@@ -131,8 +133,20 @@ class ProjecteAdmin(admin.ModelAdmin):
     list_display = ('nom','centre','inici','final','cicle')
     ordering = ('centre','cicle','-inici')
     search_fields = ('nom','centre__nom','cicle__nom',)
+    readonly_fields = ('descripcio_html',)
+    exclude = ('descripcio',)
     filter_horizontal = ('admins',)
     inlines = [ SprintInline, SpecInline, ]
+    def get_form(self,request,obj=None,**kwargs):
+        if request.user.es_alumne:
+            # mostrem read-only i amaguem desc field (renderitzem html)
+            self.exclude = ('descripcio',)
+            self.readonly_fields = ('descripcio_html',)
+        else:
+            # mostrem tot normal (editable)
+            self.exclude = ()
+            self.readonly_fields = ()
+        return super().get_form(request,obj,**kwargs)
     def get_queryset(self,request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
