@@ -71,8 +71,8 @@ class EquipAdmin(admin.ModelAdmin):
 class SpecInline(SortableInlineAdminMixin,admin.TabularInline):
     model = Spec
     #form = SpecForm
-    fields = ('nom','mp','hores_estimades','show_sprints')
-    readonly_fields = ('show_sprints',)
+    fields = ('nom','mp','hores_estimades','sprints')
+    #readonly_fields = ('show_sprints',)
     #exclude = ('pare','descripcio')
     #TODO: no exclude descripcio pero adaptar-ho be en amplada
     extra = 2
@@ -102,6 +102,22 @@ class SpecInline(SortableInlineAdminMixin,admin.TabularInline):
                     kwargs['queryset'] = ModulProfessional.objects.none()
             except:
                 print("ERROR in formfield_for_manytomany (SpecInline)")
+        elif db_field.name == 'sprints':
+            try:
+                parts = request.get_raw_uri().split("/")
+                i = parts.index("projecte")
+                #print("I="+str(i))
+                obj_id = parts[i+1]
+                #print(obj_id)
+                # obj és un projecte
+                obj = Projecte.objects.get(pk=obj_id)
+                #print(obj.id)
+                if obj:
+                    kwargs['queryset'] = Sprint.objects.filter(projecte=obj).order_by('nom')
+                else:
+                    kwargs['queryset'] = Sprint.objects.none()
+            except:
+                print("ERROR in formfield_for_manytomany (SpecInline)")
         return super().formfield_for_manytomany(db_field, request=request, **kwargs)
 class SprintInline(admin.TabularInline):
     model = Sprint
@@ -110,7 +126,7 @@ class SprintInline(admin.TabularInline):
     exclude = ('notes',)
     extra = 1
     # restrict specs al proj
-    def formfield_for_manytomany(self, db_field, request=None, **kwargs):
+    """def formfield_for_manytomany(self, db_field, request=None, **kwargs):
         if db_field.name == 'specs':
             try:
                 parts = request.get_raw_uri().split("/")
@@ -125,7 +141,7 @@ class SprintInline(admin.TabularInline):
             except:
                 print("ERROR in formfield_for_manytomany (SprintInline)")
         return super().formfield_for_manytomany(db_field, request=request, **kwargs)
-
+"""
 from django.db.models import Q
 class ProjecteAdmin(admin.ModelAdmin):
     model = Projecte
@@ -275,13 +291,13 @@ class SpecAdmin(SortableAdminMixin,admin.ModelAdmin):
         return super().formfield_for_manytomany(db_field, request=request, **kwargs)
 
 # deprecated (no registrem pel backend, ho fem inline al Projecte admin)
-class SpecInline(admin.TabularInline):
-    model = Sprint.specs.through
+#class SpecInline(admin.TabularInline):
+#    model = Sprint.specs.through
 class SprintAdmin(admin.ModelAdmin):
     model = Sprint
     list_display = ('nom','projecte','inici','final')
     #form = SprintForm
-    filter_horizontal = ('specs',)
+    #filter_horizontal = ('specs',)
     ordering = ['inici',]
     search_fields = ('projecte__nom',)
     #inlines = [ SpecInline, ]

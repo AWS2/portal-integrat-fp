@@ -31,6 +31,16 @@ class Equip(models.Model):
     def __str__(self):
         return self.nom
 
+class Sprint(models.Model):
+    nom = models.CharField(max_length=255)
+    notes = RichTextField(blank=True)
+    projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
+    inici = models.DateField()
+    final = models.DateField()
+    def __str__(self):
+        return self.nom
+
+
 class Spec(models.Model):
     class Meta:
         ordering = ['ordre',]
@@ -41,6 +51,7 @@ class Spec(models.Model):
     ordre = models.IntegerField(default=0)
     mp = models.ManyToManyField(ModulProfessional,blank=True,help_text="Mòduls Professionals. NOTA: no apareixeran a en la CREACIÓ de la Spec, sinó en l'EDICIÓ")
     hores_estimades = models.FloatField(blank=True,default=0.0)
+    sprints = models.ManyToManyField(Sprint,related_name="specs",blank=True)
     def __str__(self):
         return self.nom
     def show_sprints(self):
@@ -48,17 +59,6 @@ class Spec(models.Model):
         for sprint in self.sprints.all():
             ret += str(sprint.nom) + " , "
         return ret
-
-class Sprint(models.Model):
-    nom = models.CharField(max_length=255)
-    notes = RichTextField(blank=True)
-    projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
-    inici = models.DateField()
-    final = models.DateField()
-    specs = models.ManyToManyField(Spec,related_name="sprints",blank=True,
-                        help_text="NOTA: no apareixeran a en la CREACIÓ del Sprint, sinó en l'EDICIÓ")
-    def __str__(self):
-        return self.nom
 
 class Qualificacio(models.Model):
     class Meta:
