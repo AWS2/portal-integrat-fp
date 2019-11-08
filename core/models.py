@@ -18,6 +18,7 @@ class User(AbstractUser):
 	arxiu = models.FileField(upload_to="docPerfil", blank=True,
 						help_text="Carrega aquí el CV")
 	descripcio = RichTextField(blank=True,null=True)
+	registre = models.TextField(blank=True,null=True)
 	localitzacio = gismodels.PointField(null=True,default=Point(0,0))
 	#TODO: eliminar centre
 	centre = models.ForeignKey('Centre',on_delete=models.SET_NULL,null=True,blank=True,

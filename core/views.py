@@ -30,11 +30,12 @@ def tos_accepta(request):
 	# guardem que l'usuari ha validat les condicions d'ús
 	# Deixem constància del refús
 	msg = "<p>L'usuari ha ACCEPTAT els termes d'ús el {}</p>".format(timezone.now())
-	if not request.user.descripcio:
-		request.user.descripcio = msg
+	if not request.user.registre:
+		request.user.registre = msg
 	else:
-		request.user.descripcio += msg
+		request.user.registre += msg
 	request.user.tos = True
+	request.user.data_notificacio_tos = timezone.now()
 	# obrim accés al backend
 	request.user.is_staff = True
 	request.user.save()
@@ -44,10 +45,10 @@ def tos_accepta(request):
 def tos_refusa(request):
 	# Deixem constància del refús
 	msg = "<p>L'usuari ha REFUSAT els termes d'ús el {}</p>".format(timezone.now())
-	if not request.user.descripcio:
-		request.user.descripcio = msg
+	if not request.user.registre:
+		request.user.registre = msg
 	else:
-		request.user.descripcio += msg
+		request.user.registre += msg
 	# tanquem accés al backend
 	request.user.is_staff = False
 	request.user.save()

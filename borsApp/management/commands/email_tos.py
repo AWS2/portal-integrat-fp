@@ -16,19 +16,21 @@ class Command(BaseCommand):
     """
 
     email_body ="""<p>Benvolguda/Benvolgut,</p>
-<p>com a alumne o ex-alumne del centre {} has estat donat d'alta al Portal Integrat de FP, on podràs accedir a la borsa de treball i a la gestió de projectes amb metodologia Scrum.</p>
+<p>com a alumne o ex-alumne del centre {} has estat donat d'alta al Portal Integrat de FP, on podràs accedir a la borsa de treball.</p>
 <p>Per poder fer ús dels serveis has d'entrar al portal https://borsa.ieti.cat i acceptar els termes d'ús.</p>
 <p>Esperem que et siguin d'utilitat.</p>
 <p>Atentament,</p>
 <br>
-<p>Equip
+<p>Equip Borsa de Treball IETI</p>
 """
 
     def handle(self, *args, **options):
         print("Enviant INVITACIONS d'alumnes al portal.")
         # iterem alumnes que encara no hagin acceptat el TOS i que 
         galumnes = Group.objects.get(name="alumnes")
-        for alumne in User.objects.filter(groups__in=[galumnes,],tos=False,data_notificacio_tos=None):
+        for alumne in User.objects.filter(groups__in=[galumnes,],tos=False,
+                data_notificacio_tos=None,is_active=True):
+
             print(alumne)
 
             # enviem email de benvinguda
@@ -44,6 +46,7 @@ class Command(BaseCommand):
             if enviat:
                 alumne.data_notificacio_tos = timezone.now()
                 alumne.save()
+                print("EMAIL enviat a "+str(alumne.email))
             else:
                 print("ERROR a l'enviar email d'invitació ({})".format(email_to))
 
