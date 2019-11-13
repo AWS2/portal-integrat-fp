@@ -43,10 +43,10 @@ def pot_convidar( usuari ):
 # LIB
 ###############################################
 def filtra_ofertes_alumne(alumne):
-	# TODO: resoldre per subscripcions
-	# HO RESOLEM PELS TÍTOLS DE L'ALUMNE
+    # TODO: resoldre per subscripcions
+    # HO RESOLEM PELS TÍTOLS DE L'ALUMNE
     # cicles que ha cursat l'alumne
-    cicles = [ titol.cicle for titol in alumne.titols.all() ]
+    cicles = [ titol.cicle for titol in alumne.titols.filter(graduat=True) ]
     centres = [ titol.centre for titol in alumne.titols.all() ]
     # TODO:(revisar, eliminar) només de les empreses que estan adscrites al centre de l'alumne
     # TODO: distància en km...

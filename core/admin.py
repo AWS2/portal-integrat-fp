@@ -105,6 +105,7 @@ PERMISOS_ONLY_SUPER = ['is_superuser','groups','is_staff','user_permissions']
 
 class MyUserAdmin(UserAdmin):
     save_on_top = True
+    list_filter = ()
     #form = UserForm
     #add_form = UserCreationFormExtended
     fieldsets = UserAdmin.fieldsets + (
