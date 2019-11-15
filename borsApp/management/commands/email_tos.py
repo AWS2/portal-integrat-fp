@@ -49,7 +49,7 @@ class Command(BaseCommand):
             self.reset_refusats(TEST)
             return
 
-        print("Enviant INVITACIONS d'alumnes al portal.")
+        print("[{}] Enviant INVITACIONS d'alumnes al portal.".format(timezone.now()))
         total = 0
         galumnes = Group.objects.get(name="alumnes")
         # queryset --all : tots els alumnes amb tos=False
@@ -61,7 +61,7 @@ class Command(BaseCommand):
             print(alumne)
             # enviem email de benvinguda
             subject = "Portal integrat FP. Borsa de treball."
-            email_from = settings.EMAIL_HOST_USER
+            email_from = settings.EMAIL_FROM_NAME +"<"+settings.EMAIL_HOST_USER+">"
             email_to = [ alumne.email, ]
             # afegim centre al redactat de l'email
             body = self.email_body.format(alumne.centre)

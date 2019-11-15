@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django import forms
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import Group
+from django.utils import timezone
 
 from django_select2.forms import Select2Widget
 from easy_select2 import Select2
@@ -12,7 +13,6 @@ import re
 from core.models import Centre, User, Cicle
 from borsApp.models import Empresa, Titol, Oferta
 
-from datetime import datetime
 # Create your views here.
 
 from core.views import accepta_tos
@@ -56,7 +56,7 @@ def filtra_ofertes_alumne(alumne):
                         cicles__in=cicles,           # cicles subscrits
                         activa=True,
                         empresa__in=empreses,        # empreses adscrites TODO: segur?/eliminar?
-                        final__gte=datetime.today(), # eliminem les caducades
+                        final__gte=timezone.now(),   # eliminem les caducades
                     )
     return qs.distinct()
 
