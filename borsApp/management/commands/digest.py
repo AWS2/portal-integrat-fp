@@ -78,10 +78,11 @@ class Command(BaseCommand):
                     email_to = [ alumne.email, ]
                     plain_body = strip_tags(body)
                     enviat = send_mail( subject, plain_body, email_from, email_to, html_message=body )
+                    enviat = False
                     if enviat:
-                        print("\tEmail enviat amb {} ofertes".format(enviat))
+                        print("\tEmail enviat amb {} ofertes".format(len(notis)))
                     else:
-                        print("\tError enviant email amb {} ofertes".format(enviat))
+                        print("\tError enviant email amb {} ofertes".format(len(notis)))
                     # 4) si l'email s'envia correctament, es marquen totes les notificacions com OK
                     for noti in notis:
                         temps = timezone.now()
