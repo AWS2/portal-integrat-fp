@@ -30,15 +30,23 @@ class Command(BaseCommand):
                 help="Reseteja settings per enviar emails a tots els usuaris pendents de validar els TOS (però no envia cap).")
         parser.add_argument('--reset_refusats', action="store_true",
                 help="Reseteja settings per enviar emails a tots els usuaris que han refusat els TOS (però no envia cap).")
+        parser.add_argument('--test', action="store_true",
+                help="Printa missatges però no els efectua.")
 
     def handle(self, *args, **options):
+        TEST = False
+        if options["test"]:
+            print("========================")
+            print("MODE TEST (NO S'EFECTUA)")
+            print("========================")
+            TEST = True
         if options["reset_pendents"]:
             # resetejem queryset alumnes amb TOS pendent (encara que hagin estat notificats)
-            self.reset_pendents()
+            self.reset_pendents(TEST)
             return
         if options["reset_refusats"]:
             # resetejem queryset alumnes amb TOS refusat
-            self.reset_refusats()
+            self.reset_refusats(TEST)
             return
 
         print("Enviant INVITACIONS d'alumnes al portal.")
@@ -59,35 +67,43 @@ class Command(BaseCommand):
             body = self.email_body.format(alumne.centre)
             plain_body = strip_tags(body)
             #print(body)
-            enviat = send_mail( subject, plain_body, email_from, email_to, html_message=body )
-            # si l'email s'envia correctament, es marquen totes les notificacions com OK
-            if enviat:
-                alumne.data_notificacio_tos = timezone.now()
-                alumne.save()
-                print("EMAIL enviat a "+str(alumne.email))
+            enviat = True
+            if TEST:
+                print("EMAIL (TEST) 'no' enviat a "+str(alumne.email))
                 total += 1
             else:
-                print("ERROR a l'enviar email d'invitació ({})".format(email_to))
+                enviat = send_mail( subject, plain_body, email_from, email_to, html_message=body )
+                # si l'email s'envia correctament, es marquen totes les notificacions com OK
+                if enviat:
+                    alumne.data_notificacio_tos = timezone.now()
+                    alumne.save()
+                    print("EMAIL enviat a "+str(alumne.email))
+                    total += 1
+                else:
+                    print("ERROR a l'enviar email d'invitació ({})".format(email_to))
 
             # controlem MAX_EMAILS (per no ser classificats per spam)
-            if total>settings.MAX_EMAILS:
+            if total>=settings.MAX_EMAILS:
                 print("Arribat maxim nombre d'emails. Parem fins següent enviament.")
                 break
 
-    def reset_pendents(self):
+    def reset_pendents(self,test):
         print("Resetejant alumnes amb TOS pendent. Se'ls enviarà email a la propera crida.")
         galumnes = Group.objects.get(name="alumnes")
         alumnes = User.objects.filter(groups__in=[galumnes,],tos=False,is_active=True)
         for alumne in alumnes:
             print(alumne.email)
-            alumne.data_notificacio_tos = None
-            alumne.save()
+            if not test:
+                alumne.data_notificacio_tos = None
+                alumne.save()
 
-    def reset_refusats(self):
+    def reset_refusats(self,test):
         print("Resetejant alumnes amb TOS refusat. Se'ls enviarà email a la propera crida.")
         galumnes = Group.objects.get(name="alumnes")
         alumnes = User.objects.filter(groups__in=[galumnes,],tos=False,is_active=False)
         for alumne in alumnes:
             print(alumne.email)
-            alumne.data_notificacio_tos = None
-            alumne.save()
+            if not test:
+                alumne.data_notificacio_tos = None
+                alumne.is_active = True
+                alumne.save()

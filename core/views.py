@@ -29,7 +29,7 @@ def tos(request):
 def tos_accepta(request):
 	# guardem que l'usuari ha validat les condicions d'ús
 	# Deixem constància del refús
-	msg = "<p>L'usuari ha ACCEPTAT els termes d'ús el {}</p>".format(timezone.now())
+	msg = "L'usuari ha ACCEPTAT els termes d'ús el {}.\n".format(timezone.now())
 	if not request.user.registre:
 		request.user.registre = msg
 	else:
@@ -44,7 +44,7 @@ def tos_accepta(request):
 @login_required
 def tos_refusa(request):
 	# Deixem constància del refús
-	msg = "<p>L'usuari ha REFUSAT els termes d'ús el {}</p>".format(timezone.now())
+	msg = "L'usuari ha REFUSAT els termes d'ús el {}.\n".format(timezone.now())
 	if not request.user.registre:
 		request.user.registre = msg
 	else:
