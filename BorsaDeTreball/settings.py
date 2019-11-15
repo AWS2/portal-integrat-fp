@@ -224,3 +224,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = settings2.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
 
 # Ajustos per accelerar testing
 #TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
+
+# enviament maxim d'emails
+MAX_EMAILS = 5
+

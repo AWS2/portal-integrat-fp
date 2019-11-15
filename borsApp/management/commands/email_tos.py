@@ -24,15 +24,25 @@ class Command(BaseCommand):
 <p>Equip Borsa de Treball IETI</p>
 """
 
+    def add_arguments(self, parser):
+        # args opcionals --all
+        parser.add_argument('--all', action="store_true",
+                help="Envia emails a tots els usuaris pendents de validar els TOS.")
+
     def handle(self, *args, **options):
         print("Enviant INVITACIONS d'alumnes al portal.")
+        total = 0
         # iterem alumnes que encara no hagin acceptat el TOS i que 
         galumnes = Group.objects.get(name="alumnes")
-        for alumne in User.objects.filter(groups__in=[galumnes,],tos=False,
-                data_notificacio_tos=None,is_active=True):
-
+        # queryset --all : tots els alumnes amb tos=False
+        alumnes = User.objects.filter(groups__in=[galumnes,],tos=False)
+        if not options["all"]:
+            # si no hi ha arg --all , eliminem els actius i ja notificats
+            alumnes = alumnes.filter(data_notificacio_tos=None,is_active=True)
+        # iterem alumnes
+        for alumne in alumnes:
+            # debug
             print(alumne)
-
             # enviem email de benvinguda
             subject = "Portal integrat FP. Borsa de treball."
             email_from = settings.EMAIL_HOST_USER
@@ -41,13 +51,19 @@ class Command(BaseCommand):
             body = self.email_body.format(alumne.centre)
             plain_body = strip_tags(body)
             #print(body)
-            enviat = send_mail( subject, plain_body, email_from, email_to, html_message=body )
+            enviat = True #send_mail( subject, plain_body, email_from, email_to, html_message=body )
             # si l'email s'envia correctament, es marquen totes les notificacions com OK
             if enviat:
                 alumne.data_notificacio_tos = timezone.now()
                 alumne.save()
                 print("EMAIL enviat a "+str(alumne.email))
+                total += 1
             else:
                 print("ERROR a l'enviar email d'invitació ({})".format(email_to))
+
+            # controlem MAX_EMAILS (per no ser classificats per spam)
+            if total>settings.MAX_EMAILS:
+                print("Arribat maxim nombre d'emails. Parem fins següent enviament.")
+                break
 
 
