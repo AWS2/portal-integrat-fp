@@ -17,8 +17,8 @@ class Command(BaseCommand):
 
     email_body ="""<p>Benvolguda/Benvolgut,</p>
 <p>com a alumne o ex-alumne del centre {} has estat donat d'alta al Portal Integrat de FP, on podràs accedir a la borsa de treball.</p>
-<p>Per poder fer ús dels serveis has d'entrar al portal https://borsa.ieti.cat i acceptar els termes d'ús.</p>
-<p>Esperem que et siguin d'utilitat.</p>
+<p>Per poder gaudir dels serveis has d'entrar al portal https://borsa.ieti.cat i acceptar els termes d'ús.</p>
+<p>Esperem que et sigui d'utilitat.</p>
 <p>Atentament,</p>
 <br>
 <p>Equip Borsa de Treball IETI</p>
@@ -26,19 +26,27 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         # args opcionals --all
-        parser.add_argument('--all', action="store_true",
-                help="Envia emails a tots els usuaris pendents de validar els TOS.")
+        parser.add_argument('--reset_pendents', action="store_true",
+                help="Reseteja settings per enviar emails a tots els usuaris pendents de validar els TOS (però no envia cap).")
+        parser.add_argument('--reset_refusats', action="store_true",
+                help="Reseteja settings per enviar emails a tots els usuaris que han refusat els TOS (però no envia cap).")
 
     def handle(self, *args, **options):
+        if options["reset_pendents"]:
+            # resetejem queryset alumnes amb TOS pendent (encara que hagin estat notificats)
+            self.reset_pendents()
+            return
+        if options["reset_refusats"]:
+            # resetejem queryset alumnes amb TOS refusat
+            self.reset_refusats()
+            return
+
         print("Enviant INVITACIONS d'alumnes al portal.")
         total = 0
-        # iterem alumnes que encara no hagin acceptat el TOS i que 
         galumnes = Group.objects.get(name="alumnes")
         # queryset --all : tots els alumnes amb tos=False
-        alumnes = User.objects.filter(groups__in=[galumnes,],tos=False)
-        if not options["all"]:
-            # si no hi ha arg --all , eliminem els actius i ja notificats
-            alumnes = alumnes.filter(data_notificacio_tos=None,is_active=True)
+        alumnes = User.objects.filter(groups__in=[galumnes,],tos=False,
+                                    data_notificacio_tos=None,is_active=True)
         # iterem alumnes
         for alumne in alumnes:
             # debug
@@ -51,7 +59,7 @@ class Command(BaseCommand):
             body = self.email_body.format(alumne.centre)
             plain_body = strip_tags(body)
             #print(body)
-            enviat = True #send_mail( subject, plain_body, email_from, email_to, html_message=body )
+            enviat = send_mail( subject, plain_body, email_from, email_to, html_message=body )
             # si l'email s'envia correctament, es marquen totes les notificacions com OK
             if enviat:
                 alumne.data_notificacio_tos = timezone.now()
@@ -66,4 +74,20 @@ class Command(BaseCommand):
                 print("Arribat maxim nombre d'emails. Parem fins següent enviament.")
                 break
 
+    def reset_pendents(self):
+        print("Resetejant alumnes amb TOS pendent. Se'ls enviarà email a la propera crida.")
+        galumnes = Group.objects.get(name="alumnes")
+        alumnes = User.objects.filter(groups__in=[galumnes,],tos=False,is_active=True)
+        for alumne in alumnes:
+            print(alumne.email)
+            alumne.data_notificacio_tos = None
+            alumne.save()
 
+    def reset_refusats(self):
+        print("Resetejant alumnes amb TOS refusat. Se'ls enviarà email a la propera crida.")
+        galumnes = Group.objects.get(name="alumnes")
+        alumnes = User.objects.filter(groups__in=[galumnes,],tos=False,is_active=False)
+        for alumne in alumnes:
+            print(alumne.email)
+            alumne.data_notificacio_tos = None
+            alumne.save()

@@ -102,6 +102,7 @@ class UserCreationFormExtended(UserCreationForm):
 # no cal select2_modelform pq amb django-admin-select2 ja funciona
 
 PERMISOS_ONLY_SUPER = ['is_superuser','groups','is_staff','user_permissions']
+PERMISOS_READ_ONLY = ['mostrar_imatge','last_login','date_joined','registre']
 
 class MyUserAdmin(UserAdmin):
     save_on_top = True
@@ -110,7 +111,7 @@ class MyUserAdmin(UserAdmin):
     #add_form = UserCreationFormExtended
     fieldsets = UserAdmin.fieldsets + (
             ("Dades acadèmiques", {
-                'fields': ('centre','imatge','mostrar_imatge','arxiu','descripcio','tos','data_notificacio_tos'),
+                'fields': ('centre','imatge','mostrar_imatge','arxiu','descripcio','tos','data_notificacio_tos','registre'),
             }),
     )
     """add_fieldsets = (
@@ -120,7 +121,7 @@ class MyUserAdmin(UserAdmin):
         }),)"""
     #inlines = [ TitolInline, SubscripcioInline, ]
     inlines = [ TitolInline, ]
-    readonly_fields = ['mostrar_imatge','last_login','date_joined'] + PERMISOS_ONLY_SUPER
+    readonly_fields = PERMISOS_READ_ONLY + PERMISOS_ONLY_SUPER
     def mostra_grups(self,obj):
         grups = ""
         for grup in obj.groups.all():
@@ -142,9 +143,9 @@ class MyUserAdmin(UserAdmin):
     #ncentres.admin_order_field = 'ncentres'
     def get_form(self,request,obj=None,**kwargs):
         if request.user.is_superuser:
-            self.readonly_fields = ['mostrar_imatge','last_login','date_joined']
+            self.readonly_fields = PERMISOS_READ_ONLY
         else:
-            self.readonly_fields = ['mostrar_imatge','last_login','date_joined'] + PERMISOS_ONLY_SUPER
+            self.readonly_fields = PERMISOS_READ_ONLY + PERMISOS_ONLY_SUPER
         return super().get_form(request,obj,**kwargs)
     def get_queryset(self,request):
         # Deshabilitem ordering ncentres per evitar error creuat
