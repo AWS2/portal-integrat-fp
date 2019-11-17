@@ -85,10 +85,17 @@ class EmpresaAdmin(OSMGeoAdmin):
                         form.instance.adscripcio.add(centre)
 
 class TitolAdmin(admin.ModelAdmin):
-    list_display = ('alumne','nom','cicle','centre','graduat','data')
-    search_fields = ('alumne__first_name','alumne__last_name','alumne__email','cicle__nom','centre__nom')
+    list_display = ('alumne','nom','cicle','centre','graduat','data','tos','data_notificacio_tos','last_login')
+    search_fields = ('alumne__first_name','alumne__last_name','alumne__email','cicle__nom','centre__nom',)
     # no cal form de select2 pq ho posem per a tot l'admin amb django-admin-select2
     #form = TitolForm
+    def tos(self,obj):
+        return obj.alumne.tos
+    tos.boolean = True
+    def data_notificacio_tos(self,obj):
+        return obj.alumne.data_notificacio_tos
+    def last_login(self,obj):
+        return obj.alumne.last_login
     def nom(self,obj):
         return obj.alumne.first_name+" "+obj.alumne.last_name+" (email: "+obj.alumne.email+")"
     def get_queryset(self,request):

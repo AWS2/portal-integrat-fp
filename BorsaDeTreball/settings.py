@@ -169,15 +169,14 @@ AUTH_USER_MODEL = 'core.User'
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
 LANGUAGE_CODE = 'ca-ES'
-
 #TIME_ZONE = 'UTC'
 TIME_ZONE = 'Europe/Madrid'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
+
+from django.conf.locale.ca import formats as ca_formats
+ca_formats.DATETIME_FORMAT = "d M Y H:i:s"
 
 
 DJRICHTEXTFIELD_CONFIG = {
@@ -227,5 +226,6 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = settings2.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
 #TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
 
 # enviament maxim d'emails
-MAX_EMAILS = 1
+MAX_EMAILS = 3
+
 

@@ -79,8 +79,8 @@ class Command(BaseCommand):
                     email_from = settings.EMAIL_FROM_NAME+"<"+settings.EMAIL_HOST_USER+">"
                     email_to = [ alumne.email, ]
                     plain_body = strip_tags(body)
-                    #enviat = send_mail( subject, plain_body, email_from, email_to, html_message=body )
-                    enviat = True
+                    enviat = send_mail( subject, plain_body, email_from, email_to, html_message=body )
+                    #enviat = True # per DEBUG
                     if not enviat:
                         print("\tError enviant email a {} amb {} ofertes".format(alumne.email,len(notis)))
                         # saltem a seguent iteracio

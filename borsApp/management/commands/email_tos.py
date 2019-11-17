@@ -49,7 +49,7 @@ class Command(BaseCommand):
             self.reset_refusats(TEST)
             return
 
-        print("[{}] Enviant INVITACIONS d'alumnes al portal.".format(timezone.now()))
+        print("\n[{}] Enviant INVITACIONS d'alumnes al portal.".format(timezone.now()))
         total = 0
         galumnes = Group.objects.get(name="alumnes")
         # queryset --all : tots els alumnes amb tos=False
@@ -76,6 +76,10 @@ class Command(BaseCommand):
                 # si l'email s'envia correctament, es marquen totes les notificacions com OK
                 if enviat:
                     alumne.data_notificacio_tos = timezone.now()
+                    if alumne.registre:
+                        alumne.registre = alumne.registre + "Enviat email de notificacio TOS el {}\n".format(timezone.now())
+                    else:
+                        alumne.registre = "Enviat email de notificacio TOS el {}\n".format(timezone.now())
                     alumne.save()
                     print("EMAIL enviat a "+str(alumne.email))
                     total += 1
