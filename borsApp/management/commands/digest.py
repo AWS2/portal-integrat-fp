@@ -74,6 +74,8 @@ class Command(BaseCommand):
                                 "</div>";
                                 #TODO: noti.oferta.dades_empresa()
                                 #TODO: botó enviar CV
+                    # afegim footer al email
+                    body += "<br><p>En qualsevol moment pots donar-te de baixa escrivint a borsa@iesesteveterradas.cat</p>"
                     # 3) notifiacions pendents: s'intenten enviar
                     subject = "Borsa de treball: tens %i ofertes" % (len(notis),)
                     email_from = settings.EMAIL_FROM_NAME+"<"+settings.EMAIL_HOST_USER+">"
