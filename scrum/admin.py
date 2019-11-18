@@ -295,7 +295,7 @@ class SpecAdmin(SortableAdminMixin,admin.ModelAdmin):
 #    model = Sprint.specs.through
 class SprintAdmin(admin.ModelAdmin):
     model = Sprint
-    list_display = ('nom','projecte','inici','final')
+    list_display = ('nom','projecte','inici','final','hores')
     #form = SprintForm
     #filter_horizontal = ('specs',)
     ordering = ['inici',]
@@ -303,7 +303,7 @@ class SprintAdmin(admin.ModelAdmin):
     #inlines = [ SpecInline, ]
     #exclude = ('specs',)
     #fields = ('nom','notes','projecte','inici','final','show_specs')
-    readonly_fields = ('notes_html','show_specs',)
+    readonly_fields = ('notes_html','hores','show_specs',)
     def get_form(self,request,obj=None,**kwargs):
         if request.user.es_alumne:
             self.exclude = ('notes')

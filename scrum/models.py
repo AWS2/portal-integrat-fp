@@ -39,7 +39,13 @@ class Sprint(models.Model):
     final = models.DateField()
     def __str__(self):
         return self.nom
-
+    def hores(self):
+        total = 0
+        for spec in self.specs.all():
+            if spec.hores_estimades:
+                total += spec.hores_estimades
+        return total
+            
 
 class Spec(models.Model):
     class Meta:
@@ -68,7 +74,7 @@ class Qualificacio(models.Model):
     nota = models.FloatField(null=True,blank=True)
     comentaris = RichTextField(blank=True)
     def __str__(self):
-        return str(self.equip)+" ("+str(self.sprint)+") : "+str(self.nota)
+        return str(self.equip)+" ("+str(self.sprint)+")"
     def projecte(self):
         return self.sprint.projecte.nom
     def specs_completades(self):
@@ -80,7 +86,7 @@ class Qualificacio(models.Model):
                 done += 1
         if total==0:
             return "-"
-        return str(100*done/total)+" %"
+        return "{0:.1f} %".format(round(100*done/total,1))
     def hores_completades(self):
         total = 0
         done = 0
@@ -90,7 +96,7 @@ class Qualificacio(models.Model):
                 done += spec.spec.hores_estimades
         if total==0:
             return "-"
-        return str(100*done/total)+" %"
+        return "{0:.1f} %".format(round(100*done/total,1))
     def specs_completades_mps(self):
         # computem specs realitzades, sense tenir en compte les hores
         mps = {}
@@ -108,7 +114,7 @@ class Qualificacio(models.Model):
         for mpid in mps:
             dades = mps[mpid]
             mp = mps[mpid]["obj"]
-            ret += mp.nom + " : "+str(100*dades["done"]/dades["total"])+ " %<br>"
+            ret += mp.nom[:4] + " : {0:.1f} %<br>".format(round(100*dades["done"]/dades["total"],1))
         return mark_safe(ret)
     def specs_completades_mps_ponderat(self):
         # computem % d'hores de specs realitzades
@@ -130,7 +136,8 @@ class Qualificacio(models.Model):
             if dades["total"] == 0:
                 ret += mp.nom[:4] + " : -<br>"
             else:
-                ret += mp.nom[:4] + " : "+str(100*dades["done"]/dades["total"])+ " %<br>"
+                #ret += mp.nom[:4] + " : "+str(100*dades["done"]/dades["total"])+ " %<br>"
+                ret += mp.nom[:4] + " : {0:.1f} %<br>".format(round(100*dades["done"]/dades["total"],1))
         return mark_safe(ret)
 
 class DoneSpec(models.Model):
