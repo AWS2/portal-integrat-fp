@@ -7,7 +7,25 @@ from django.utils import timezone
 
 from core.models import *
 
-# Create your views here.
+from django.template import Context
+from django.template.loader import get_template
+from django.template.loader_tags import BlockNode, ExtendsNode
+from django.utils.html import strip_tags
+#
+# Utils TOS (Termes d'ús)
+##########################################
+def _get_node(template, context=Context(), name='subject'):
+    for node in template:
+        if isinstance(node, BlockNode) and node.name == name:
+            return node.render(context)
+        elif isinstance(node, ExtendsNode):
+            return _get_node(node.nodelist, context, name)
+    raise Exception("Node '%s' could not be found in template." % name)
+def get_tos_text():
+    templ = get_template("tos.html")
+    section = _get_node(templ.template,name="content")
+    text = strip_tags(section)
+    return text.strip()
 
 #
 # TOS (Termes d'ús)
@@ -21,15 +39,19 @@ def accepta_tos(func):
 			return render( request, 'tos.html', {} )
 	return wrapper
 
+
+#
+# TOS VIEWS (Termes d'ús)
+##########################################
 @login_required
 def tos(request):
 	return render( request, 'tos.html', {} )
 
 @login_required
 def tos_accepta(request):
-	# guardem que l'usuari ha validat les condicions d'ús
-	# Deixem constància del refús
+	# Deixem constància de l'acceptació
 	msg = "L'usuari ha ACCEPTAT els termes d'ús el {}.\n".format(timezone.now())
+	msg += get_tos_text()
 	if not request.user.registre:
 		request.user.registre = msg
 	else:
