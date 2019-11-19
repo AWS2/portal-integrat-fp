@@ -22,13 +22,14 @@ class ConvidaProfesForm(forms.Form):
 	emails = forms.CharField( widget=forms.Textarea,
 							help_text="Un email per línia dels alumnes a convidar.")
 
+ANYS_TITOLS = [ y for y in range(1990,timezone.now().year+2) ]
 class ConvidaAlumnesForm(ConvidaProfesForm):
 	# els alumnes cal afegir tb el centre per posar-los al títol adequat
-	cicle = forms.ModelChoiceField( None, widget=Select2Widget )
+	cicle = forms.ModelChoiceField( None, widget=Select2Widget(attrs={'width':'100'}) )
 	finalitzat = forms.BooleanField( required=False,
-							help_text="Marcar si els alumnes ja han finalitzat el cicle." )
-	data_finalitzacio = forms.DateField( widget=forms.SelectDateWidget, required=False, 
-							help_text="Data de graduació de l'alumne")
+				help_text="Marcar si els alumnes ja han finalitzat el cicle." )
+	data_finalitzacio = forms.DateField( widget=forms.SelectDateWidget(years=ANYS_TITOLS),
+				required=False, help_text="Data de graduació de l'alumne")
 
 
 # Create your views here.
@@ -70,6 +71,7 @@ def convida_alumnes(request):
 		cicle = Cicle.objects.get(pk=request.POST["cicle"])
 		centre = Centre.objects.get(pk=request.POST["centre"])
 		finalitzat = False
+		data_finalitzacio = request.POST.get("data_finalitzacio", None )
 		if request.POST.get("finalitzat",False):
 			finalitzat = True
 		# emails
@@ -97,7 +99,8 @@ def convida_alumnes(request):
 				usuari.save()
 				# creem titol si necessari
 				if Titol.objects.filter(cicle=cicle,centre=centre,alumne=usuari).count()==0:
-					titol = Titol( cicle=cicle, centre=centre, graduat=finalitzat, alumne=usuari )
+					titol = Titol( cicle=cicle, centre=centre, graduat=finalitzat, 
+								alumne=usuari, data_finalitzacio=data_finalitzacio )
 					titol.save()
 				# afegim al grup alumnes
 				galumnes.user_set.add(usuari)
@@ -110,7 +113,8 @@ def convida_alumnes(request):
 				user.save()
 				emails_ok.append(email)
 				# crear títol de l'alumne
-				titol = Titol( cicle=cicle, centre=centre, graduat=finalitzat, alumne=user )
+				titol = Titol( cicle=cicle, centre=centre, graduat=finalitzat,
+								alumne=user, data_finalitzacio=data_finalitzacio )
 				titol.save()
 				# afegir al grup alumnes
 				galumnes.user_set.add(user)
@@ -125,7 +129,7 @@ def convida_alumnes(request):
 				"emails_erronis":emails_erronis} )
 	# GET: creem form per introduir emails d'invitació
 	form = ConvidaAlumnesForm(request.GET)
-	#form.fields["data_finalitzacio"].initial = timezone.now()
+	form.fields["data_finalitzacio"].initial = timezone.now()
 	if request.user.is_superuser:
 		form.fields["centre"].queryset = Centre.objects.all()
 		form.fields["cicle"].queryset = Cicle.objects.all()
