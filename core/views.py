@@ -12,7 +12,7 @@ from django.template.loader import get_template
 from django.template.loader_tags import BlockNode, ExtendsNode
 from django.utils.html import strip_tags
 #
-# Utils TOS (Termes d'ús)
+# Utils 
 ##########################################
 def _get_node(template, context=Context(), name='subject'):
     for node in template:

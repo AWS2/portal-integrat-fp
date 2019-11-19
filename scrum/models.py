@@ -86,7 +86,7 @@ class Qualificacio(models.Model):
                 done += 1
         if total==0:
             return "-"
-        return "{0:.1f} %".format(round(100*done/total,1))
+        return "{} ({:.1f}%)".format(done,round(100*done/total,1))
     def hores_completades(self):
         total = 0
         done = 0
@@ -96,7 +96,7 @@ class Qualificacio(models.Model):
                 done += spec.spec.hores_estimades
         if total==0:
             return "-"
-        return "{0:.1f} %".format(round(100*done/total,1))
+        return "{} ({:.1f}%)".format(done,round(100*done/total,1))
     def specs_completades_mps(self):
         # computem specs realitzades, sense tenir en compte les hores
         mps = {}
@@ -114,7 +114,8 @@ class Qualificacio(models.Model):
         for mpid in mps:
             dades = mps[mpid]
             mp = mps[mpid]["obj"]
-            ret += mp.nom[:4] + " : {0:.1f} %<br>".format(round(100*dades["done"]/dades["total"],1))
+            if dades["done"]!=0:
+                ret += mp.nom[:4] + " : {} ({:.1f}%)<br>".format(dades["done"],round(100*dades["done"]/dades["total"],1))
         return mark_safe(ret)
     def specs_completades_mps_ponderat(self):
         # computem % d'hores de specs realitzades
@@ -136,8 +137,8 @@ class Qualificacio(models.Model):
             if dades["total"] == 0:
                 ret += mp.nom[:4] + " : -<br>"
             else:
-                #ret += mp.nom[:4] + " : "+str(100*dades["done"]/dades["total"])+ " %<br>"
-                ret += mp.nom[:4] + " : {0:.1f} %<br>".format(round(100*dades["done"]/dades["total"],1))
+                if dades["done"]!=0:
+                    ret += mp.nom[:4] + " : {} ({:.1f}%)<br>".format(dades["done"],round(100*dades["done"]/dades["total"],1))
         return mark_safe(ret)
 
 class DoneSpec(models.Model):

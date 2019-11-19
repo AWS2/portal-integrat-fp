@@ -27,8 +27,8 @@ class ConvidaAlumnesForm(ConvidaProfesForm):
 	cicle = forms.ModelChoiceField( None, widget=Select2Widget )
 	finalitzat = forms.BooleanField( required=False,
 							help_text="Marcar si els alumnes ja han finalitzat el cicle." )
-	#data_finalitzacio = forms.DateField( widget=forms.SelectDateWidget, required=False,
-	#						help_text="Data de graduació de l'alumne")
+	data_finalitzacio = forms.DateField( widget=forms.SelectDateWidget, required=False, 
+							help_text="Data de graduació de l'alumne")
 
 
 # Create your views here.
@@ -125,6 +125,7 @@ def convida_alumnes(request):
 				"emails_erronis":emails_erronis} )
 	# GET: creem form per introduir emails d'invitació
 	form = ConvidaAlumnesForm(request.GET)
+	#form.fields["data_finalitzacio"].initial = timezone.now()
 	if request.user.is_superuser:
 		form.fields["centre"].queryset = Centre.objects.all()
 		form.fields["cicle"].queryset = Cicle.objects.all()
