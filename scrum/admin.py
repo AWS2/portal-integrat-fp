@@ -299,7 +299,7 @@ class SprintAdmin(admin.ModelAdmin):
     #form = SprintForm
     #filter_horizontal = ('specs',)
     ordering = ['inici',]
-    search_fields = ('projecte__nom',)
+    search_fields = ('projecte__nom','nom')
     #inlines = [ SpecInline, ]
     #exclude = ('specs',)
     #fields = ('nom','notes','projecte','inici','final','show_specs')
@@ -315,9 +315,15 @@ class SprintAdmin(admin.ModelAdmin):
     def show_specs(self,obj):
         ret = "<ol>\n"
         for spec in obj.specs.all():
-            ret += '<li>{}<dl><dd>Hores estimades: {}</dd><dd>{}</dd></dl></li>\n'.format(
-                        spec.nom, spec.hores_estimades, spec.descripcio )
-            print(spec.nom)
+            ret += '<li>{}<dl>'.format(spec.nom)
+            ret += '<dd>Hores estimades: {}</dd>'.format(spec.hores_estimades)
+            ret += '<dd>'
+            for mp in spec.mp.all():
+                ret += '{} '.format(mp.nom[:4])
+            ret += '</dd>\n'
+            ret += '<dd>{}</dd>\n'.format(spec.descripcio)
+            ret += '</dl>\n'
+            #print(spec.nom)
             #print(spec.notes)
         ret += '</ol>\n'
         return mark_safe(ret)
@@ -328,7 +334,7 @@ class SprintAdmin(admin.ModelAdmin):
                 i = parts.index("sprint")
                 #print("I="+str(i))
                 obj_id = parts[i+1]
-                print(obj_id)
+                #print(obj_id)
                 obj = self.get_object(request,obj_id)
                 if obj:
                     kwargs['queryset'] = Spec.objects.filter(projecte=obj.projecte).order_by('ordre')
@@ -343,6 +349,7 @@ class DoneSpecInline(admin.TabularInline):
     model = DoneSpec
     extra = 0
     can_delete = False
+    ordering = ('spec__ordre',)
     readonly_fields = ('is_done','spec','hores_estimades','descripcio','mps')
     def is_done(self,obj):
         return obj.done
@@ -363,7 +370,11 @@ class QualificacioAdmin(admin.ModelAdmin):
     readonly_fields = ('sprint','equip','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
     inlines = [ DoneSpecInline, ]
     def get_list_display(self,*args,**kwargs):
-        actualitza_qualificacions()
+        request = args[0]
+        # no actualitzem amb alumnes (si amb profes/admins)
+        # TODO: optimitzar mes (actualitzar nomes quan modifiquem projecte o equip)
+        if not request.user.es_alumne:
+            actualitza_qualificacions()
         return super().get_list_display(*args,**kwargs)
     def get_queryset(self,request):
         qs = super().get_queryset(request)
@@ -425,6 +436,10 @@ def actualitza_qualificacions():
                 if not dspecs:
                     dspec = DoneSpec(qualificacio=quali,spec=spec)
                     dspec.save()
+            # esborrar done_specs que s'hagin tret del sprint
+            for dspec in quali.done_specs.all():
+                if dspec.spec not in sprint.specs.all():
+                    dspec.delete()
 
 
 
