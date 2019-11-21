@@ -63,7 +63,7 @@ class EquipAdmin(admin.ModelAdmin):
         if db_field.name=="membres" and not request.user.is_superuser:
             # els membres de l'equip poden ser els alumnes del mateix centre que l'usuari
             if request.user.centre:
-                kwargs["queryset"] = User.objects.filter(centre=request.user.centre)
+                kwargs["queryset"] = User.objects.filter(centre=request.user.centre,titols__graduat=False)
                 #TODO: initial sense modificar els que hi ha ja
                 kwargs["initial"] = User.objects.filter(pk=request.user.id)
         return super().formfield_for_manytomany(db_field,request=request,**kwargs)

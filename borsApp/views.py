@@ -72,6 +72,7 @@ def convida_alumnes(request):
 		centre = Centre.objects.get(pk=request.POST["centre"])
 		finalitzat = False
 		data_finalitzacio = request.POST.get("data_finalitzacio", None )
+		print("DATA FINALITZACIO: {}".format(data_finalitzacio))
 		if request.POST.get("finalitzat",False):
 			finalitzat = True
 		# emails
@@ -100,7 +101,7 @@ def convida_alumnes(request):
 				# creem titol si necessari
 				if Titol.objects.filter(cicle=cicle,centre=centre,alumne=usuari).count()==0:
 					titol = Titol( cicle=cicle, centre=centre, graduat=finalitzat, 
-								alumne=usuari, data_finalitzacio=data_finalitzacio )
+								alumne=usuari, data=data_finalitzacio )
 					titol.save()
 				# afegim al grup alumnes
 				galumnes.user_set.add(usuari)
@@ -114,7 +115,7 @@ def convida_alumnes(request):
 				emails_ok.append(email)
 				# crear títol de l'alumne
 				titol = Titol( cicle=cicle, centre=centre, graduat=finalitzat,
-								alumne=user, data_finalitzacio=data_finalitzacio )
+								alumne=user, data=data_finalitzacio )
 				titol.save()
 				# afegir al grup alumnes
 				galumnes.user_set.add(user)
@@ -129,6 +130,7 @@ def convida_alumnes(request):
 				"emails_erronis":emails_erronis} )
 	# GET: creem form per introduir emails d'invitació
 	form = ConvidaAlumnesForm(request.GET)
+        # TODO: arreglar initial, no va
 	form.fields["data_finalitzacio"].initial = timezone.now()
 	if request.user.is_superuser:
 		form.fields["centre"].queryset = Centre.objects.all()
