@@ -146,13 +146,35 @@ from django.db.models import Q
 class ProjecteAdmin(admin.ModelAdmin):
     model = Projecte
     #form = ProjecteForm
-    list_display = ('nom','centre','inici','final','cicle')
+    list_display = ('nom','centre','cicle','inici','final','hores','resum_mps')
     ordering = ('centre','cicle','-inici')
     search_fields = ('nom','centre__nom','cicle__nom',)
     readonly_fields = ('descripcio_html',)
     exclude = ('descripcio',)
     filter_horizontal = ('admins',)
     inlines = [ SprintInline, SpecInline, ]
+    def hores(self,obj):
+        hores = 0
+        for spec in obj.spec_set.all():
+            hores += spec.hores_estimades
+        return "{:.0f}".format(hores)
+    def resum_mps(self,obj):
+        res = {}
+        total = 0
+        for spec in obj.spec_set.all():
+            for mp in spec.mp.all():
+                mpshort = mp.nom[:4]
+                if not res.get(mpshort):
+                    res[mpshort] = 0
+                res[mpshort] += spec.hores_estimades
+                total += spec.hores_estimades
+        ret = ""
+        for mp in res:
+            percent = 0
+            if total != 0:
+                percent = 100*res[mp]/total
+            ret += "{}: {:.0f} ({:.0f}%)<br>\n".format(mp,res[mp],percent)
+        return mark_safe(ret)
     def get_form(self,request,obj=None,**kwargs):
         if request.user.es_alumne:
             # mostrem read-only i amaguem desc field (renderitzem html)
