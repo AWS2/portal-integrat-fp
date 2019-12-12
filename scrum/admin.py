@@ -21,6 +21,7 @@ class QualificacioInline(admin.TabularInline):
     extra = 0
     fields = ('sprint','nota','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
     readonly_fields = ('sprint','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
+    ordering = ('sprint__nom',)
 
 class EquipAdmin(admin.ModelAdmin):
     model = Equip
@@ -153,6 +154,7 @@ class ProjecteAdmin(admin.ModelAdmin):
     exclude = ('descripcio',)
     filter_horizontal = ('admins',)
     inlines = [ SprintInline, SpecInline, ]
+    save_on_top = True
     def hores(self,obj):
         hores = 0
         for spec in obj.spec_set.all():
@@ -387,7 +389,7 @@ class DoneSpecInline(admin.TabularInline):
         return mark_safe(mps)
 class QualificacioAdmin(admin.ModelAdmin):
     model = Qualificacio
-    list_display = ('__str__','projecte','sprint','equip','nota','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
+    list_display = ('__str__','projecte','sprint','equip','membres','nota','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
     search_fields = ('sprint__projecte__nom','sprint__nom','equip__nom')
     readonly_fields = ('sprint','equip','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
     inlines = [ DoneSpecInline, ]

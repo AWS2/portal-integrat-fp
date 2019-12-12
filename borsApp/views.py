@@ -194,11 +194,11 @@ def convida_profes(request):
                 usuari.save()
             elif validate_email(email,check_mx=True):
                 # crear usuari (al grup profes)
-                user = User(username=email.replace("@","_"),email=email,is_staff=True,centre=centre)
-                user.save()
+                usuari = User(username=email.replace("@","_"),email=email,is_staff=True,centre=centre)
+                usuari.save()
                 emails_ok.append(email)
                 # afegir al grup alumnes
-                gprofes.user_set.add(user)
+                gprofes.user_set.add(usuari)
                 # resetejem els permisos fins q accepti el TOS
                 usuari.is_staff = False
                 usuari.tos = False

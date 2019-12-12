@@ -77,6 +77,11 @@ class Qualificacio(models.Model):
         return str(self.equip)+" ("+str(self.sprint)+")"
     def projecte(self):
         return self.sprint.projecte.nom
+    def membres(self):
+        ret = ""
+        for membre in self.equip.membres.all():
+            ret += membre.first_name + " " + membre.last_name + "<br>\n"
+        return mark_safe(ret)
     def specs_completades(self):
         total = 0
         done = 0
@@ -114,8 +119,8 @@ class Qualificacio(models.Model):
         for mpid in mps:
             dades = mps[mpid]
             mp = mps[mpid]["obj"]
-            if dades["done"]!=0:
-                ret += mp.nom[:4] + " : {} ({:.1f}%)<br>".format(dades["done"],round(100*dades["done"]/dades["total"],1))
+            if dades["total"]!=0:
+                ret += mp.nom[:4] + " : {}/{} ({:.1f}%)<br>".format(dades["done"],dades["total"],round(100*dades["done"]/dades["total"],1))
         return mark_safe(ret)
     def specs_completades_mps_ponderat(self):
         # computem % d'hores de specs realitzades
@@ -137,8 +142,8 @@ class Qualificacio(models.Model):
             if dades["total"] == 0:
                 ret += mp.nom[:4] + " : -<br>"
             else:
-                if dades["done"]!=0:
-                    ret += mp.nom[:4] + " : {} ({:.1f}%)<br>".format(dades["done"],round(100*dades["done"]/dades["total"],1))
+                if dades["total"]!=0:
+                    ret += mp.nom[:4] + " : {}/{} ({:.1f}%)<br>".format(dades["done"],dades["total"],round(100*dades["done"]/dades["total"],1))
         return mark_safe(ret)
 
 class DoneSpec(models.Model):
