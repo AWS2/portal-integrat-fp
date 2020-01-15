@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+.select-wrapper input.select-dropdown {
+	display: none;
+}
+
+select[id^='id_data_finalitzacio'] {
+	display: inline-block;
+	width: auto;
+}
+
+span.select2 {
+	width: 100% !important;
+}
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="section">
+			<h2>Ofertes</h2>
+		</div>
+	</div>
+
+{% endblock %}

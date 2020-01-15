@@ -106,7 +106,7 @@ def convida_alumnes(request):
                 usuari.save()
                 # creem titol si necessari
                 if Titol.objects.filter(cicle=cicle,centre=centre,alumne=usuari).count()==0:
-                    titol = Titol( cicle=cicle, centre=centre, graduat=finalitzat, 
+                    titol = Titol( cicle=cicle, centre=centre, graduat=finalitzat,
                                 alumne=usuari, data=data_finalitzacio )
                     titol.save()
                 # afegim al grup alumnes
@@ -221,3 +221,6 @@ def convida_profes(request):
         centres = request.user.centres_admin.all()
         form.fields["centre"].queryset = centres
     return render(request, 'borsApp/convida.html', {"form":form,"tipus":"profes"} )
+
+def ofertes(request):
+    return render(request, 'borsApp/ofertes.html', {"form":'text',"tipus":"profes"} )
