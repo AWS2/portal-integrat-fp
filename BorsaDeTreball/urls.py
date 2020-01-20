@@ -29,6 +29,7 @@ urlpatterns = [
     path('djrichtextfield/', include('djrichtextfield.urls')),
     path('', include('core.urls')),
     path('borsa/', include('borsApp.urls')),
+    path('dual/', include('dual.urls')),
     path('', include('social_django.urls', namespace='social')),
     path('select2/', include('django_select2.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

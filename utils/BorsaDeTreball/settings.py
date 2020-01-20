@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'core',
     'borsApp',
     'scrum',
+    'dual'
 ]
 # OAuth -> 
 AUTHENTICATION_BACKENDS = (

@@ -16,11 +16,13 @@ PERMISOS = {
         "categoria": ["add","change","delete","view"],
         "centre": ["add","change","delete","view"],
         "user": ["add","change","delete","view"],
+        "demanda dual": ["add","change","delete","view"],
     },
     "admin_empresa":{
         "demanda": ["view"],
         "empresa": ["change","view"],
         "oferta": ["add","change","delete","view"],
+        "demanda dual": ["view"],
     },
     "alumnes":{
         "demanda": ["add","change","delete","view"],
