@@ -13,7 +13,7 @@ from borsApp.models import Empresa
 # Create your models here.
 class DemandaDual(models.Model):
 	class Meta:
-		verbose_name_plural = "DemanadesDual"
+		verbose_name_plural = "DemandesDual"
 	inici = models.DateTimeField(default=timezone.now)
 	# TODO: check timedelta
 	final = models.DateTimeField()
