@@ -51,6 +51,9 @@ class User(AbstractUser):
 		if self.empreses_admin.count() > 0:
 			return True
 		return False
+	@property
+	def nom_complert(self):
+		return "{} {}".format(self.first_name,self.last_name)
 
 class Categoria(models.Model):
 	class Meta:

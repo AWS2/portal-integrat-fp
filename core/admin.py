@@ -139,14 +139,19 @@ class MyUserAdmin(UserAdmin):
     def mostra_titols(self,obj):
         titols = ""
         for titol in obj.titols.all():
-            titols += titol.cicle.nom + "<br>"
+            fet = "Graduat"
+            if not titol.graduat:
+                fet = "Pendent"
+            titols += "{} [{}]<br>".format(titol.cicle.nom,fet)
         return mark_safe(titols)
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         # reset ordering pq a get_queryset si no, dona un error en altres admins (equips...)
         self.ordering = ('username',)
+        # redefinim els camps mostrats (traiem "staff")
+        self.list_display = ('username','email','first_name','last_name')
         self.list_display += ('mostra_centres_admin','mostra_grups','mostra_centre','mostra_titols','tos','data_notificacio_tos','last_login')
-        self.search_fields += ('centre__nom',)
+        self.search_fields += ('centre__nom','titols__cicle__nom')
         # anular els camps de nomes superusuari
     #def ncentres(self,obj):
     #   return obj.centres.count()
