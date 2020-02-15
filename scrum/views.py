@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 
 from scrum.models import Projecte
+from core.models import ModulProfessional
 
 # Create your views here.
 
@@ -12,5 +13,6 @@ def index(request):
 
 def projecte(request,id):
 	projecte = Projecte.objects.get(id=id)
-	return render( request, "projecte.html", {"projecte":projecte} )
+	mps = ModulProfessional.objects.filter( specs__projecte=projecte ).distinct()
+	return render( request, "projecte.html", {"projecte":projecte,"mps":mps} )
 

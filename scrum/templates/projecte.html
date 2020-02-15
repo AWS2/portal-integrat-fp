@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block extra_css %}
-
 {% endblock %}
 
 {% block content %}
@@ -10,15 +9,28 @@
     <div class="section">
         <h2>Projecte</h2>
 
-        <h3>{{projecte.nom}}</h3>
-        <p>Inici: {{projecte.inici}}</p>
-        <p>Final: {{projecte.final}}</p>
+        <div class="card-panel light-blue lighten-4">
+	        <h3>{{projecte.nom}}</h3>
+	        <p>Centre: <b>{{projecte.centre}}</b></p>
+	        <p>Cicle: <b>{{projecte.cicle}}</b></p>
+	        <p>Inici: {{projecte.inici}}</p>
+	        <p>Final: {{projecte.final}}</p>
+        </div>
 
-        <div class="descripcio">
+        <div class="card-panel light-blue lighten-4">
+        	<h4>Mòduls Professionals implicats</h4>
+        	{% for mp in mps %}
+        		{{mp.nom}}<br>
+        	{% endfor %}
+        </div>
+
+        <div class="card-panel light-blue lighten-4">
+        	<h4>Descripció</h4>
         	{{projecte.descripcio | safe}}
         </div>
 
         <div class="specs">
+
 
         {% for sprint in projecte.sprint_set.all %}
 
@@ -29,13 +41,24 @@
 	        		<p>Final: {{sprint.final}}</p>
 	        	</li>
         	{% for spec in sprint.specs.all %}
-        		<li class="collection-item"><div>{{spec.nom}}<a class="secondary-content">hores estimades: {{spec.hores_estimades}}</a></div></li>
+        		<li class="collection-item">
+        			<div>
+        				{{spec.ordre}}. {{spec.nom}}
+        			</div>
+        			<div>
+        				<p><a >hores estimades: {{spec.hores_estimades}}</a>
+        					Mòduls:
+        					{% for mp in spec.mp.all %}
+        						{{mp.nom|slice:"0:4"}}
+        					{% endfor %}
+        				</p>
+        			</div>
+        		</li>
         	{% endfor %}
         	</ul>
 
         {% endfor %}
 
-        	
         </div>
 
 

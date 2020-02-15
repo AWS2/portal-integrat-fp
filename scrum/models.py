@@ -55,7 +55,8 @@ class Spec(models.Model):
     pare = models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True)
     projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
     ordre = models.IntegerField(default=0)
-    mp = models.ManyToManyField(ModulProfessional,blank=True,help_text="Mòduls Professionals. NOTA: no apareixeran a en la CREACIÓ de la Spec, sinó en l'EDICIÓ")
+    mp = models.ManyToManyField(ModulProfessional,related_name="specs",blank=True,
+        help_text="Mòduls Professionals. NOTA: no apareixeran a en la CREACIÓ de la Spec, sinó en l'EDICIÓ")
     hores_estimades = models.FloatField(blank=True,default=0.0)
     sprints = models.ManyToManyField(Sprint,related_name="specs",blank=True)
     def __str__(self):
