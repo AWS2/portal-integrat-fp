@@ -67,13 +67,9 @@ class Command(BaseCommand):
                                                 (alumne.email, str(timezone.now()))
                         noti.save()
                         # afegim al body html email
-                        body += "<div style='border:1px black solid;border-radius:1em;margin:1em;padding:1em;'><br>" +\
-                                noti.oferta.titol + "<br>" +\
-                                str(noti.oferta.empresa) + "<br>" +\
-                                noti.oferta.descripcio + "<br>" +\
-                                "</div>";
-                                #TODO: noti.oferta.dades_empresa()
-                                #TODO: botó enviar CV
+                        body += render_to_string("borsApp/digest_item.html",
+                                                {"oferta":noti.oferta})
+                        #TODO: botó enviar CV
                     # afegim footer al email
                     body += "<br><p>En qualsevol moment pots donar-te de baixa escrivint a borsa@iesesteveterradas.cat</p>"
                     # 3) notifiacions pendents: s'intenten enviar
@@ -83,6 +79,7 @@ class Command(BaseCommand):
                     plain_body = strip_tags(body)
                     enviat = send_mail( subject, plain_body, email_from, email_to, html_message=body )
                     #enviat = True # per DEBUG
+                    #print(body)
                     if not enviat:
                         print("\tError enviant email a {} amb {} ofertes".format(alumne.email,len(notis)))
                         # saltem a seguent iteracio

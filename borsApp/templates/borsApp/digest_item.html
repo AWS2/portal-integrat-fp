@@ -1,0 +1,16 @@
+
+<div style='border:1px black solid;border-radius:1em;margin:1em;padding:1em;'>
+	<h3>OFERTA</h3>
+	<p>{{oferta.titol}}</p>
+	<p>{{oferta.empresa.nom}}</p>
+	{{oferta.descripcio|safe}}
+	<hr>
+	<h3>DADES EMPRESA</h3>
+	{% if oferta.empresa.imatge %}
+	<img style="max-width:200px;float:right;" src="https://borsa.ieti.cat/media/{{oferta.empresa.imatge}}" />
+	{% endif %}
+	<p>{{oferta.empresa.nom}}</p>
+	<p>{{oferta.empresa.web}}</p>
+	<p>{{oferta.empresa.telefon}}</p>
+	<p>{{oferta.empresa.email}}</p>
+</div>

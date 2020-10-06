@@ -51,12 +51,12 @@ def filtra_ofertes_alumne(alumne):
     centres = [ titol.centre for titol in alumne.titols.all() ]
     # TODO:(revisar, eliminar) només de les empreses que estan adscrites al centre de l'alumne
     # TODO: distància en km...
-    empreses = Empresa.objects.filter(adscripcio__in=centres)
+    #empreses = Empresa.objects.filter(adscripcio__in=centres)
     # qs final (ofertes)
     qs = Oferta.objects.filter(
                         cicles__in=cicles,           # cicles subscrits
                         activa=True,
-                        empresa__in=empreses,        # empreses adscrites TODO: segur?/eliminar?
+                        #empresa__in=empreses,        # empreses adscrites TODO: segur?/eliminar?
                         final__gte=timezone.now(),   # eliminem les caducades
                     )
     return qs.distinct()

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  <div class="container">
+    <div class="section">
+		<h2>Projectes Scrum</h2>
+
+		<ul class="collection">
+		{% for projecte in projectes %}
+			<li class="collection-item"><a href="{% url 'projecte' projecte.id %}">{{projecte.nom}}</a></li>
+		{% endfor %}
+		</ul>
+
+	</div>
+</div>
+
+{% endblock %}
+
+

@@ -264,13 +264,16 @@ class OfertaAdmin(admin.ModelAdmin):
 
 
 class NotificacioAdmin(admin.ModelAdmin):
-    list_display = ('oferta','data_oferta','usuari','mostra_email','enviament','confirmacio')
+    list_display = ('oferta','data_oferta','nom_usuari','mostra_email','enviament','confirmacio')
     readonly_fields = ('oferta','data_oferta','usuari','confirmacio','registre')
     ordering = ('-enviament',)
+    search_fields = ('oferta__titol','usuari__first_name','usuari__last_name',)
     def mostra_email(self,obj):
         return obj.usuari.email
     def data_oferta(self,obj):
         return obj.oferta.inici
+    def nom_usuari(self,obj):
+        return obj.usuari.nom_complert
     def get_queryset(self,request):
         qs = super().get_queryset(request)
         # super ho veu tot

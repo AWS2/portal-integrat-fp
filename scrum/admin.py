@@ -322,7 +322,7 @@ class SprintAdmin(admin.ModelAdmin):
     list_display = ('nom','projecte','inici','final','hores')
     #form = SprintForm
     #filter_horizontal = ('specs',)
-    ordering = ['inici',]
+    ordering = ['-inici',]
     search_fields = ('projecte__nom','nom')
     #inlines = [ SpecInline, ]
     #exclude = ('specs',)
