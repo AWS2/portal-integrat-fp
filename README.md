@@ -1,11 +1,19 @@
 
 # Borsa de Treball IETI
 
-Projecte per a borsa de treball online per a centres on s'imparteixen cicles formatius. El projecte s'ha iniciat a l'Institut Esteve Terradas i Illa de Cornellà de Llobregat i està sent dut a terme pels alumnes de DAW (programació web).
+Projecte per a borsa de treball online per a centres on s'imparteixen cicles formatius. El projecte s'ha iniciat a l'Institut Esteve Terradas i Illa de Cornellà de Llobregat i està sent dut a terme pel professorat i alumnes de DAW (desenvolupament web).
 
 ## Instal·lació
 
 Per instal·lar-te aquest software has de tenir instal·lat GIT, Python 3.x i Virtualenv.
+
+    $ sudo apt install git python3-virtualenv
+
+Per la base de dades es pot optar per MySQL, MariaDB o PostgreSQL. En aquesta sentència per a Ubuntu/Debian (provat en Ubuntu 20.04) carreguem les dependències pel projecte:
+
+    $ sudo apt-get install libmysqlclient-dev python3-dev gdal-bin python3-mysql.connector python3-mysqldb libssl-dev postgresql-server-dev-all postgresql-common libjpeg-dev
+
+I ja podem clonar el projecte i instal·lar els connectors per Python:
 
     $ git clone https://github.com/aws2/BorsaDeTreball.git
     $ cd BorsaDeTreball
@@ -21,6 +29,7 @@ Com a BD no ens servirà utilitzar SQLite, haurem d'utilitzar MySQL o bé PostGi
     $ docker run --name=postgis -d -e POSTGRES_USER=user001 -e POSTGRES_PASS=123456789 -e POSTGRES_DBNAME=gis -p 5432:5432 kartoza/postgis:9.6-2.4
 
 Cal crear un arxiu settings2.py amb les dades en producció:
+
     $ cp BorsaDeTreball/settings2example.py BorsaDeTreball/settings2.py
     $ vi BorsaDeTreball/settings2.py
 
@@ -39,6 +48,10 @@ Si volem importar dades d'inici:
     (env)$ python manage.py loaddata mps
     (env)$ python manage.py loaddata ufs
 
+Alternativament disposem de la comanda per importar centres des d'un full de càlcul:
+
+    (env)$ ./manage.py importa_centres
+
 ## CRON
 Per que funcioni l'enviament d'emails amb el resum (digest) de les ofertes acumulades, caldrà afegir una línia al CRON a la hora convenient i executar la comanda //digest//
 
@@ -47,7 +60,12 @@ Per que funcioni l'enviament d'emails amb el resum (digest) de les ofertes acumu
 
 ## Seguiment del projecte
 Pots trobar més informació del desenvolupament del projecte a la wiki de l'Esteve Terradas:
+
     https://wiket.esteveterradas.cat/index.php/Projecte_Borsa_de_Treball
 
-## Usuaris
 
+## Tests
+Els tests es fan amb Selenium per simular la interacció amb l'usuari. Ens caldrà un [driver per a Firefox](https://github.com/mozilla/geckodriver/releases), descomprimir-lo i posar-lo en algun lloc del PATH (com \~/bin).
+
+Els tests es passen amb:
+    $ python manage.py tests
