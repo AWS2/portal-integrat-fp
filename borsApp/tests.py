@@ -158,14 +158,18 @@ class BorsaTests(StaticLiveServerTestCase):
         self.selenium.find_element_by_xpath('//a[@href="/admin/borsApp/oferta/add/"]').click()
         # omplim form
         # per defecte la data d'inici la oferta és ara mateix
-        #self.selenium.find_element_by_name('inici_0').clear()
-        #self.selenium.find_element_by_name('inici_1').clear()
+        self.selenium.find_element_by_name('inici_0').clear()
+        self.selenium.find_element_by_name('inici_1').clear()
         self.selenium.find_element_by_name('final_0').clear()
         self.selenium.find_element_by_name('final_1').clear()
         # data final d'aqui 1 setmana (7 dies timedelta)
         from datetime import datetime, date, timedelta
+        inici = date.today() + timedelta(days=-7)
+        inicistr = inici.strftime("%d/%m/%Y")
         final = date.today() + timedelta(days=7)
         finalstr = final.strftime("%d/%m/%Y")
+        self.selenium.find_element_by_name('inici_0').send_keys(inicistr)
+        self.selenium.find_element_by_name('inici_1').send_keys("10:30:00")
         self.selenium.find_element_by_name('final_0').send_keys(finalstr)
         self.selenium.find_element_by_name('final_1').send_keys("10:30:00")
         self.selenium.find_element_by_name('titol').send_keys("oferta test vigent 11")
@@ -233,6 +237,8 @@ class BorsaTests(StaticLiveServerTestCase):
         # select2 cicles (FK)
         self.selenium.find_element_by_xpath('//span[@id="select2-id_titols-0-cicle-container"]').click()
         self.selenium.find_element_by_xpath('//input[@class="select2-search__field"]').send_keys(cerca_cicle+"\n")
+        # titol completat (graduat)
+        self.selenium.find_element_by_xpath('//input[@id="id_titols-0-graduat"]').click()
         # desem
         self.selenium.find_element_by_xpath('//input[@value="Desar"]').click()
 
@@ -318,10 +324,10 @@ class BorsaTests(StaticLiveServerTestCase):
         self.no_veu_oferta_caducada1()
         self.no_veu_oferta_vigent11()
         self.backend_logout()
-        # alumne21 (es de web, pero no del terradas, no veu la oferta)
+        # alumne21 (es de web, pero no del terradas, SI veu la oferta IGUALMENT)
         self.backend_login("alumne21","enric123")
         self.no_veu_oferta_caducada1()
-        self.no_veu_oferta_vigent11()
+        self.veu_oferta_vigent11()
         self.backend_logout()
         # empresa2
         self.backend_login("empresa21","enric123")
