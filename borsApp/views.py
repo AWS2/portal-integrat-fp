@@ -36,13 +36,11 @@ class ConvidaAlumnesForm(ConvidaProfesForm):
 def index(request):
     return render(request, 'borsApp/index.html', {} )
 
-
+# LIB
+###############################################
 def pot_convidar( usuari ):
     return usuari.es_admin_centre or usuari.is_superuser
 
-
-# LIB
-###############################################
 def filtra_ofertes_alumne(alumne):
     # TODO: resoldre per subscripcions
     # HO RESOLEM PELS TÍTOLS DE L'ALUMNE
@@ -60,6 +58,9 @@ def filtra_ofertes_alumne(alumne):
                         final__gte=timezone.now(),   # eliminem les caducades
                     )
     return qs.distinct()
+# END LIB
+###############################################
+
 
 
 @login_required
@@ -221,3 +222,5 @@ def convida_profes(request):
         centres = request.user.centres_admin.all()
         form.fields["centre"].queryset = centres
     return render(request, 'borsApp/convida.html', {"form":form,"tipus":"profes"} )
+
+

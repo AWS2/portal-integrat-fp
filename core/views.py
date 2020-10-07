@@ -81,9 +81,23 @@ def tos_refusa(request):
 # VIEWS
 ##########################################
 
+from django.contrib.auth import authenticate, login
+
 # Basic login and mainpage
 def login(request):
-	return render( request, 'login.html', {} )
+	if request.method == "GET":
+		return render( request, 'login.html', {} )
+	else:
+		email = request.POST["email"]
+		passw = request.POST["password"]
+		user = authenticate(request, email=email, password=passw)
+		if user is not None:
+			print("OK user "+user.username)
+			login(request,user)
+			return redirect("/")
+		# error in authenticate
+		print("ERROR!")
+		return render( request, 'login.html', {} )
 
 def logout_view(request):
 	logout(request)
