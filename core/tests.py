@@ -175,7 +175,7 @@ class CoreTest(BaseCoreTest,StaticLiveServerTestCase):
     #############################################3
 
     def test_superadmin(self):
-        self.backend_login("admin","admin123")
+        self.backend_login("admin@mail.com","admin123")
         # anem al menu usuari
         self.selenium.find_element_by_xpath('//a[text()="Usuaris"]').click()
         # editem un usuari (admin1)
@@ -191,28 +191,28 @@ class CoreTest(BaseCoreTest,StaticLiveServerTestCase):
 
     def test_admin_centre(self):
         # ADMIN1
-        self.backend_login("admin1","enric123")
+        self.backend_login("admin1@mail.com","enric123")
         self.check_items_admin_centre()
         self.check_permisos_admin_centre()
         # admin1 centre crea alumnes
-        alumnes1 = ["alumne11","alumne12","alumne13","alumne14"]
+        alumnes1 = ["alumne11@mail.com","alumne12@mail.com","alumne13@mail.com","alumne14@mail.com"]
         for alumne in alumnes1:
             self.backend_crea_usuari(alumne,"enric123")
         # admin1 pot veure els seus alumnes
-        admin1 = User.objects.get(username="admin1")
+        admin1 = User.objects.get(username="admin1@mail.com")
         self.check_alumnes(alumnes1,admin1)
         # logout
         self.backend_logout()
 
         # ADMIN2
-        self.backend_login("admin2","enric123")
+        self.backend_login("admin2@mail.com","enric123")
         self.check_items_admin_centre()
         # admin2 centre crea alumnes
-        self.backend_crea_usuari("alumne21","enric123")
-        self.backend_crea_usuari("alumne22","enric123")
+        self.backend_crea_usuari("alumne21@mail.com","enric123")
+        self.backend_crea_usuari("alumne22@mail.com","enric123")
         # admin2 pot veure els seus alumnes
-        admin2 = User.objects.get(username="admin2")
-        self.check_alumnes(["alumne21","alumne22"],admin2)
+        admin2 = User.objects.get(username="admin2@mail.com")
+        self.check_alumnes(["alumne21@mail.com","alumne22@mail.com"],admin2)
         # admin2 NO pot veure alumnes del admin1
         self.check_no_usuaris(alumnes1,admin2)
         # logout
@@ -220,10 +220,10 @@ class CoreTest(BaseCoreTest,StaticLiveServerTestCase):
 
     def test_crea_admins_centre(self):
         # creem admins centre
-        self.backend_login("admin","admin123")
-        self.crea_admin_centre("admin3","enric123")
-        self.crea_admin_centre("admin4","enric123")
-        self.assigna_admin_a_centre("admin3","terradas")
-        self.assigna_admin_a_centre("admin4","montilivi")
+        self.backend_login("admin@mail.com","admin123")
+        self.crea_admin_centre("admin3@mail.com","enric123")
+        self.crea_admin_centre("admin4@mail.com","enric123")
+        self.assigna_admin_a_centre("admin3@mail.com","terradas")
+        self.assigna_admin_a_centre("admin4@mail.com","montilivi")
         # logout
         self.backend_logout()

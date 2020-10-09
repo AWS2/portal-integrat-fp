@@ -9,6 +9,7 @@ from django.utils.safestring import mark_safe
 from django.contrib.gis.db import models as gismodels
 from django.contrib.gis.geos import Point
 from djrichtextfield.models import RichTextField
+from django.utils.translation import gettext as _
 
 class User(AbstractUser):
 	# foto alumne o logo admin empresa
@@ -25,6 +26,11 @@ class User(AbstractUser):
 						help_text="Centre on està actualment matriculat l'alumne o el darrer centre on hi va estar.")
 	tos = models.BooleanField(default=False)
 	data_notificacio_tos = models.DateTimeField(null=True,blank=True,default=None)
+	# auth model
+	# fem email unique: https://stackoverflow.com/questions/37332190/django-login-with-email
+	email = models.EmailField(_('email address'), unique=True)
+	USERNAME_FIELD = "email"
+	REQUIRED_FIELDS = ['username',]
 	def mostrar_imatge(self):
 		return mark_safe('<img src="'+settings.MEDIA_URL+'%s" width="90" />' % (self.imatge))
 	mostrar_imatge.short_description = 'Avatar'

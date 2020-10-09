@@ -249,36 +249,36 @@ class BorsaTests(StaticLiveServerTestCase):
     def test_1_crea_empreses(self):
         print("test_crea_empreses")
         # centre 1
-        self.backend_login("admin1","enric123")
-        self.backend_crea_alumne("alumne11","enric123")
+        self.backend_login("admin1@mail.com","enric123")
+        self.backend_crea_alumne("alumne11@mail.com","enric123")
         # alumne11 te el cicle de web
-        self.backend_titol_alumne("alumne11","web","terradas")
-        self.backend_crea_alumne("alumne12","enric123")
+        self.backend_titol_alumne("alumne11@mail.com","web","terradas")
+        self.backend_crea_alumne("alumne12@mail.com","enric123")
         # alumne11 te el cicle de mecanització
-        self.backend_titol_alumne("alumne12","mecanitza","terradas")
+        self.backend_titol_alumne("alumne12@mail.com","mecanitza","terradas")
         # usuari i empresa es diran igual pels tests
         # ULL: no posar noms d'empresa amb espais per tests!!!
-        self.crea_empresa("empresa11")
-        self.ajusta_usuari_empresa("empresa11","enric123")
-        self.check_menu_empresa("empresa11")
+        self.crea_empresa("empresa11@mail.com")
+        self.ajusta_usuari_empresa("empresa11@mail.com","enric123")
+        self.check_menu_empresa("empresa11@mail.com")
         # sortim de admin1
         self.backend_logout()
         # centre2 (admin2)
-        self.backend_login("admin2","enric123")
-        self.backend_crea_alumne("alumne21","enric123")
-        self.backend_crea_alumne("alumne22","enric123")
+        self.backend_login("admin2@mail.com","enric123")
+        self.backend_crea_alumne("alumne21@mail.com","enric123")
+        self.backend_crea_alumne("alumne22@mail.com","enric123")
         # alumne21 te el cicle de web
-        self.backend_titol_alumne("alumne21","web","montilivi")
+        self.backend_titol_alumne("alumne21@mail.com","web","montilivi")
         # empresa2
-        self.crea_empresa("empresa21")
-        self.ajusta_usuari_empresa("empresa21","enric123")
-        self.check_menu_empresa("empresa21")
+        self.crea_empresa("empresa21@mail.com")
+        self.ajusta_usuari_empresa("empresa21@mail.com","enric123")
+        self.check_menu_empresa("empresa21@mail.com")
         self.backend_logout()
 
         #def test_2_empresa21_no_veu_empresa11(self):
-        self.backend_login("empresa21","enric123")
+        self.backend_login("empresa21@mail.com","enric123")
         try:
-            self.check_menu_empresa("empresa11")
+            self.check_menu_empresa("empresa11@mail.com")
             raise Exception("L'usuari empresa21 veu l'empresa11, i no li correspon.")
         except NoSuchElementException as e:
             # si no hi ha l'element "empresa11", anem bé
@@ -289,9 +289,9 @@ class BorsaTests(StaticLiveServerTestCase):
         self.backend_logout()
 
         #def test_3_admin2_no_veu_empresa1(self):
-        self.backend_login("admin2","enric123")
+        self.backend_login("admin2@mail.com","enric123")
         try:
-            self.check_menu_empresa("empresa11")
+            self.check_menu_empresa("empresa11@mail.com")
             raise Exception("L'usuari admin2 veu l'empresa1, i no li correspon.")
         except NoSuchElementException as e:
             # si no hi ha l'element "empresa1", anem bé
@@ -303,40 +303,40 @@ class BorsaTests(StaticLiveServerTestCase):
 
         #def test_4_empresa1_oferta_caducada(self):
         # empresa1
-        self.backend_login("empresa11","enric123")
+        self.backend_login("empresa11@mail.com","enric123")
         self.crea_oferta_caducada1()
         self.crea_oferta_vigent11() # oferta de web visible
         self.veu_oferta_caducada1()
         self.veu_oferta_vigent11()
         self.backend_logout()
         # alumne11 (es de web i del terradas, veu la oferta vigent)
-        self.backend_login("alumne11","enric123")
+        self.backend_login("alumne11@mail.com","enric123")
         self.no_veu_oferta_caducada1()
         self.veu_oferta_vigent11()
         self.backend_logout()
         # alumne12 (es del terradas però no de web, no veu la oferta vigent)
-        self.backend_login("alumne12","enric123")
+        self.backend_login("alumne12@mail.com","enric123")
         self.no_veu_oferta_caducada1()
         self.no_veu_oferta_vigent11()
         self.backend_logout()
         # admin2
-        self.backend_login("admin2","enric123")
+        self.backend_login("admin2@mail.com","enric123")
         self.no_veu_oferta_caducada1()
         self.no_veu_oferta_vigent11()
         self.backend_logout()
         # alumne21 (es de web, pero no del terradas, SI veu la oferta IGUALMENT)
-        self.backend_login("alumne21","enric123")
+        self.backend_login("alumne21@mail.com","enric123")
         self.no_veu_oferta_caducada1()
         self.veu_oferta_vigent11()
         self.backend_logout()
         # empresa2
-        self.backend_login("empresa21","enric123")
+        self.backend_login("empresa21@mail.com","enric123")
         self.no_veu_oferta_caducada1()
         self.no_veu_oferta_vigent11()
         self.backend_logout()
 
     def xtest_5_empresa1_oferta_ok(self):
-        self.backend_login("empresa11","enric123")
+        self.backend_login("empresa11@mail.com","enric123")
         self.crea_oferta_vigent11()
         self.backend_logout()
         # alumne1 sí veu l'oferta ok
