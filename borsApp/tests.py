@@ -142,7 +142,8 @@ class BorsaTests(StaticLiveServerTestCase):
         self.selenium.find_element_by_name('titol').send_keys("oferta test caducada 1")
         # select2 empresa (FK)
         self.selenium.find_element_by_xpath('//span[@id="select2-id_empresa-container"]').click()
-        self.selenium.find_element_by_xpath('//li[text()="'+self.username+'"]').click()
+        empresa = self.username.split("@")[1].split(".")[0]
+        self.selenium.find_element_by_xpath('//li[text()="'+empresa+'"]').click()
         # select2 cicles (m2m)
         self.selenium.find_element_by_xpath('//div[@class="form-row field-cicles"]').click()
         self.selenium.find_element_by_xpath('//input[@class="select2-search__field"]').send_keys("web\n")
@@ -180,7 +181,8 @@ class BorsaTests(StaticLiveServerTestCase):
         self.selenium.find_element_by_name('titol').send_keys("oferta test vigent 11")
         # select2 empresa (FK)
         self.selenium.find_element_by_xpath('//span[@id="select2-id_empresa-container"]').click()
-        self.selenium.find_element_by_xpath('//li[text()="'+self.username+'"]').click()
+        empresa = self.username.split("@")[1].split(".")[0]
+        self.selenium.find_element_by_xpath('//li[text()="'+empresa+'"]').click()
         # select2 cicles (m2m)
         self.selenium.find_element_by_xpath('//div[@class="form-row field-cicles"]').click()
         self.selenium.find_element_by_xpath('//input[@class="select2-search__field"]').send_keys("web\n")
@@ -262,9 +264,9 @@ class BorsaTests(StaticLiveServerTestCase):
         self.backend_titol_alumne("alumne12@mail.com","mecanitza","terradas")
         # usuari i empresa es diran igual pels tests
         # ULL: no posar noms d'empresa amb espais per tests!!!
-        self.crea_empresa("empresa11@mail.com")
-        self.ajusta_usuari_empresa("empresa11@mail.com","enric123")
-        self.check_menu_empresa("empresa11@mail.com")
+        self.crea_empresa("empresa13")
+        self.ajusta_usuari_empresa("empresa13","enric123")
+        self.check_menu_empresa("empresa13")
         # sortim de admin1
         self.backend_logout()
         # centre2 (admin2)
@@ -274,15 +276,15 @@ class BorsaTests(StaticLiveServerTestCase):
         # alumne21 te el cicle de web
         self.backend_titol_alumne("alumne21@mail.com","web","montilivi")
         # empresa2
-        self.crea_empresa("empresa21@mail.com")
-        self.ajusta_usuari_empresa("empresa21@mail.com","enric123")
-        self.check_menu_empresa("empresa21@mail.com")
+        self.crea_empresa("empresa21")
+        self.ajusta_usuari_empresa("empresa21","enric123")
+        self.check_menu_empresa("empresa21")
         self.backend_logout()
 
         #def test_2_empresa21_no_veu_empresa11(self):
-        self.backend_login("empresa21@mail.com","enric123")
+        self.backend_login("info@empresa21.com","enric123")
         try:
-            self.check_menu_empresa("empresa11@mail.com")
+            self.check_menu_empresa("empresa11")
             raise Exception("L'usuari empresa21 veu l'empresa11, i no li correspon.")
         except NoSuchElementException as e:
             # si no hi ha l'element "empresa11", anem bé
@@ -295,7 +297,7 @@ class BorsaTests(StaticLiveServerTestCase):
         #def test_3_admin2_no_veu_empresa1(self):
         self.backend_login("admin2@mail.com","enric123")
         try:
-            self.check_menu_empresa("empresa11@mail.com")
+            self.check_menu_empresa("empresa11")
             raise Exception("L'usuari admin2 veu l'empresa1, i no li correspon.")
         except NoSuchElementException as e:
             # si no hi ha l'element "empresa1", anem bé
@@ -307,7 +309,7 @@ class BorsaTests(StaticLiveServerTestCase):
 
         #def test_4_empresa1_oferta_caducada(self):
         # empresa1
-        self.backend_login("empresa11@mail.com","enric123")
+        self.backend_login("info@empresa13.com","enric123")
         self.crea_oferta_caducada1()
         self.crea_oferta_vigent11() # oferta de web visible
         self.veu_oferta_caducada1()
@@ -334,13 +336,13 @@ class BorsaTests(StaticLiveServerTestCase):
         self.veu_oferta_vigent11()
         self.backend_logout()
         # empresa2
-        self.backend_login("empresa21@mail.com","enric123")
+        self.backend_login("info@empresa21.com","enric123")
         self.no_veu_oferta_caducada1()
         self.no_veu_oferta_vigent11()
         self.backend_logout()
 
     def xtest_5_empresa1_oferta_ok(self):
-        self.backend_login("empresa11@mail.com","enric123")
+        self.backend_login("info@empresa13.com","enric123")
         self.crea_oferta_vigent11()
         self.backend_logout()
         # alumne1 sí veu l'oferta ok
