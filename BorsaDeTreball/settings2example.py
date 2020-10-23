@@ -25,12 +25,12 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "Clave secreta que recibimos de Google para u
 #SOCIAL_AUTH_MICROSOFT_OAUTH2_SECRET = "Clave secreta de Microsoft"
 
 # DB
-DB_TYPE = "postgre" # postgre, mysql
+DB_TYPE = "mysql" # postgre, mysql
 DB_HOST = "localhost"
 DB_PORT = None # None = auto
-DB_NAME = "borsApp"
-DB_USER = "user001"
-DB_PASS = "123456789"
+DB_NAME = "borsa"
+DB_USER = "borsa"
+DB_PASS = "borsa123"
 
 
 

@@ -71,6 +71,11 @@ class BorsaTests(StaticLiveServerTestCase):
         # TODO: millorar test (comprovar no errors/warnings)
         #self.selenium.find_element_by_xpath('//li[@class="success" and contains(text(),"fou afegit amb èxit")]')
         self.selenium.find_element_by_xpath('//li[@class="success"]')
+        email_input = self.selenium.find_element_by_name('email')
+        email_input.send_keys(usuari)
+        self.selenium.find_element_by_xpath('//input[@value="Desar"]').click()
+        self.selenium.find_element_by_xpath('//li[@class="success"]')
+
 
     # UTILS EMPRESES
     #######################################
@@ -247,7 +252,6 @@ class BorsaTests(StaticLiveServerTestCase):
     #######################################
 
     def test_1_crea_empreses(self):
-        print("test_crea_empreses")
         # centre 1
         self.backend_login("admin1@mail.com","enric123")
         self.backend_crea_alumne("alumne11@mail.com","enric123")
