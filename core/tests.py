@@ -33,6 +33,9 @@ class BaseCoreTest:
         password_input = self.selenium.find_element_by_name("password")
         password_input.send_keys(contrasenya)
         self.selenium.find_element_by_xpath('//input[@value="Iniciar sessió"]').click()
+        # Comprovem que ens hem logat
+        self.selenium.find_element_by_xpath('//a[@href="/admin/logout/"]')
+        # si tot ha anat bé, marquem sessió iniciada
         self.loged = True
         self.username = usuari
 
@@ -56,6 +59,12 @@ class BaseCoreTest:
         # TODO: millorar test (comprovar no errors/warnings)
         #self.selenium.find_element_by_xpath('//li[@class="success" and contains(text(),"fou afegit amb èxit")]')
         self.selenium.find_element_by_xpath('//li[@class="success"]')
+        # afegim email (camp obligatori) a la 2a pantalla de creació de usuaris
+        email_input = self.selenium.find_element_by_name('email')
+        email_input.send_keys(usuari)
+        self.selenium.find_element_by_xpath('//input[@value="Desar i continuar editant"]').click()
+        self.selenium.find_element_by_xpath('//li[@class="success"]')
+
 
     def check_usuaris(self,usuaris,adminuser):
         # tornem a menu principal
@@ -172,10 +181,10 @@ class CoreTest(BaseCoreTest,StaticLiveServerTestCase):
         super().tearDownClass()
 
     # TESTS
-    #############################################3
+    #############################################
 
     def test_superadmin(self):
-        self.backend_login("admin@mail.com","admin123")
+        self.backend_login("admin@mail.com","enric123")
         # anem al menu usuari
         self.selenium.find_element_by_xpath('//a[text()="Usuaris"]').click()
         # editem un usuari (admin1)
@@ -220,7 +229,7 @@ class CoreTest(BaseCoreTest,StaticLiveServerTestCase):
 
     def test_crea_admins_centre(self):
         # creem admins centre
-        self.backend_login("admin@mail.com","admin123")
+        self.backend_login("admin@mail.com","enric123")
         self.crea_admin_centre("admin3@mail.com","enric123")
         self.crea_admin_centre("admin4@mail.com","enric123")
         self.assigna_admin_a_centre("admin3@mail.com","terradas")

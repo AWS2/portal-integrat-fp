@@ -71,6 +71,7 @@ class BorsaTests(StaticLiveServerTestCase):
         # TODO: millorar test (comprovar no errors/warnings)
         #self.selenium.find_element_by_xpath('//li[@class="success" and contains(text(),"fou afegit amb èxit")]')
         self.selenium.find_element_by_xpath('//li[@class="success"]')
+        # afegim email (camp obligatori) a la 2a pantalla de creació de usuaris
         email_input = self.selenium.find_element_by_name('email')
         email_input.send_keys(usuari)
         self.selenium.find_element_by_xpath('//input[@value="Desar"]').click()
