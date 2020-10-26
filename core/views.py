@@ -121,13 +121,19 @@ class PerfilForm(forms.ModelForm):
 @login_required
 @accepta_tos
 def perfil(request):
-	print("ID user="+str(request.user.id))
+	oldmail = request.user.email
 	form = None
 	if request.method=="POST":
 		form = PerfilForm( request.POST, request.FILES, instance=request.user)
 		if form.is_valid():
 			# TODO: flash message?
+			newmail = form.cleaned_data["email"]
+			# guardem noves dades d'usuari
 			form.save()
+			# registrar canvis a registre
+			if oldmail != newmail :
+				request.user.registre += "Canvi d'email de l'usuari "+oldmail+" -> "+newmail+"\n"
+				request.user.save()
 			return redirect("/")
 	else:
 		# GET: create form
