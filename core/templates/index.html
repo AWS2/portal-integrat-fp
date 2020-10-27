@@ -10,7 +10,7 @@
       <br><br>
       <h1 class="header center orange-text">Portal Integrat FP</h1>
       <div class="row center">
-        <h5 class="header col s12 light">Una iniciativa de IETI - Innovació Esteve Terradas</h5>
+        <h5 class="header col s12 light">Una iniciativa de IETI - Innovació Esteve Terradas i Illa</h5>
       </div>
       {% if request.user.is_anonymous %}
       <div class="row center">
@@ -36,11 +36,14 @@
             <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
       {% if not request.user.is_anonymous %}
             <div class="row center">
-              <a href="/admin/scrum" id="abp-button" class="btn-large waves-effect waves-light orange">Scrum / ABP</a>
+              <a href="/admin/scrum" id="abp-button" class="btn-large waves-effect waves-light orange">Gestiona Scrum / ABP</a>
             </div>
       {% else %}
             <h5 class="center">Scrum / ABP</h5>
       {% endif %}
+            <div class="row center">
+              <a href="/scrum/projectes" id="abp-button" class="btn-large waves-effect waves-light orange">Mira els projectes!</a>
+            </div>
             <p class="light">Gestiona els projectes a l'aula amb metodologia Scrum.</p>
       {% endif %}
           </div>

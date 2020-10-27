@@ -8,7 +8,7 @@ from core.models import ModulProfessional
 
 
 def index(request):
-	projectes = Projecte.objects.all()
+	projectes = Projecte.objects.order_by('-inici')
 	return render( request, "projecte_list.html", {"projectes":projectes} )
 
 def projecte(request,id):

@@ -7,11 +7,24 @@
     <div class="section">
 		<h2>Projectes Scrum</h2>
 
-		<ul class="collection">
+		<table>
+			<thead>
+				<tr>
+					<td>Nom projecte</td>
+					<td>Dates inici - final</td>
+					<td>Go!</td>
+				</tr>
+			</thead>
 		{% for projecte in projectes %}
-			<li class="collection-item"><a href="{% url 'projecte' projecte.id %}">{{projecte.nom}}</a></li>
+			<tr>
+				<td><a class="title" href="{% url 'projecte' projecte.id %}">{{projecte.nom}}</a></td>
+				<td><span class="lighten-3">Inici: {{projecte.inici}} <br>Final: {{projecte.final}}</span></td>
+				<td><a class="secondary-content" href="{% url 'projecte' projecte.id %}">
+					<i class="material-icons">send</i></a>
+				</td>
+			</tr>
 		{% endfor %}
-		</ul>
+		</table>
 
 	</div>
 </div>

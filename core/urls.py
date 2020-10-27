@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from core import views
 
 urlpatterns = [
@@ -9,11 +9,12 @@ urlpatterns = [
     path('tos-refusa', views.tos_refusa, name="tos" ),
     # aquest path es on va redirect per defecte quan falla OAuth
     # TODO: explicitar redirect
-    path('accounts/login/', views.login_view, name='login2'),
-    path('accounts/change_password/',views.change_password, name="change_password"),
+    path('change_password/',views.change_password, name="change_password"),
     path('login', views.login_view, name='login'),
     path('logout', views.logout_view, name="logout"),
     path('', views.index ),
     path('perfil', views.perfil, name="perfil"),
+    # auth framework
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
