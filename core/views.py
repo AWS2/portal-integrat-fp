@@ -90,14 +90,12 @@ def login_view(request):
 	else:
 		email = request.POST["email"]
 		passw = request.POST["password"]
-		#print(email,passw)
 		user = authenticate(request, email=email, password=passw)
 		if user is not None:
-			print("OK user "+user.username)
+			print("Loign OK user "+user.username)
 			login(request,user)
 			return redirect("/")
 		# error in authenticate
-		print("ERROR!")
 		return render( request, 'login.html',
 			{"msg":"Error: l'usuari o la contrasenya no son correctes."} )
 
@@ -115,7 +113,7 @@ class PerfilForm(forms.ModelForm):
 		model = User
 		#exclude = ('groups','permissions','is_staff','is_superuser','is_active',
 		#	'password','last_login','date_joined')
-		fields = ['first_name','last_name','username','email',
+		fields = ['first_name','last_name','email',
 			'imatge','arxiu','descripcio',]
 
 @login_required
@@ -140,3 +138,27 @@ def perfil(request):
 		form = PerfilForm(instance=request.user)
 	
 	return render(request, 'perfil.html', {"form":form} )
+
+
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render, redirect
+
+@login_required
+@accepta_tos
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Contrasenya canviada exitosament :)')
+            return redirect('/perfil')
+        else:
+            messages.error(request, 'Sisplau, corregeix els errors descrits a continuació:')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'change_password.html', {
+        'form': form
+    })
