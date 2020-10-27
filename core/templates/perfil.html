@@ -4,6 +4,9 @@
 .select-wrapper input.select-dropdown {
 	display: none;
 }
+.errorlist {
+	color: red;
+}
 {% endblock %}
 
 {% block content %}
@@ -17,6 +20,8 @@
 	<p>
 		{{form.instance.mostrar_imatge}}
 	</p>
+
+	<p><a href="/admin/password_change?next=/">Canviar contrasenya</a></p>
 
 	<form method="post" enctype="multipart/form-data">
 		{% csrf_token %}
