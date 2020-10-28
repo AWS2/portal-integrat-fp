@@ -389,17 +389,18 @@ class DoneSpecInline(admin.TabularInline):
         return mark_safe(mps)
 class QualificacioAdmin(admin.ModelAdmin):
     model = Qualificacio
+    list_per_page = 16
     list_display = ('__str__','projecte','sprint','equip','membres','nota','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
     search_fields = ('sprint__projecte__nom','sprint__nom','equip__nom')
     readonly_fields = ('sprint','equip','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
     inlines = [ DoneSpecInline, ]
-    def get_list_display(self,*args,**kwargs):
+    """def get_list_display(self,*args,**kwargs):
         request = args[0]
         # no actualitzem amb alumnes (si amb profes/admins)
         # TODO: optimitzar mes (actualitzar nomes quan modifiquem projecte o equip)
         if not request.user.es_alumne:
             actualitza_qualificacions()
-        return super().get_list_display(*args,**kwargs)
+        return super().get_list_display(*args,**kwargs)"""
     def get_queryset(self,request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -418,52 +419,6 @@ class QualificacioAdmin(admin.ModelAdmin):
                 | Q(sprint__projecte__centre__in=centres)
                 | Q(sprint__projecte__equips__membres__in=[request.user]) )
         return qs.distinct()
-"""
-class DoneSpecAdmin(admin.ModelAdmin):
-    model = DoneSpec
-    list_display = ('__str__','is_done','done','projecte','sprint','equip')
-    list_editable = ('done',)
-    search_fields = ('qualificacio__sprint__projecte__nom','qualificacio__equip__nom','qualificacio__sprint__nom','spec__nom')
-    ordering = ('qualificacio__sprint__projecte__nom','qualificacio__equip__nom','qualificacio__sprint__inici',)
-    def projecte(self,obj):
-        return obj.qualificacio.sprint.projecte.nom
-    def sprint(self,obj):
-        return obj.qualificacio.sprint.nom
-    def equip(self,obj):
-        return obj.qualificacio.equip.nom
-    def is_done(self,obj):
-        if obj.done:
-            return True
-        return False
-    is_done.boolean = True
-    def get_list_display(self,*args,**kwargs):
-        actualitza_qualificacions()
-        return super().get_list_display(*args,**kwargs)
-"""
-def actualitza_qualificacions():
-    print("actualitzant...")
-    sprints = Sprint.objects.all()
-    for sprint in sprints:
-        # cal crear una Qualificació per cada sprint i equip
-        for equip in sprint.projecte.equips.all():
-            quali = None
-            qualis = Qualificacio.objects.filter(sprint=sprint,equip=equip)
-            if not qualis:
-                print("Creant Qualificacio per a "+sprint.nom)
-                quali = Qualificacio(sprint=sprint,equip=equip)
-                quali.save()
-            else:
-                quali = qualis[0]
-            # cal crear un DoneSpec per cada Qualificació i Spec
-            for spec in sprint.specs.all():
-                dspecs = DoneSpec.objects.filter(qualificacio=quali,spec=spec)
-                if not dspecs:
-                    dspec = DoneSpec(qualificacio=quali,spec=spec)
-                    dspec.save()
-            # esborrar done_specs que s'hagin tret del sprint
-            for dspec in quali.done_specs.all():
-                if dspec.spec not in sprint.specs.all():
-                    dspec.delete()
 
 
 
