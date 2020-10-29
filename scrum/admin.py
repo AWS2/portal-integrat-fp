@@ -19,6 +19,7 @@ SpecForm = select2_modelform(Spec)
 class QualificacioInline(admin.TabularInline):
     model = Qualificacio
     extra = 0
+    show_change_link = True
     fields = ('sprint','nota','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
     readonly_fields = ('sprint','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
     ordering = ('sprint__nom',)
