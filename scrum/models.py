@@ -50,7 +50,7 @@ class Sprint(models.Model):
 class Spec(models.Model):
     class Meta:
         ordering = ['ordre',]
-    nom = models.CharField(max_length=255)
+    nom = models.CharField(max_length=600)
     descripcio = RichTextField(blank=True)#field_settings={'width':'300'} aqui si q funciona
     pare = models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True)
     projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
