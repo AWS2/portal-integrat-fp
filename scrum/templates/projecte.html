@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 
 {% block extra_css %}
+.collection-header {
+    background-color: #b3e5fc !important;
 {% endblock %}
 
 {% block content %}
 
   <div class="container">
     <div class="section">
-        <h2>Projecte</h2>
+        <!--h2>Projecte</h2-->
+        <div>
+            <a href="/scrum/projectes"><i class="material-icons">arrow_back</i>Tornar a la llista de projectes</a>
+        </div>
 
         <div class="card-panel light-blue lighten-4">
 	        <h3>{{projecte.nom}}</h3>
@@ -39,6 +44,7 @@
 	        		<h4>{{sprint.nom}}</h4>
 	        		<p>Inici: {{sprint.inici}}</p>
 	        		<p>Final: {{sprint.final}}</p>
+                    <p>Hores estimades: {{sprint.hores}}</p>
 	        	</li>
         	{% for spec in sprint.specs.all %}
         		<li class="collection-item">
@@ -61,6 +67,9 @@
 
         </div>
 
+        <div>
+            <a href="/scrum/projectes"><i class="material-icons">arrow_back</i>Tornar a la llista de projectes</a>
+        </div>
 
     </div>
   </div>

@@ -123,31 +123,13 @@ class SpecInline(SortableInlineAdminMixin,admin.TabularInline):
         return super().formfield_for_manytomany(db_field, request=request, **kwargs)
 class SprintInline(admin.TabularInline):
     model = Sprint
-    #form = SprintForm
+    readonly_fields = ('hores',)
     ordering = ('inici',)
     exclude = ('notes',)
     extra = 1
-    # restrict specs al proj
-    """def formfield_for_manytomany(self, db_field, request=None, **kwargs):
-        if db_field.name == 'specs':
-            try:
-                parts = request.get_raw_uri().split("/")
-                i = parts.index("projecte")
-                #print("I="+str(i))
-                obj_id = parts[i+1]
-                #print(obj_id)
-                if obj_id:
-                    kwargs['queryset'] = Spec.objects.filter(projecte=obj_id).order_by('ordre')
-                else:
-                    kwargs['queryset'] = Spec.objects.none()
-            except:
-                print("ERROR in formfield_for_manytomany (SprintInline)")
-        return super().formfield_for_manytomany(db_field, request=request, **kwargs)
-"""
 from django.db.models import Q
 class ProjecteAdmin(admin.ModelAdmin):
     model = Projecte
-    #form = ProjecteForm
     list_display = ('nom','centre','cicle','inici','final','hores','resum_mps')
     ordering = ('centre','cicle','-inici')
     search_fields = ('nom','centre__nom','cicle__nom',)
@@ -275,16 +257,16 @@ class SpecAdmin(SortableAdminMixin,admin.ModelAdmin):
             self.exclude = ()
             self.readonly_fields = ()
         return super().get_form(request,obj,**kwargs)
-    def get_list_display(self,request):
+    """def get_list_display(self,request):
         # TODO: falla (ordre apareix en num enlloc de control). arreglar
         # per a admins i super
-        """self.list_display = ('nom','projecte','hores_estimades','moduls','ordre',)
+        self.list_display = ('nom','projecte','hores_estimades','moduls','ordre',)
         self.list_editable = ('hores_estimades',)
         # modifiquem per alumnes
         if request.user.es_alumne:
             self.list_display = ('nom','projecte','hores_estimades','moduls',)
-            self.list_editable = ()"""
-        return super().get_list_display(request)
+            self.list_editable = ()
+        return super().get_list_display(request)"""
     def get_queryset(self,request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -395,13 +377,6 @@ class QualificacioAdmin(admin.ModelAdmin):
     search_fields = ('sprint__projecte__nom','sprint__nom','equip__nom')
     readonly_fields = ('sprint','equip','specs_completades','hores_completades','specs_completades_mps','specs_completades_mps_ponderat')
     inlines = [ DoneSpecInline, ]
-    """def get_list_display(self,*args,**kwargs):
-        request = args[0]
-        # no actualitzem amb alumnes (si amb profes/admins)
-        # TODO: optimitzar mes (actualitzar nomes quan modifiquem projecte o equip)
-        if not request.user.es_alumne:
-            actualitza_qualificacions()
-        return super().get_list_display(*args,**kwargs)"""
     def get_queryset(self,request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -425,7 +400,7 @@ class QualificacioAdmin(admin.ModelAdmin):
 
 admin.site.register( Projecte, ProjecteAdmin )
 admin.site.register( Spec, SpecAdmin )
-admin.site.register( Sprint, SprintAdmin )
+#admin.site.register( Sprint, SprintAdmin )
 admin.site.register( Equip, EquipAdmin )
 admin.site.register( Qualificacio, QualificacioAdmin )
 #admin.site.register( DoneSpec, DoneSpecAdmin )
