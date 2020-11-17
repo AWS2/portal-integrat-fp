@@ -1,0 +1,43 @@
+{% load i18n admin_urls %}
+{% block object-tools-items %}
+<li>
+    {% url opts|admin_urlname:'history' original.pk|admin_urlquote as history_url %}
+    <a href="{% add_preserved_filters history_url %}" class="historylink">{% trans "History" %}</a>
+</li>
+
+
+
+	  {# BOTÓ AMAGAR SPECS SPRINTS PASSATS #}
+
+	  {% if '/admin/scrum/projecte/' in request.path and not request.user.es_alumne %}
+		  <li>
+		  	<script type="text/javascript">
+		  		var amaga_toggled = false;
+		  		function amaga_specs() {
+		  			var sprints = $("td.field-sprints ul.select2-selection__rendered");
+
+		  			if( amaga_toggled ) {
+		  				// MOSTREM FILES (SPECS)
+			  			var parents = sprints.parent().parent().parent().parent().parent().parent();
+		  				parents.css("display","table-row");
+		  			} else {
+		  				// AMAGUEM LES QUE TENEN UN SPRINT ASSIGNAT
+			  			sprints.each(function() {
+			  				var sons = $("li",$(this));
+			  				if( sons.length>1 ) {
+			  					var parent = $(this).parent().parent().parent().parent().parent().parent();
+					  			parent.css("display","none");
+					  		}
+					 	});
+					}
+					amaga_toggled = ! amaga_toggled;
+				}
+			</script>
+		  	<a href="#" onclick="amaga_specs()" class="viewlink">Amaga specs de sprints passats</a>
+		  </li>
+	  {% endif %}
+
+
+
+{% if has_absolute_url %}<li><a href="{{ absolute_url }}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif %}
+{% endblock %}
