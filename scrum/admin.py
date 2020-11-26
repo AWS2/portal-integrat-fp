@@ -6,6 +6,8 @@ from easy_select2 import select2_modelform
 from adminsortable2.admin import SortableAdminMixin
 from adminsortable2.admin import SortableInlineAdminMixin
 
+from django.utils import timezone
+
 # Register your models here.
 
 from scrum.models import *
@@ -54,19 +56,20 @@ class EquipAdmin(admin.ModelAdmin):
         return qs.distinct()
     def formfield_for_foreignkey(slef,db_field,request=None,**kwargs):
         if db_field.name=="projecte" and not request.user.is_superuser:
-            # restringir a projectes del propi centre/s
-            # TODO: restringir dates projectes en curs
+            # restringir a projectes del propi centre/s en curs (dates)
             centres = Centre.objects.filter(admins__in=[request.user])
             if request.user.centre:
                 centres |= Centre.objects.filter(pk=request.user.centre.id)
-            kwargs["queryset"] = Projecte.objects.filter(centre__in=centres)
+            kwargs["queryset"] = Projecte.objects.filter(centre__in=centres,
+                                    final__gt=timezone.now()).order_by('-inici')
         return super().formfield_for_foreignkey(db_field,request=request,**kwargs)
     def formfield_for_manytomany(slef,db_field,request=None,**kwargs):
         if db_field.name=="membres" and not request.user.is_superuser:
             # els membres de l'equip poden ser els alumnes del mateix centre que l'usuari
+            # que no estiguin graduats encara (per no omplir amb exalumnes de la borsa)
             if request.user.centre:
                 kwargs["queryset"] = User.objects.filter(centre=request.user.centre,titols__graduat=False)
-                #TODO: initial sense modificar els que hi ha ja
+                # initial: sense modificar els que hi ha ja
                 kwargs["initial"] = User.objects.filter(pk=request.user.id)
         return super().formfield_for_manytomany(db_field,request=request,**kwargs)
 
@@ -131,7 +134,7 @@ from django.db.models import Q
 class ProjecteAdmin(admin.ModelAdmin):
     model = Projecte
     list_display = ('nom','centre','cicle','inici','final','hores','resum_mps')
-    ordering = ('centre','cicle','-inici')
+    ordering = ('-inici',)
     search_fields = ('nom','centre__nom','cicle__nom',)
     readonly_fields = ('descripcio_html',)
     exclude = ('descripcio',)
@@ -397,12 +400,19 @@ class QualificacioAdmin(admin.ModelAdmin):
         return qs.distinct()
 
 
+class SpecFeedbackAdmin(admin.ModelAdmin):
+    model = SpecFeedback
+    list_per_page = 15
+    list_display = ('spec','projecte','usuari','hores')
+    search_fields = ('spec','spec__projecte','usuari')
+    def projecte(self,obj):
+        return obj.spec.projecte
 
 admin.site.register( Projecte, ProjecteAdmin )
 admin.site.register( Spec, SpecAdmin )
 #admin.site.register( Sprint, SprintAdmin )
 admin.site.register( Equip, EquipAdmin )
 admin.site.register( Qualificacio, QualificacioAdmin )
-#admin.site.register( DoneSpec, DoneSpecAdmin )
+admin.site.register( SpecFeedback, SpecFeedbackAdmin )
 
 

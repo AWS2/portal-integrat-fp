@@ -51,9 +51,9 @@
         			<div>
         				{{spec.ordre}}. {{spec.nom}}
         			</div>
-				<div>
-					{{spec.descripcio|safe}}
-				</div>
+    				<div>
+    					{{spec.descripcio|safe}}
+    				</div>
         			<div>
         				<p><a >hores estimades: {{spec.hores_estimades}}</a>
         					Mòduls:
@@ -62,6 +62,14 @@
         					{% endfor %}
         				</p>
         			</div>
+                    {% if not request.user.is_anonymous %}
+                    <div>Comentaris
+                        {% for coment in spec.feedbacks.all  %}
+                            <p>Hores: {{coment.hores}}</p>
+                            {{spec.feedback.desc}}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
         		</li>
         	{% endfor %}
         	</ul>

@@ -3,6 +3,7 @@ from djrichtextfield.models import RichTextField
 import datetime
 from django.utils.safestring import mark_safe
 from django import forms
+from django.utils import timezone
 
 # Create your models here.
 
@@ -148,10 +149,18 @@ class Qualificacio(models.Model):
         return mark_safe(ret)
 
 class DoneSpec(models.Model):
-    qualificacio = models.ForeignKey(Qualificacio,on_delete=models.CASCADE,related_name="done_specs")
+    qualificacio = models.ForeignKey(Qualificacio,on_delete=models.CASCADE,
+                                            related_name="done_specs")
     spec = models.ForeignKey(Spec,on_delete=models.CASCADE)
     done = models.BooleanField(default=False)
     def __str__(self):
-        return str(self.qualificacio.equip.nom)+" ("+str(self.spec.nom)+") : "+str(self.done)
+        return str(self.spec.ordre)+" : "+str(self.spec.nom)
 
+
+class SpecFeedback(models.Model):
+    spec = models.ForeignKey(Spec, on_delete=models.CASCADE, related_name="feedbacks")
+    usuari = models.ForeignKey(User, on_delete=models.CASCADE)
+    data = models.DateField(default=timezone.now)
+    hores = models.FloatField(blank=True,null=True)
+    desc = RichTextField(blank=True,null=True)
 
