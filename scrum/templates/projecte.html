@@ -3,9 +3,27 @@
 {% block extra_css %}
 .collection-header {
     background-color: #b3e5fc !important;
+}
+
+.comment-box {
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+.comment-form {
+    display: none;
+}
+
 {% endblock %}
 
 {% block content %}
+
+<script type="text/javascript">
+    function obre(form_num) {
+        $("#comment-form-"+form_num).css("display","block");
+    }
+</script>
+
 
   <div class="container">
     <div class="section">
@@ -63,11 +81,24 @@
         				</p>
         			</div>
                     {% if not request.user.is_anonymous %}
-                    <div>Comentaris
+                    <div class="comments">Comentaris
                         {% for coment in spec.feedbacks.all  %}
+                        <div class="comment-box">
                             <p>Hores: {{coment.hores}}</p>
-                            {{spec.feedback.desc}}
+                            {{coment.desc|safe}}
+                        </div>
                         {% endfor %}
+                        <p>Afegir comentari:
+                            <i class="material-icons" onclick="obre({{forloop.counter}})">note_add</i>
+                        </p>
+                        <div class="comment-form" id="comment-form-{{forloop.counter}}">
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="number" name="hores" />
+                                <input type="text" name="desc" />
+                                <input type="submit" />
+                            </form>
+                        </div>
                     </div>
                     {% endif %}
         		</li>
