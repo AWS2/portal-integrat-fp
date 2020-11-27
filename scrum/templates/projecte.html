@@ -14,6 +14,10 @@
     display: none;
 }
 
+.anchor {
+    color: black;
+}
+
 {% endblock %}
 
 {% block content %}
@@ -68,7 +72,8 @@
 
         	<ul class="collection with-header">
 	        	<li class="collection-header">
-	        		<h4>{{sprint.nom}}</h4>
+
+	        		<h4><a class="anchor" id="sprint-{{sprint.id}}">{{sprint.nom}}</a></h4>
 	        		<p>Inici: {{sprint.inici}}</p>
 	        		<p>Final: {{sprint.final}}</p>
                     <p>Hores estimades: {{sprint.hores}}</p>
@@ -76,13 +81,15 @@
         	{% for spec in sprint.specs.all %}
         		<li class="collection-item">
         			<h6 style="font-weight: bold;">
+                        <a class="anchor" id="sprint-{{sprint.id}}-spec-{{spec.ordre}}">
         				{{spec.ordre}}. {{spec.nom}}
+                        </a>
         			</h6>
     				<div>
     					{{spec.descripcio|safe}}
     				</div>
         			<div>
-        				<p><a >hores estimades: {{spec.hores_estimades}}</a>
+        				<p><a>hores estimades: {{spec.hores_estimades}}</a>
         					Mòduls:
         					{% for mp in spec.mp.all %}
         						{{mp.nom|slice:"0:4"}}
@@ -108,7 +115,7 @@
                             <i class="material-icons" onclick="toggle_comment({{spec.id}})">read_more</i>
                         </p>
                         <div class="comment-form row" id="comment-form-{{spec.id}}">
-                            <form method="post">
+                            <form method="post" action="#sprint-{{sprint.id}}-spec-{{spec.ordre}}">
                                 {% csrf_token %}
                                 <div class="col s2">
                                     <i class="material-icons">alarm</i>
