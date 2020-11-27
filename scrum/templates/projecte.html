@@ -6,7 +6,7 @@
 }
 
 .comment-box {
-    border-top: 1px solid gray;
+    /*border-top: 1px solid gray;*/
     border-bottom: 1px solid gray;
 }
 
@@ -19,8 +19,17 @@
 {% block content %}
 
 <script type="text/javascript">
-    function obre(form_num) {
-        $("#comment-form-"+form_num).css("display","block");
+    function toggle_comment(form_num) {
+        var elem = $("#comment-form-"+form_num);
+
+        if( elem.css("display")=="none" ) {
+            // colapsem tota la resta d'elements
+            $(".comment-form").css("display","none");
+            // activem el que hem triat
+            elem.css("display","block");
+        }
+        else
+            elem.css("display","none");
     }
 </script>
 
@@ -66,9 +75,9 @@
 	        	</li>
         	{% for spec in sprint.specs.all %}
         		<li class="collection-item">
-        			<div>
+        			<h6 style="font-weight: bold;">
         				{{spec.ordre}}. {{spec.nom}}
-        			</div>
+        			</h6>
     				<div>
     					{{spec.descripcio|safe}}
     				</div>
@@ -81,22 +90,37 @@
         				</p>
         			</div>
                     {% if not request.user.is_anonymous %}
-                    <div class="comments">Comentaris
+                    <div class="comments">
+                        <h6>Comentaris</h6>
                         {% for coment in spec.feedbacks.all  %}
-                        <div class="comment-box">
-                            <p>Hores: {{coment.hores}}</p>
-                            {{coment.desc|safe}}
+                        <div class="comment-box row">
+                            <div class="col s3">
+                                <i class="material-icons">alarm</i>
+                                {{coment.hores}} Hores reals
+                            </div>
+                            <div class="col s9">
+                                <i class="material-icons">comment_bank</i>
+                                <div>{{coment.desc|safe}}</div>
+                            </div>
                         </div>
                         {% endfor %}
                         <p>Afegir comentari:
-                            <i class="material-icons" onclick="obre({{forloop.counter}})">note_add</i>
+                            <i class="material-icons" onclick="toggle_comment({{spec.id}})">read_more</i>
                         </p>
-                        <div class="comment-form" id="comment-form-{{forloop.counter}}">
+                        <div class="comment-form row" id="comment-form-{{spec.id}}">
                             <form method="post">
                                 {% csrf_token %}
-                                <input type="number" name="hores" />
-                                <input type="text" name="desc" />
-                                <input type="submit" />
+                                <div class="col s2">
+                                    <i class="material-icons">alarm</i>
+                                    <label for="hores">Hores reals</label>
+                                    <input type="number" name="hores" />
+                                </div>
+                                <div class="col s10">
+                                    <i class="material-icons">comment_bank</i>
+                                    <label for="desc">Comentari</label>
+                                    <textarea name="desc" class="materialize-textarea"></textarea>
+                                </div>
+                                <input class="col s3" type="submit" value="Envia comentari" />
                             </form>
                         </div>
                     </div>
