@@ -190,7 +190,9 @@
 
 {% if toggled_comment %}
 <script type="text/javascript">
-    toggle_read_comment({{toggled_comment.sprint_id}},{{toggled_comment.spec_id}});
+    window.onload = (event) => {
+        toggle_read_comment({{toggled_comment.sprint_id}},{{toggled_comment.spec_id}});
+    };
 </script>
 {% endif %}
 
