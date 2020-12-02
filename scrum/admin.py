@@ -403,10 +403,16 @@ class QualificacioAdmin(admin.ModelAdmin):
 class SpecFeedbackAdmin(admin.ModelAdmin):
     model = SpecFeedback
     list_per_page = 15
-    list_display = ('spec','projecte','usuari','hores')
+    list_display = ('spec','projecte','usuari','equip','hores','data')
     search_fields = ('spec','spec__projecte','usuari')
+    #readonly_fields = ('spec','usuari','hores','desc','data')
     def projecte(self,obj):
         return obj.spec.projecte
+    def equip(self,obj):
+        res = ""
+        for equip in obj.usuari.equips.filter(projecte=obj.spec.projecte):
+            res += equip.nom + ", "
+        return res
 
 admin.site.register( Projecte, ProjecteAdmin )
 admin.site.register( Spec, SpecAdmin )

@@ -10,7 +10,7 @@
     border-bottom: 1px solid gray;
 }
 
-.comment-form {
+.comment-form, .comment-container {
     display: none;
 }
 
@@ -23,12 +23,25 @@
 {% block content %}
 
 <script type="text/javascript">
-    function toggle_comment(form_num) {
-        var elem = $("#comment-form-"+form_num);
+    function toggle_add_comment(sprint_id,spec_id) {
+        var elem = $("#comment-form-"+sprint_id+"-"+spec_id);
 
         if( elem.css("display")=="none" ) {
             // colapsem tota la resta d'elements
             $(".comment-form").css("display","none");
+            // activem el que hem triat
+            elem.css("display","block");
+        }
+        else
+            elem.css("display","none");
+    }
+
+    function toggle_read_comment(sprint_id,spec_id) {
+        var elem = $("#comment-container-"+sprint_id+"-"+spec_id);
+
+        if( elem.css("display")=="none" ) {
+            // colapsem tota la resta d'elements
+            $(".comment-container").css("display","none");
             // activem el que hem triat
             elem.css("display","block");
         }
@@ -81,7 +94,7 @@
         	{% for spec in sprint.specs.all %}
         		<li class="collection-item">
         			<h6 style="font-weight: bold;">
-                        <a class="anchor" id="sprint-{{sprint.id}}-spec-{{spec.ordre}}">
+                        <a class="anchor" id="sprint-{{sprint.id}}-spec-{{spec.id}}">
         				{{spec.ordre}}. {{spec.nom}}
                         </a>
         			</h6>
@@ -98,25 +111,40 @@
         			</div>
                     {% if not request.user.is_anonymous %}
                     <div class="comments">
-                        <h6>Comentaris</h6>
-                        {% for coment in spec.feedbacks.all  %}
-                        <div class="comment-box row">
-                            <div class="col s3">
-                                <i class="material-icons">alarm</i>
-                                {{coment.hores}} Hores reals
-                            </div>
-                            <div class="col s9">
-                                <i class="material-icons">comment_bank</i>
-                                <div>{{coment.desc|safe}}</div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                        <p>Afegir comentari:
-                            <i class="material-icons" onclick="toggle_comment({{spec.id}})">read_more</i>
+                        {% if spec.feedbacks.count > 0 %}
+                        <p onclick="toggle_read_comment({{sprint.id}},{{spec.id}})">
+                            <i class="material-icons">comment</i>
+                            Llegir comentaris
                         </p>
-                        <div class="comment-form row" id="comment-form-{{spec.id}}">
-                            <form method="post" action="#sprint-{{sprint.id}}-spec-{{spec.ordre}}">
+                        <div class="comment-container" id="comment-container-{{sprint.id}}-{{spec.id}}">
+                            {# posem nomes els comentaris del grup de l'usuari #}
+                            {% for coment in spec.feedbacks.all  %}
+                            <div class="comment-box row" >
+                                <div class="col s3">
+                                    <i class="material-icons">alarm</i>
+                                    {{coment.hores}} Hores reals
+                                </div>
+                                <div class="col s1">
+                                    <i class="material-icons">comment_bank</i>
+                                </div>
+                                <div class="col s8">
+                                    <div>{{coment.desc|safe}}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <p onclick="toggle_add_comment({{sprint.id}},{{spec.id}})">
+                            <i class="material-icons">read_more</i>
+                            Afegir comentari
+                        </p>
+                        <div class="comment-form row" id="comment-form-{{sprint.id}}-{{spec.id}}">
+                            <form method="post" action="#sprint-{{sprint.id}}-spec-{{spec.id}}">
                                 {% csrf_token %}
+
+                                <input type="hidden" name="sprint_id" value="{{sprint.id}}" />
+                                <input type="hidden" name="spec_id" value="{{spec.id}}" />
+
                                 <div class="col s2">
                                     <i class="material-icons">alarm</i>
                                     <label for="hores">Hores reals</label>
@@ -146,6 +174,12 @@
 
     </div>
   </div>
+
+{% if toggled_comment %}
+<script type="text/javascript">
+    toggle_read_comment({{toggled_comment.sprint}},{{toggled_comment.spec}});
+</script>
+{% endif %}
 
 {% endblock %}
 

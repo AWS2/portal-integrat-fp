@@ -27,7 +27,7 @@ class Equip(models.Model):
     nom = models.CharField(max_length=255)
     descripcio = RichTextField(blank=True)
     projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE,related_name="equips")
-    membres = models.ManyToManyField(User)
+    membres = models.ManyToManyField(User,related_name="equips")
     # TODO: permisos (read, write, etc.)
     def __str__(self):
         return self.nom
@@ -67,6 +67,10 @@ class Spec(models.Model):
         for sprint in self.sprints.all():
             ret += str(sprint.nom) + " , "
         return ret
+    def comentaris_grup(self,request):
+        qs = self.feedbacks.filter(usuari=request.user)
+        return qs
+        
 
 class Qualificacio(models.Model):
     class Meta:
@@ -159,8 +163,8 @@ class DoneSpec(models.Model):
 
 class SpecFeedback(models.Model):
     spec = models.ForeignKey(Spec, on_delete=models.CASCADE, related_name="feedbacks")
-    usuari = models.ForeignKey(User, on_delete=models.CASCADE)
-    data = models.DateField(default=timezone.now)
+    usuari = models.ForeignKey(User, on_delete=models.CASCADE, related_name="feedbacks")
+    data = models.DateTimeField(default=timezone.now)
     hores = models.FloatField(blank=True,null=True)
     desc = RichTextField(blank=True,null=True)
 
