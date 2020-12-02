@@ -1,14 +1,8 @@
 from django.shortcuts import render
-from django import template
 
 from scrum.models import Projecte, Spec, SpecFeedback
 from core.models import ModulProfessional
 
-register = template.Library()
-
-@register.filter
-def dels_grups_de(feedbacks,usuari):
-	return feedbacks.filter()
 
 # Create your views here.
 
@@ -19,7 +13,7 @@ def index(request):
 
 def projecte(request,id):
 	projecte = Projecte.objects.get(id=id)
-	mps = ModulProfessional.objects.filter( specs__projecte=projecte ).distinct()
+	mps = ModulProfessional.objects.filter(specs__projecte=projecte).distinct()
 	toggled_comment = None
 	if request.method=="POST":
 		# processem comentaris enviats
@@ -28,11 +22,13 @@ def projecte(request,id):
 		spec = Spec.objects.get(id=spec_id)
 		comentari = SpecFeedback()
 		comentari.spec = spec
+		equips = request.user.equips.filter(membres__in=[request.user])
+		comentari.equip = equips[0]
 		comentari.usuari = request.user
 		comentari.hores = request.POST.get("hores")
 		comentari.desc = request.POST.get("desc").strip()
 		comentari.save()
 		toggled_comment = {"sprint_id":sprint_id,"spec_id":spec_id}
 	return render( request, "projecte.html", {"projecte":projecte,
-					"mps":mps,"obre":toggled_comment} )
+					"mps":mps, "toggled_comment":toggled_comment} )
 

@@ -70,7 +70,7 @@ class Spec(models.Model):
     def comentaris_grup(self,request):
         qs = self.feedbacks.filter(usuari=request.user)
         return qs
-        
+
 
 class Qualificacio(models.Model):
     class Meta:
@@ -163,7 +163,10 @@ class DoneSpec(models.Model):
 
 class SpecFeedback(models.Model):
     spec = models.ForeignKey(Spec, on_delete=models.CASCADE, related_name="feedbacks")
-    usuari = models.ForeignKey(User, on_delete=models.CASCADE, related_name="feedbacks")
+    usuari = models.ForeignKey(User, null=True,
+            on_delete=models.SET_NULL, related_name="feedbacks")
+    equip = models.ForeignKey(Equip, null=True,
+            on_delete=models.SET_NULL, related_name="feedbacks")
     data = models.DateTimeField(default=timezone.now)
     hores = models.FloatField(blank=True,null=True)
     desc = RichTextField(blank=True,null=True)

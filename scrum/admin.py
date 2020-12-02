@@ -408,7 +408,7 @@ class SpecFeedbackAdmin(admin.ModelAdmin):
     #readonly_fields = ('spec','usuari','hores','desc','data')
     def projecte(self,obj):
         return obj.spec.projecte
-    def equip(self,obj):
+    def equips(self,obj):
         res = ""
         for equip in obj.usuari.equips.filter(projecte=obj.spec.projecte):
             res += equip.nom + ", "
