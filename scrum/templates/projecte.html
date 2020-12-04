@@ -61,23 +61,39 @@
             <a href="/scrum/projectes"><i class="material-icons">arrow_back</i>Tornar a la llista de projectes</a>
         </div>
 
-        <div class="card-panel light-blue lighten-4">
-	        <h3>{{projecte.nom}}</h3>
-	        <p>Centre: <b>{{projecte.centre}}</b></p>
-	        <p>Cicle: <b>{{projecte.cicle}}</b></p>
-	        <p>Inici: {{projecte.inici}}</p>
-	        <p>Final: {{projecte.final}}</p>
+        <div class="row">
+            <div class="col s8">
+                <div class="card-panel light-blue lighten-4">
+        	        <h3>{{projecte.nom}}</h3>
+        	        <p>Centre: <b>{{projecte.centre}}</b></p>
+        	        <p>Cicle: <b>{{projecte.cicle}}</b></p>
+        	        <p>Inici: {{projecte.inici}}</p>
+        	        <p>Final: {{projecte.final}}</p>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="card-panel light-blue lighten-4">
+                    <h4>Continguts</h4>
+                    <ul class="collection">
+                        <a class="collection-item" href="#moduls-professionals">Mòduls professionals</a>
+                        <a class="collection-item" href="#descripcio">Descripció</a>
+                        {% for sprint in projecte.sprint_set.all %}
+                        <a class="collection-item" href="#sprint-{{sprint.id}}">{{sprint.nom}}</a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <div class="card-panel light-blue lighten-4">
-        	<h4>Mòduls Professionals implicats</h4>
+        	<h4><a class="anchor" id="moduls-professionals">Mòduls Professionals implicats</a></h4>
         	{% for mp in mps %}
         		{{mp.nom}}<br>
         	{% endfor %}
         </div>
 
         <div class="card-panel light-blue lighten-4">
-        	<h4>Descripció</h4>
+        	<h4><a class="anchor" id="descripcio">Descripció</a></h4>
         	{{projecte.descripcio | safe}}
         </div>
 
@@ -85,7 +101,6 @@
 
 
         {% for sprint in projecte.sprint_set.all %}
-
         	<ul class="collection with-header">
 	        	<li class="collection-header">
 
@@ -112,7 +127,7 @@
         					{% endfor %}
         				</p>
         			</div>
-                    {% if not request.user.is_anonymous %}
+                    {% if activa_comentaris %}
                     <div class="comments">
                         {% if spec.feedbacks|compte_dels_grups_de:request.user > 0 %}
                         <p onclick="toggle_read_comment({{sprint.id}},{{spec.id}})">

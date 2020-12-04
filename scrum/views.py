@@ -29,6 +29,13 @@ def projecte(request,id):
 		comentari.desc = request.POST.get("desc").strip()
 		comentari.save()
 		toggled_comment = {"sprint_id":sprint_id,"spec_id":spec_id}
+	# activem comentaris nomes si l'usuari està en algun grup de treball
+	activa_comentaris = False
+	if not request.user.is_anonymous:
+		equips = request.user.equips.filter(membres__in=[request.user])
+		if len(equips)>0:
+			activa_comentaris = True
 	return render( request, "projecte.html", {"projecte":projecte,
-					"mps":mps, "toggled_comment":toggled_comment} )
+					"mps": mps, "toggled_comment": toggled_comment,
+					"activa_comentaris": activa_comentaris } )
 
