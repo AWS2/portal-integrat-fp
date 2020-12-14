@@ -46,6 +46,23 @@ class Sprint(models.Model):
             if spec.hores_estimades:
                 total += spec.hores_estimades
         return total
+    def dades_mps(self):
+        total_hores = 0
+        total_specs = 0
+        mps = {}
+        for spec in self.specs.all():
+            total_specs += 1
+            total_hores += spec.hores_estimades
+            for mp in spec.mp.all():
+                if not mps.get(mp.nom):
+                    # init
+                    mps[mp.nom] = {"hores":0,'specs':0}
+                mps[mp.nom]["specs"] += 1
+                mps[mp.nom]["hores"] += spec.hores_estimades
+        for mp in mps:
+            mps[mp]["percent_hores"] = 100*mps[mp]["hores"] / total_hores
+            mps[mp]["percent_specs"] = 100*mps[mp]["specs"] / total_specs
+        return mps
             
 
 class Spec(models.Model):

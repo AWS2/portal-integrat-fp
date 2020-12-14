@@ -107,7 +107,16 @@
 	        		<h4><a class="anchor" id="sprint-{{sprint.id}}">{{sprint.nom}}</a></h4>
 	        		<p>Inici: {{sprint.inici}}</p>
 	        		<p>Final: {{sprint.final}}</p>
-                    <p>Hores estimades: {{sprint.hores}}</p>
+                    <p>Hores estimades totals: {{sprint.hores}}</p>
+                    <ul>
+                    {% for mp,dades_mp in sprint.dades_mps.items %}
+                        <li>{{mp}}:
+                            {{dades_mp.specs}} specs ({{dades_mp.percent_specs|floatformat}}%),
+                            {{dades_mp.hores}} hores
+                            ({{dades_mp.percent_hores|floatformat}}%)
+                        </li>
+                    {% endfor %}
+                    </ul>
 	        	</li>
         	{% for spec in sprint.specs.all %}
         		<li class="collection-item">
