@@ -60,8 +60,12 @@ class Sprint(models.Model):
                 mps[mp.nom]["specs"] += 1
                 mps[mp.nom]["hores"] += spec.hores_estimades
         for mp in mps:
-            mps[mp]["percent_hores"] = 100*mps[mp]["hores"] / total_hores
-            mps[mp]["percent_specs"] = 100*mps[mp]["specs"] / total_specs
+            mps[mp]["percent_hores"] = 0
+            mps[mp]["percent_specs"] = 0
+            if total_hores != 0:
+                mps[mp]["percent_hores"] = 100*mps[mp]["hores"] / total_hores
+            if total_specs != 0:
+                mps[mp]["percent_specs"] = 100*mps[mp]["specs"] / total_specs
         return mps
             
 
