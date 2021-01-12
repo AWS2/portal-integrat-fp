@@ -171,6 +171,8 @@
                             {% endfor %}
                         </div>
                         {% endif %}
+
+                        {% if not request.user.es_profe and not request.user.is_superuser %}
                         <p onclick="toggle_add_comment({{sprint.id}},{{spec.id}})">
                             <i class="material-icons">read_more</i>
                             Afegir comentari
@@ -195,6 +197,7 @@
                                 <input class="col s3" type="submit" value="Envia comentari" />
                             </form>
                         </div>
+                        {% endif %}
                     </div>
                     {% endif %}
         		</li>

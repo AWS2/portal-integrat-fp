@@ -32,6 +32,8 @@ def projecte(request,id):
 	# activem comentaris nomes si l'usuari està en algun grup de treball
 	activa_comentaris = False
 	if not request.user.is_anonymous:
+		if request.user.is_superuser or request.user.es_profe:
+			activa_comentaris = True
 		equips = request.user.equips.filter(membres__in=[request.user])
 		if len(equips)>0:
 			activa_comentaris = True
