@@ -6,7 +6,7 @@ FROM python:3.8-slim
 
 # loads db libs
 RUN apt-get update
-RUN apt-get install -y libmariadb-dev python3-dev gdal-bin python3-mysqldb libssl-dev postgresql-server-dev-all postgresql-common libjpeg-dev
+RUN apt-get install -y libmariadb-dev libmariadbclient-dev python3-dev gdal-bin python3-mysqldb libssl-dev postgresql-server-dev-all postgresql-common libjpeg-dev python-psycopg2 gcc
 
 
 # Allows docker to cache installed dependencies between builds
