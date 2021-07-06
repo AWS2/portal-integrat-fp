@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from borsApp.models import Cicle, Categoria
+from core.models import *
 
 import csv
 
@@ -11,32 +11,6 @@ class Command(BaseCommand):
     cats = {}
 
     def handle(self, *args, **options):
-        cicles = {}
-        with open('misc/Taules_cataleg_FP_18-19-LOE.csv') as csvfile:
-            csv_reader = csv.DictReader( csvfile )
-            for row in csv_reader:
-                self.cicles[row["CODI_CICLE_FORMATIU"]] = row["NOM_CICLE_FORMATIU"]
-                fam = row["CODI_CICLE_FORMATIU"][-4:-2]
-                self.families[fam] = fam
-        #debug
-        self.show_families()
-
-        Cicle.objects.all().delete()
-        self.carrega()
-
-    def show_families(self):
-        for codi in self.families:
-            print(self.families[codi])
-
-    def show_cicles(self):
-        for codi in self.cicles:
-            print(self.cicles[codi])
-
-    def carrega(self):
-        # reseteja DB
-        Categoria.objects.all().delete()
-        Cicle.objects.all().delete()
-
         # categoria arrel
         arrel = None
         qs = Categoria.objects.filter(nom=self.CAT_CICLES)
@@ -45,26 +19,65 @@ class Command(BaseCommand):
             arrel.save()
         else:
             arrel = qs[0]
-        # carrega families (categories)
-        for codi in self.families:
-            cat = Categoria()
-            cat.nom = self.families[codi]
-            cat.pare = arrel
-            cat.save()
-            self.cats[codi] = cat
-        # carrega cicles
-        for codi in self.cicles:
-            cicle = Cicle()
-            grau = codi[:4]
-            if grau=="CFPS":
-                cicle.grau = "CFGS"
-            else:
-                cicle.grau = "CFGM"
-            cicle.codi = codi[-4:]
-            cicle.nom = self.cicles[codi]
-            codifamilia = codi[-4:-2]
-            cicle.familia = self.cats[codifamilia]
-            cicle.descripcio = cicle.nom
-            print(cicle.codi)
-            cicle.save()
+
+        # obrim arxiu
+        with open('misc/Taules_cataleg_FP_18-19-LOE.csv') as csvfile:
+            csv_reader = csv.DictReader( csvfile )
+            cats = 0
+            cicles = 0
+            mps = 0
+            ufs = 0
+            for row in csv_reader:
+                fam = row["CODI_CICLE_FORMATIU"][-4:-2]
+                codi_cicle = row["CODI_CICLE_FORMATIU"][-4:]
+                nom_cicle = row["NOM_CICLE_FORMATIU"]
+                codi_mp = row["CODI_MODUL"]
+                nom_mp = row["NOM_MODUL"]
+                codi_uf = row["CODI_UNITAT_FORMATIVA"]
+                nom_uf = row["NOM_UNITAT_FORMATIVA"]
+
+                # creem objectes necessaris
+                cat = Categoria.objects.filter(nom=fam).first()
+                if not cat:
+                    cat = Categoria()
+                    cat.nom = fam
+                    cat.pare = arrel
+                    cat.save()
+                    cats += 1
+
+                cicle = Cicle.objects.filter(codi=codi_cicle).first()
+                if not cicle:
+                    cicle = Cicle()
+                    cicle.codi = codi_cicle
+                    cicle.nom = nom_cicle
+                    cicle.familia = cat
+                    cicle.descripcio = cicle.nom
+                    cicle.save()
+                    cicles += 1
+                    #print(cicle.nom)
+                
+                mp = ModulProfessional.objects.filter(nom=nom_mp).first()
+                if not mp:
+                    mp = ModulProfessional()
+                    mp.nom = nom_mp
+                    mp.cicle = cicle
+                    mp.numero = 0
+                    mp.descripcio = ""
+                    mp.save()
+                    mps += 1
+                    #print(mp.nom)
+
+                """uf = UnitatFormativa.objects.filter(nom=nom_uf).first()
+                if not uf:
+                    uf = UnitatFormativa()
+                    uf.numero = 0
+                    uf.nom = nom_uf
+                    uf.mp = mp
+                    uf.descripcio = ""
+                    uf.save()
+                    ufs += 1
+                    #print(uf.nom)
+                """
+            # sumari addicions
+            print("TOTAL:\n\tCategories: {}\n\tCicles: {}\n\tMPs: {}\n\tUFs: {}".format(cats,cicles,mps,ufs))
 

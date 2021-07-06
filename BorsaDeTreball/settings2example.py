@@ -5,19 +5,19 @@ ALLOWED_HOSTS = ['*']
 DEBUG = True
 
 # set2 example
-EMAIL_HOST = "Asignar el host por el cual se enviaran los mails"
-EMAIL_PORT = "Asignar el puerto por el que se envia el mail"
+EMAIL_HOST = "mail.mydomain.com"
+EMAIL_PORT = "993"
 EMAIL_FROM_NAME = "Borsa de Treball IETI (noreply)"
-EMAIL_HOST_USER = "El correo electronico que enviara los mails"
-EMAIL_HOST_PASSWORD = "Password correspondiente al email"
+EMAIL_HOST_USER = "borsa@ieti.cat"
+EMAIL_HOST_PASSWORD = "borsa123"
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 #OAuth
 SOCIAL_AUTH_URL_NAMESPACE = ""
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/"
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "Clave que recibimos de Google"
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "Clave secreta que recibimos de Google para usar este plugin"
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "Clave_que_recibimos_de_Google"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "Clave_secreta_que_recibimos_de_Google"
 # Microsoft no hi es en aquest plugin
 # per crear Microsoft app:
 # https://docs.microsoft.com/en-us/dynamics365/customer-engagement/portals/configure-oauth2-settings
@@ -31,6 +31,7 @@ DB_PORT = None # None = auto
 DB_NAME = "borsa"
 DB_USER = "borsa"
 DB_PASS = "borsa123"
+
 
 
 
