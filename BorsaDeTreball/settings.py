@@ -178,9 +178,11 @@ USE_TZ = True
 from django.conf.locale.ca import formats as ca_formats
 ca_formats.DATETIME_FORMAT = "d M Y H:i:s"
 
+TINYMCE_KEY = settings2.TINYMCE_KEY
 
 DJRICHTEXTFIELD_CONFIG = {
-    'js': ['//tinymce.cachefly.net/4.1/tinymce.min.js'],
+    #'js': ['//tinymce.cachefly.net/4.1/tinymce.min.js'],
+    'js': ['//cdn.tiny.cloud/1/'+TINYMCE_KEY+'/tinymce/5/tinymce.min.js'],
     'init_template': 'djrichtextfield/init/tinymce.js',
     'settings': {
         'menubar': False,
