@@ -20,7 +20,6 @@ oauth2==1.9.0.post1
 oauthlib==3.0.1
 Pillow==8.3.1
 protobuf==3.8.0
-psycopg2-binary==2.8.3
 py3dns==3.2.0
 pycparser==2.20
 PyJWT==1.7.1
