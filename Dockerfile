@@ -6,7 +6,9 @@ FROM python:3.8-slim
 
 # loads db libs
 RUN apt-get update
-RUN apt-get install -y default-mysql-client libmariadb-dev libmariadb-dev-compat libmariadbclient-dev python3-dev gdal-bin python3-mysqldb libssl-dev postgresql-server-dev-all postgresql-common libjpeg-dev python-psycopg2 gcc
+RUN apt-get install -y default-mysql-client libmariadb-dev
+RUN apt-get install -y libmariadb-dev-compat gcc gdal-bin libjpeg-dev
+#libmariadb-dev-compat libmariadbclient-dev python3-dev gdal-bin python3-mysqldb libssl-dev libjpeg-dev gcc
 
 
 # Allows docker to cache installed dependencies between builds
@@ -16,12 +18,14 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Mounts the application code to the image
 COPY . code
+# avoids env confs to be installed
+#RUN rm /code/BorsaDeTreball/.env
+#RUN rm -rf /code/env*
+
+# establish workdir
 WORKDIR /code
 
-COPY BorsaDeTreball/settings2example.py BorsaDeTreball/settings2.py
-
-EXPOSE 8000
+EXPOSE 8000 8001
 
 # runs the production server
-ENTRYPOINT ["python", "manage.py"]
-CMD ["runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["/code/run.sh"]

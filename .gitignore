@@ -11,3 +11,5 @@ settings2.py
 .DS_Store
 geckodriver.log
 
+docker-compose-pro.yml
+

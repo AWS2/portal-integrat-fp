@@ -10,9 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
-import os
+import os, environ, json
 
-from BorsaDeTreball import settings2
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+# reading .env file
+environ.Env.read_env()
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -23,12 +28,12 @@ REPOSITORY_ROOT = os.path.dirname(BASE_DIR)
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = settings2.SECRET_KEY
+SECRET_KEY = env("SECRET_KEY",default="asecretkey123")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = settings2.DEBUG
+DEBUG = env("DEBUG",default=False)
 
-ALLOWED_HOSTS = settings2.ALLOWED_HOSTS
+ALLOWED_HOSTS = [host for host in env("ALLOWED_HOSTS",default='*').split(" ")]
 
 SESSION_COOKIE_AGE = 4 * 60 * 60 # les sessions duren 4 hores per defecte
 
@@ -118,31 +123,9 @@ WSGI_APPLICATION = 'BorsaDeTreball.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    #'sqlite': {
-    #    'ENGINE': 'django.db.backends.sqlite3',
-    #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    #},
-    'mysql': { # mysql
-        'ENGINE': 'django.contrib.gis.db.backends.mysql',
-        #'ENGINE': 'django.db.backends.mysql',
-        #'ENGINE': 'mysql.connector.django', # MySQL 8 (problemes amb GIS)
-        'NAME': settings2.DB_NAME,
-        'USER': settings2.DB_USER,
-        'PASSWORD': settings2.DB_PASS,
-        'HOST': settings2.DB_HOST or "localhost",
-        'PORT': settings2.DB_PORT or 3306,
-    },
-    'postgre': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': settings2.DB_NAME,
-        'USER': 'user001',
-        'PASSWORD': '123456789',
-        'HOST': settings2.DB_HOST or 'localhost',
-        'PORT': settings2.DB_PORT or 5432,
-    },
+    'default': env.db(),
 }
 
-DATABASES["default"] = DATABASES[settings2.DB_TYPE]
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -178,7 +161,7 @@ USE_TZ = True
 from django.conf.locale.ca import formats as ca_formats
 ca_formats.DATETIME_FORMAT = "d M Y H:i:s"
 
-TINYMCE_KEY = settings2.TINYMCE_KEY
+TINYMCE_KEY = env("TINYMCE_KEY",default="")
 
 DJRICHTEXTFIELD_CONFIG = {
     #'js': ['//tinymce.cachefly.net/4.1/tinymce.min.js'],
@@ -203,32 +186,33 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL = '/media/'
 
 
-EMAIL_HOST = settings2.EMAIL_HOST
-EMAIL_PORT = settings2.EMAIL_PORT
-EMAIL_FROM_NAME = settings2.EMAIL_FROM_NAME
-EMAIL_HOST_USER = settings2.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = settings2.EMAIL_HOST_PASSWORD
-EMAIL_USE_TLS = settings2.EMAIL_USE_TLS
-EMAIL_USE_SSL = settings2.EMAIL_USE_SSL
+EMAIL_HOST = env("EMAIL_HOST",default="mail.ieti.cat")
+EMAIL_PORT = env("EMAIL_PORT",default=25)
+EMAIL_FROM_NAME = env("EMAIL_FROM_NAME",default="Borsa de Treball IETI")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER",default="noreply@ieti.cat")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD",default="onepassword")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS",default=True)
+EMAIL_USE_SSL = env("EMAIL_USE_SSL",default=False)
 
 
-SOCIAL_AUTH_URL_NAMESPACE = settings2.SOCIAL_AUTH_URL_NAMESPACE
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = settings2.SOCIAL_AUTH_LOGIN_REDIRECT_URL
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY =  settings2.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = settings2.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
+SOCIAL_AUTH_URL_NAMESPACE = env("SOCIAL_AUTH_URL_NAMESPACE",default="")
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = env("SOCIAL_AUTH_LOGIN_REDIRECT_URL",default="/")
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY =  env("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY",default="")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET",default="")
 # Microsoft no present en aquest plugin
-#SOCIAL_AUTH_MICROSOFT_OAUTH2_KEY =  settings2.SOCIAL_AUTH_MICROSOFT_OAUTH2_KEY
-#SOCIAL_AUTH_MICROSOFT_OAUTH2_SECRET = settings2.SOCIAL_AUTH_MICROSOFT_OAUTH2_SECRET
+#SOCIAL_AUTH_MICROSOFT_OAUTH2_KEY =  env("SOCIAL_AUTH_MICROSOFT_OAUTH2_KEY")
+#SOCIAL_AUTH_MICROSOFT_OAUTH2_SECRET = env("SOCIAL_AUTH_MICROSOFT_OAUTH2_SECRET")
+
+print(SOCIAL_AUTH_GOOGLE_OAUTH2_KEY)
+print(SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET)
+print(SOCIAL_AUTH_LOGIN_REDIRECT_URL)
 
 
 #no fem servir aquest plugin
 #SOCIAL_AUTH_WHITELISTED_EMAILS = ['enric.mieza@gmail.com',]
-
-
 # Ajustos per accelerar testing
 #TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
 
 # enviament maxim d'emails
 MAX_EMAILS = 3
-
 
