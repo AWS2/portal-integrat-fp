@@ -1,0 +1,47 @@
+version: '3.1'
+
+services:
+
+  borsatest:
+    image: emieza/borsatest:v2.1
+    #restart: none
+    ports:
+      - 8000:8000
+    environment:
+      - DISPLAY=$DISPLAY
+      - DATABASE_URL=mysqlgis://root:lapass123@testdb/exampledb
+      - DEBUG=True
+      - SECRET_KEY=asecretkey
+      # hostnames en produccio, separats per espais
+      - ALLOWED_HOSTS=localhost borsa.ieti.cat
+      # social auth
+      #- SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=akey
+      #- SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=asecret
+      # email conf
+      #- EMAIL_HOST=smtp.gmail.com
+      #- EMAIL_PORT=587
+      #- EMAIL_FROM_NAME=Borsa de Treball IETI
+      #- EMAIL_HOST_USER=noreply@iesesteveterradas.cat
+      #- EMAIL_HOST_PASSWORD=lapass
+      #- EMAIL_USE_TLS=True
+      #- EMAIL_USE_SSL=False
+    volumes:
+      - borsatest:/var/www/html
+      - /tmp/.X11-unix/:/tmp/.X11-unix/
+    depends_on:
+      - testdb
+
+  testdb:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_ROOT_PASSWORD: lapass123
+    volumes:
+      - testdb:/var/lib/mysql
+
+
+volumes:
+  borsatest:
+  testdb:
