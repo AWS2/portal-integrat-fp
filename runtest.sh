@@ -7,9 +7,10 @@
 # (no cal de moment pq fem servir servidor de test)
 #python manage.py collectstatic
 
-firefox &
+# geckodriver in tests needs to have firefox opened before
+#firefox &
 
-# posta en marxa
+# posta en marxa dels tests
 python manage.py test
 
 # do not close container
