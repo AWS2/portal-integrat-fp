@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.db.utils import IntegrityError
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.firefox.webdriver import WebDriver
+from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from core.models import User
 
@@ -22,7 +23,9 @@ class BorsaTests(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.selenium = WebDriver()
+        firefoxOptions = webdriver.FirefoxOptions()
+        firefoxOptions.set_headless()
+        cls.selenium = WebDriver(firefox_options=firefoxOptions)
         cls.selenium.implicitly_wait(5)
 
     @classmethod
