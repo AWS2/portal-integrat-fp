@@ -41,3 +41,7 @@ def projecte(request,id):
 					"mps": mps, "toggled_comment": toggled_comment,
 					"activa_comentaris": activa_comentaris } )
 
+def qualifica(request):
+	projectes = []
+	return render( request, "qualifica.html", {"projectes":projectes} )
+
