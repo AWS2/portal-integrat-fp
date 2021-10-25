@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 
 
+{% block extra_js %}
+<script type="text/javascript">
+	$(document).ready(function() {
+    $('select').formSelect();
+});
+</script>
+{% endblock %}
+
+
 {% block content %}
 
   <div class="container">
@@ -9,15 +18,27 @@
 
 
 		<form>
-			<select>
-			{% for projecte in projectes %}
-				<option>{{projecte.titol}}</option>
-			{% endfor %}
-			</select>
+
+  		<div class="input-field col s12">
+	  		<select name="projecte" id="projecte">
+				{% for projecte in projectes %}
+					<option>{{projecte.nom}}</option>
+				{% endfor %}
+				</select>
+			</div>
+
+  		<div class="input-field col s12">
+	  		<select name="equip" id="equip">
+	  			<option disabled>--- tria un equip ---</option>
+				</select>
+			</div>
+
 		</form>
 
-	</div>
-</div>
+
+
+	  </div>
+  </div>
 
 {% endblock %}
 
