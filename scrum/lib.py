@@ -37,6 +37,8 @@ def actualitza_qualificacions():
 ##########################################
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import JsonResponse
+
 
 #@login_required
 def api_actualitza_qualificacions(request):
@@ -45,4 +47,15 @@ def api_actualitza_qualificacions(request):
         return HttpResponse("OK")
     except e:
         return HttpResponse("ERROR")
+
+
+from rest_framework import serializers
+class EquipSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Equip
+        fields = '__all__'
+
+def api_get_equips(request):
+    equips = Equip.objects.filter().values("nom","membres__email")
+    return JsonResponse({"equips":list(equips)})
 

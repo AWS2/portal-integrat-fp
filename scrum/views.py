@@ -42,6 +42,6 @@ def projecte(request,id):
 					"activa_comentaris": activa_comentaris } )
 
 def qualifica(request):
-	projectes = []
+	projectes = Projecte.objects.filter(admins__in=[request.user])
 	return render( request, "qualifica.html", {"projectes":projectes} )
 
