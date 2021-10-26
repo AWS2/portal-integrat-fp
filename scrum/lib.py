@@ -67,4 +67,3 @@ def api_get_equips(request):
     equipSerializer = EquipSerializer(equips,many=True)
     return JsonResponse({"equips":equipSerializer.data})
 
-

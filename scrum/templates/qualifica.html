@@ -16,10 +16,14 @@ function getEquips() {
 	}).done(function (resp) {
 		var equipSelect = $('#equip');
 		$.each(resp.equips, function(key,equip) {
-console.log("getEquips - equip : "+equip.nom);
-//console.log(equip);
+				var equipStr = equip.nom;
+				for(i in equip.membres) {
+					equipStr += "<br>&nbsp;&nbsp;&nbsp;&nbsp;" +
+											equip.membres[i].email;
+				}
+
 		    equipSelect.append(
-		        $('<option></option>').val(equip.id).html(equip.nom)
+		        $('<option></option>').val(equip.id).html(equipStr)
 		    );
 		});
 		equipSelect.formSelect();
