@@ -4,8 +4,30 @@
 {% block extra_js %}
 <script type="text/javascript">
 	$(document).ready(function() {
-    $('select').formSelect();
+    $('#projecte').formSelect();
 });
+
+function getEquips() {
+	var projecte = $('#projecte').val();
+	$.ajax({
+	  method: "GET",
+	  url: "/scrum/api/get_equips",
+	  dataType: "json",   // necessitem això pq ens retorni un objecte JSON
+	}).done(function (resp) {
+		var equipSelect = $('#equip');
+		$.each(resp.equips, function(key,equip) {
+console.log("getEquips - equip : "+equip.nom);
+//console.log(equip);
+		    equipSelect.append(
+		        $('<option></option>').val(equip.id).html(equip.nom)
+		    );
+		});
+		equipSelect.formSelect();
+	}).fail(function () {
+		alert("ERROR");
+	});
+
+}
 </script>
 {% endblock %}
 
@@ -17,19 +39,19 @@
 		<h2>Qualifica Projectes Scrum</h2>
 
 
-		<form>
-
   		<div class="input-field col s12">
-	  		<select name="projecte" id="projecte">
-				{% for projecte in projectes %}
+	  		<select name="projecte" id="projecte" onchange="getEquips()">
+	  			<option selected>--- tria un projecte ---</option>
+					{% for projecte in projectes %}
 					<option>{{projecte.nom}}</option>
-				{% endfor %}
+					{% endfor %}
 				</select>
 			</div>
 
+		<form>
   		<div class="input-field col s12">
 	  		<select name="equip" id="equip">
-	  			<option disabled>--- tria un equip ---</option>
+	  			<option selected>--- tria un equip ---</option>
 				</select>
 			</div>
 

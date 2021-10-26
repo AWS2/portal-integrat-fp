@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 from scrum.models import Projecte, Spec, SpecFeedback
 from core.models import ModulProfessional
@@ -41,6 +42,7 @@ def projecte(request,id):
 					"mps": mps, "toggled_comment": toggled_comment,
 					"activa_comentaris": activa_comentaris } )
 
+@login_required
 def qualifica(request):
 	projectes = Projecte.objects.filter(admins__in=[request.user])
 	return render( request, "qualifica.html", {"projectes":projectes} )

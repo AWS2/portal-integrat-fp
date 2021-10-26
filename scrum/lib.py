@@ -50,12 +50,21 @@ def api_actualitza_qualificacions(request):
 
 
 from rest_framework import serializers
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email','first_name','last_name']
+
 class EquipSerializer(serializers.ModelSerializer):
+    membres = UserSerializer(many=True,read_only=True)
     class Meta:
         model = Equip
-        fields = '__all__'
+        fields = ['id','nom','membres']
 
 def api_get_equips(request):
-    equips = Equip.objects.filter().values("nom","membres__email")
-    return JsonResponse({"equips":list(equips)})
+    equips = Equip.objects.all()
+    equipSerializer = EquipSerializer(equips,many=True)
+    return JsonResponse({"equips":equipSerializer.data})
+
 
