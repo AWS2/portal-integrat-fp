@@ -35,8 +35,21 @@ function getEquips() {
 	}).fail(function () {
 		alert("ERROR");
 	});
+}
+
+function crea_qualificacio(sprint_id,equip_id) {
+	$.ajax({
+	  method: "GET",
+	  url: "/scrum/api/crea_qualificacio/"+sprint_id+"/"+equip_id,
+	  dataType: "json",
+	}).done(function (resp) {
+		alert(JSON.stringify(resp));
+	}).fail(function () {
+		alert("ERROR en la creació de la qualificació de l'equip");
+	});
 
 }
+
 </script>
 {% endblock %}
 
@@ -84,9 +97,12 @@ function getEquips() {
 			  	</td>
 				{% for sprint in projecte.sprints.all %}
 					<td>
-						 <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Qualifica</a>
-						{% if projecte.qualificacions %}
-						QUALIFICACIONS: ...
+						 <a class="waves-effect waves-light btn modal-trigger" href="#modal1" 
+						 							onclick="crea_qualificacio({{sprint.id}},{{equip.id}})">Qualifica</a>
+						{% if sprint.qualificacions.first %}
+						 <a class="waves-effect waves-light btn modal-trigger" href="#modal1" 
+						 							onclick="edita_qualificacio({{sprint.id}},{{equip.id}})">Edita</a>
+							QUALIFICACIONS: ...
 						{% endif %}
 					</td>
 				{% endfor %}

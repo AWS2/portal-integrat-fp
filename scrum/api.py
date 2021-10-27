@@ -8,26 +8,27 @@ from scrum.models import *
 
 @login_required
 def crea_qualificacio(request,sprint_id,equip_id):
-	sprint_query = Sprint.objects.filter(id=sprint_id)
-	if not sprint:
+	sprint_qs = Sprint.objects.filter(id=sprint_id)
+	if not sprint_qs:
 	    return JsonResponse({
 	    	"status":"ERROR",
 	    	"message":"Unknown sprint_id.",
 	    })
+	sprint = sprint_qs.first()
 	projecte = Projecte.objects.filter(id=sprint.projecte.id,
-								admins_in=[request.user])
+								admins__in=[request.user])
 	if not projecte:
 	    return JsonResponse({
 	    	"status":"ERROR",
 	    	"message":"Falta de permisos.",
 	    })
-	equip = Equip.objects.filter(id=equip_id)
-	quali = Qualificacio.objects.filter(projecte=Projecte,
-						equip=equip,sprint=sprint)
-
-
+	equip_qs = Equip.objects.filter(id=equip_id)
+	equip = equip_qs.first()
+	quali_qs = Qualificacio.objects.filter(equip=equip,sprint=sprint)
+	if not quali_qs:
+		quali = Qualificacio(equip=equip,sprint=sprint)
+		quali.save()
 	return JsonResponse({"status":"OK"})
-
 
 
 @login_required
