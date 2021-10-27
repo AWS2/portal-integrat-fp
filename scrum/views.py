@@ -45,5 +45,13 @@ def projecte(request,id):
 @login_required
 def qualifica(request):
 	projectes = Projecte.objects.filter(admins__in=[request.user])
-	return render( request, "qualifica.html", {"projectes":projectes} )
+	if not request.GET.get("projecte_id") or not request.GET["projecte_id"].isdigit():
+		# sense detalls de projecte
+		return render( request, "qualifica.html", {"projectes":projectes} )
+	# amb detalls
+	projecte = Projecte.objects.get(id=request.GET["projecte_id"])
+	return render( request, "qualifica.html", {
+		"projectes":projectes,
+		"projecte": projecte,
+	} )
 

@@ -40,7 +40,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
 
 
-#@login_required
+@login_required
 def api_actualitza_qualificacions(request):
     try:
         actualitza_qualificacions()
@@ -63,7 +63,19 @@ class EquipSerializer(serializers.ModelSerializer):
         fields = ['id','nom','membres']
 
 def api_get_equips(request):
-    equips = Equip.objects.all()
+    projecte_id = request.GET.get("projecte_id")
+    if not projecte_id or not projecte_id.isdigit():
+        # paràmetre erroni o inexistent
+        return JsonResponse({"equips":[]})
+    equips = Equip.objects.filter(projecte__id=projecte_id)
     equipSerializer = EquipSerializer(equips,many=True)
     return JsonResponse({"equips":equipSerializer.data})
+
+def api_get_sprints(request):
+    projecte_id = request.GET.get("projecte_id")
+    if not projecte_id or not projecte_id.isdigit():
+        # paràmetre erroni o inexistent
+        return JsonResponse({"sprints":[]})
+    sprints = Sprint.objects.filter(projecte__id=projecte_id)
+    return JsonResponse({"sprints":list(sprints.values())})
 

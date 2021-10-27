@@ -35,7 +35,7 @@ class Equip(models.Model):
 class Sprint(models.Model):
     nom = models.CharField(max_length=255)
     notes = RichTextField(blank=True)
-    projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE)
+    projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE,related_name="sprints")
     inici = models.DateField()
     final = models.DateField()
     def __str__(self):
@@ -96,8 +96,10 @@ class Spec(models.Model):
 class Qualificacio(models.Model):
     class Meta:
         verbose_name_plural = "Qualificacions"
-    equip = models.ForeignKey(Equip,on_delete=models.CASCADE)
-    sprint = models.ForeignKey(Sprint,on_delete=models.CASCADE)
+    equip = models.ForeignKey(Equip,on_delete=models.CASCADE,
+                        related_name="qualificacions")
+    sprint = models.ForeignKey(Sprint,on_delete=models.CASCADE,
+                        related_name="qualificacions")
     nota = models.FloatField(null=True,blank=True)
     comentaris = RichTextField(blank=True)
     def __str__(self):

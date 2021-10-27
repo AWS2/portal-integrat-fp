@@ -8,25 +8,9 @@
 	      {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
 	    </a>
 	  </li>
-
 	  {% if request.path == '/admin/scrum/qualificacio/' and not request.user.es_alumne %}
 		  <li>
-		  	<script type="text/javascript">
-		  		function actualitza() {
-		  			var xhttp = new XMLHttpRequest();
-		  			xhttp.onreadystatechange = function() {
-		  				if( this.readyState==4 && this.status==200 ) {
-		  					alert("Dades actualitzades! Prem OK per recarregar la pàgina...");
-		  					window.location.reload(true);
-		  				} else if( this.readyState==4) {
-		  					alert("Error desconegut. Consulta l'administrador. "+this.status);
-		  				}
-		  			}
-		  			xhttp.open("GET","/scrum/api/actualitza_qualificacions", true);
-		  			xhttp.send();
-		  		}
-		  	</script>
-		  	<a href="#" onclick="actualitza()" class="viewlink">Actualitzar Equips i Qualificacions</a>
+				<a href="/scrum/qualifica">Qualifica els alumnes</a>
 		  </li>
 	  {% endif %}
 	  

@@ -5,27 +5,32 @@
 <script type="text/javascript">
 	$(document).ready(function() {
     $('#projecte').formSelect();
+    $('.modal').modal();
 });
 
 function getEquips() {
-	var projecte = $('#projecte').val();
+	var projecte_id = $('#projecte').val();
 	$.ajax({
 	  method: "GET",
 	  url: "/scrum/api/get_equips",
-	  dataType: "json",   // necessitem això pq ens retorni un objecte JSON
+	  dataType: "json",
+	  data: {"projecte_id":projecte_id},
 	}).done(function (resp) {
 		var equipSelect = $('#equip');
-		$.each(resp.equips, function(key,equip) {
+		//equipSelect.empty();
+		//equipSelect.append($('<option selected>--- tria un equip ---</option>'));
+		for(j in resp.equips) {
+			  var equip = resp.equips[j];
+			  // Construim etiqueta de l'equip amb els membres
 				var equipStr = equip.nom;
 				for(i in equip.membres) {
 					equipStr += "<br>&nbsp;&nbsp;&nbsp;&nbsp;" +
 											equip.membres[i].email;
 				}
-
 		    equipSelect.append(
 		        $('<option></option>').val(equip.id).html(equipStr)
 		    );
-		});
+		};
 		equipSelect.formSelect();
 	}).fail(function () {
 		alert("ERROR");
@@ -43,27 +48,66 @@ function getEquips() {
 		<h2>Qualifica Projectes Scrum</h2>
 
 
+		<form>
   		<div class="input-field col s12">
-	  		<select name="projecte" id="projecte" onchange="getEquips()">
-	  			<option selected>--- tria un projecte ---</option>
-					{% for projecte in projectes %}
-					<option>{{projecte.nom}}</option>
+	  		<select name="projecte_id" id="projecte" onchange="submit()">
+	  			<option>--- tria un projecte ---</option>
+					{% for proj in projectes %}
+					{% if proj.id == projecte.id %}
+						<option  selected value={{proj.id}}>{{proj.nom}}</option>
+					{% else %}
+  					<option value={{proj.id}}>{{proj.nom}}</option>
+  				{% endif %}
 					{% endfor %}
 				</select>
 			</div>
-
-		<form>
-  		<div class="input-field col s12">
-	  		<select name="equip" id="equip">
-	  			<option selected>--- tria un equip ---</option>
-				</select>
-			</div>
-
 		</form>
-
-
-
 	  </div>
+
+	  {% if projecte %}
+    <div class="section">
+			<h3>Projecte: {{projecte.nom}}</h3>
+			<table>
+				<thead>
+					<td>Equips</td>
+					{% for sprint in projecte.sprints.all %}
+						<td>{{sprint.nom}}</td>
+					{% endfor %}
+				</thead>
+			{% for equip in projecte.equips.all %}
+			  <tr>
+			  	<td>
+			  		{{equip.nom}}<br>
+			  		{% for membre in equip.membres.all %}
+			  		  &nbsp;&nbsp;&nbsp;&nbsp;{{membre.email}}<br>
+			  		{% endfor %}
+			  	</td>
+				{% for sprint in projecte.sprints.all %}
+					<td>
+						 <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Qualifica</a>
+						{% if projecte.qualificacions %}
+						QUALIFICACIONS: ...
+						{% endif %}
+					</td>
+				{% endfor %}
+				</tr>
+			{% endfor %}
+			</table>
+    </div>
+    {% endif %}
+
+  </div>
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
   </div>
 
 {% endblock %}
