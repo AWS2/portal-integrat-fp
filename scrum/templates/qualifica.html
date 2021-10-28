@@ -29,11 +29,19 @@ function edita_qualificacio(qualificacio_id) {
 	  url: "{% url 'get_done_specs' 0 %}"+qualificacio_id,
 	  dataType: "json",
 	}).done(function (resp) {
-		alert(JSON.stringify(resp));
-		//location.reload();
-
+		//alert(JSON.stringify(resp));
+		var modalbox = $('#modal1 .modal-content');
+		modalbox.empty();
+		var list = $('<ul class="collection with-header"></ul>');
+		var header = $('<li class="collection-header"><h4>Equip</h4></li>');
+		list.append( header );
+		for(var i=0;i<10;i++) {
+			var spec = $('<li class="collection-item">Item '+i+'</li>');
+			list.append(spec);
+		}
+		modalbox.append(list);
 	}).fail(function () {
-		alert("ERROR en la creació de la qualificació de l'equip");
+		alert("ERROR accedint a la qualificació de l'equip. Refresca la pantalla i torna a intentar-ho.");
 	});
 }
 
