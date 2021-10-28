@@ -8,50 +8,41 @@
     $('.modal').modal();
 });
 
-function getEquips() {
-	var projecte_id = $('#projecte').val();
-	$.ajax({
-	  method: "GET",
-	  url: "/scrum/api/get_equips",
-	  dataType: "json",
-	  data: {"projecte_id":projecte_id},
-	}).done(function (resp) {
-		var equipSelect = $('#equip');
-		//equipSelect.empty();
-		//equipSelect.append($('<option selected>--- tria un equip ---</option>'));
-		for(j in resp.equips) {
-			  var equip = resp.equips[j];
-			  // Construim etiqueta de l'equip amb els membres
-				var equipStr = equip.nom;
-				for(i in equip.membres) {
-					equipStr += "<br>&nbsp;&nbsp;&nbsp;&nbsp;" +
-											equip.membres[i].email;
-				}
-		    equipSelect.append(
-		        $('<option></option>').val(equip.id).html(equipStr)
-		    );
-		};
-		equipSelect.formSelect();
-	}).fail(function () {
-		alert("ERROR");
-	});
-}
-
 function crea_qualificacio(sprint_id,equip_id) {
 	$.ajax({
 	  method: "GET",
 	  url: "/scrum/api/crea_qualificacio/"+sprint_id+"/"+equip_id,
 	  dataType: "json",
 	}).done(function (resp) {
-		alert(JSON.stringify(resp));
+		//alert(JSON.stringify(resp));
+		location.reload();
 	}).fail(function () {
 		alert("ERROR en la creació de la qualificació de l'equip");
 	});
-
 }
+
+
+function edita_qualificacio(qualificacio_id) {
+	// check permissions (es fa al server)
+	$.ajax({
+	  method: "GET",
+	  url: "{% url 'get_done_specs' 0 %}"+qualificacio_id,
+	  dataType: "json",
+	}).done(function (resp) {
+		alert(JSON.stringify(resp));
+		//location.reload();
+
+	}).fail(function () {
+		alert("ERROR en la creació de la qualificació de l'equip");
+	});
+}
+
 
 </script>
 {% endblock %}
+
+{# carreguem filtres extra #}
+{% load scrum_extras %}
 
 
 {% block content %}
@@ -59,7 +50,6 @@ function crea_qualificacio(sprint_id,equip_id) {
   <div class="container">
     <div class="section">
 		<h2>Qualifica Projectes Scrum</h2>
-
 
 		<form>
   		<div class="input-field col s12">
@@ -97,12 +87,16 @@ function crea_qualificacio(sprint_id,equip_id) {
 			  	</td>
 				{% for sprint in projecte.sprints.all %}
 					<td>
-						 <a class="waves-effect waves-light btn modal-trigger" href="#modal1" 
+						{% if sprint.qualificacions|del_equip:equip %}
+							{% for qualificacio in sprint.qualificacions|del_equip:equip %}
+							  <a class="waves-effect waves-light btn modal-trigger" href="#modal1" 
+						 							onclick="edita_qualificacio({{qualificacio.id}})">
+						 			Edita</a><br>
+								{{qualificacio.specs_completades_mps_ponderat}}
+							{% endfor %}
+						{% else %}
+						  <a class="waves-effect waves-light btn modal-trigger" href="#" 
 						 							onclick="crea_qualificacio({{sprint.id}},{{equip.id}})">Qualifica</a>
-						{% if sprint.qualificacions.first %}
-						 <a class="waves-effect waves-light btn modal-trigger" href="#modal1" 
-						 							onclick="edita_qualificacio({{sprint.id}},{{equip.id}})">Edita</a>
-							QUALIFICACIONS: ...
 						{% endif %}
 					</td>
 				{% endfor %}

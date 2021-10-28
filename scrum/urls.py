@@ -10,12 +10,10 @@ urlpatterns = [
     path( 'qualifica', views.qualifica ),
 
     # api
-    path( 'api/crea_qualificacio/<int:sprint_id>/<int:equip_id>', api.crea_qualificacio,
-                            name="crea_qualificacio"),
+    path( 'api/crea_qualificacio/<int:sprint_id>/<int:equip_id>',
+                    api.crea_qualificacio,name="crea_qualificacio"),
+    path( 'api/get_done_specs/<int:qualificacio_id>',
+                    api.get_done_specs,name="get_done_specs"),
 
-    #path( 'api/actualitza_qualificacions', lib.api_actualitza_qualificacions,
-    #                                name="actualitza_qualificacions" ),
-    #path( 'api/get_equips', lib.api_get_equips, name="get_equips" ),
-    #path( 'api/get_sprints', lib.api_get_sprints, name="get_sprints" ),
 ]
 

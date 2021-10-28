@@ -18,3 +18,7 @@ def compte_dels_grups_de(feedbacks,usuari):
 	equips = usuari.equips.filter(membres__in=[usuari])
 	return feedbacks.filter(equip__in=equips).count()
 
+@register.filter
+def del_equip(qualificacions,equip):
+	return qualificacions.filter(equip=equip)
+
