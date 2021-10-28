@@ -67,3 +67,19 @@ def get_done_specs(request,qualificacio_id):
         "done_specs":donespecs_serializer.data,
         })
 
+@login_required
+def toggle_done_spec(request,done_spec_id):
+    done_spec_qs = DoneSpec.objects.filter(id=done_spec_id,
+                done_spec__spec__projecte__admins__in=[request.user])
+    if not done_spec_qs:
+        return JsonResponse({
+            "status":"ERROR",
+            "message":"ERROR accedint a la spec a qualificar."})
+
+    done_spec = done_spec_qs.first()
+    done_spec.done = not done_spec.done
+    done_spec.save()
+    return JsonResponse({
+        "status":"OK",
+        "done_spec":done_spec.values(),
+        })
