@@ -15,6 +15,10 @@ function crea_qualificacio(sprint_id,equip_id) {
 	  dataType: "json",
 	}).done(function (resp) {
 		//alert(JSON.stringify(resp));
+		if ( resp.status!="OK" ) {
+			alert("ERROR al modificar l'estat de la spec.");
+			return;
+		}
 		location.reload();
 	}).fail(function () {
 		alert("ERROR en la creació de la qualificació de l'equip");
@@ -26,23 +30,37 @@ function edita_qualificacio(qualificacio_id) {
 	// check permissions (es fa al server)
 	$.ajax({
 	  method: "GET",
-	  url: "{% url 'get_done_specs' 0 %}"+qualificacio_id,
+	  url: "{% url 'get_qualificacio' 0 %}"+qualificacio_id,
 	  dataType: "json",
 	}).done(function (resp) {
-		//alert(JSON.stringify(resp));
+		if ( resp.status!="OK" ) {
+			alert("ERROR accedint a la qualificació.");
+			return;
+		}
 		var modalbox = $('#modal1 .modal-content');
 		modalbox.empty();
+		// construim HEADER (equip i membres)
+		var equip = resp.qualificacio.equip;
+		var membres_html = "";
+		for(i in equip.membres) {
+			membres_html += equip.membres[i].first_name+" "+
+											equip.membres[i].last_name+" ("+
+											equip.membres[i].email+")<br>";
+		}
 		var list = $('<ul class="collection with-header"></ul>');
-		var header = $('<li class="collection-header"><h4>Equip</h4></li>');
+		var header = $('<li class="collection-header">\
+					<h4>'+equip.nom+'</h4>'+membres_html+'</li>');
 		list.append( header );
-		for(var i in resp.done_specs) {
+		// construim llista de DONE SPECS
+		done_specs = resp.qualificacio.done_specs;
+		for(var i in done_specs) {
 			var checked;
-			resp.done_specs[i].done ? checked="checked" : checked="";
+			done_specs[i].done ? checked="checked" : checked="";
 			var spec = $('<li class="collection-item" >\
-				<label>\
-				<input type="checkbox" onclick="change_done_spec('+resp.done_specs[i].id+')" '+checked+' id="done_spec_'+resp.done_specs[i].id+'"/>\
-				<span>'+resp.done_specs[i].spec.nom+'</span>\
-				</label></li>');
+				<span onclick="change_done_spec('+done_specs[i].id+')" >\
+				<input type="checkbox" '+checked+' id="done_spec_'+done_specs[i].id+'"/>\
+				<span>'+done_specs[i].spec.nom+'</span>\
+				</div></li>');
 			list.append(spec);
 		}
 		modalbox.append(list);
@@ -52,13 +70,20 @@ function edita_qualificacio(qualificacio_id) {
 }
 
 function change_done_spec(done_spec_id) {
-	alert("change done spec "+done_spec_id);
 	$.ajax({
 	  method: "GET",
 	  url: "/scrum/api/toggle_done_spec/"+done_spec_id,
 	  dataType: "json",
 	}).done(function (resp) {
-		alert(JSON.stringify(resp));
+		if ( resp.status!="OK" ) {
+			alert("ERROR al modificar l'estat de la spec.");
+			return;
+		}
+		//alert(JSON.stringify(resp));
+		var done_spec_id = resp.done_spec.id;
+		var checkbox = $("#done_spec_"+done_spec_id);
+		//alert(JSON.stringify(checkbox));
+		checkbox.prop("checked",resp.done_spec.done);
 	}).fail(function () {
 		alert("ERROR en l'actualització de la spec per a la qualificació.");
 	});	

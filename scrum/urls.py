@@ -14,6 +14,8 @@ urlpatterns = [
                     api.crea_qualificacio,name="crea_qualificacio"),
     path( 'api/get_done_specs/<int:qualificacio_id>',
                     api.get_done_specs,name="get_done_specs"),
+    path( 'api/get_qualificacio/<int:qualificacio_id>',
+                    api.get_qualificacio,name="get_qualificacio"),
     path( 'api/toggle_done_spec/<int:done_spec_id>',
                     api.toggle_done_spec,name="toggle_done_spec"),
 

@@ -51,6 +51,21 @@ class DoneSpecSerializer(serializers.ModelSerializer):
     class Meta:
         model = DoneSpec
         fields = ['id','done','spec',]
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username','first_name','last_name','email']
+class EquipSerializer(serializers.ModelSerializer):
+    membres = UserSerializer(many=True,read_only=True)
+    class Meta:
+        model = Equip
+        fields = '__all__'
+class QualiSerializer(serializers.ModelSerializer):
+    done_specs = DoneSpecSerializer(many=True,read_only=True)
+    equip = EquipSerializer(read_only=True)
+    class Meta:
+        model = Qualificacio
+        fields = ['id','done_specs','equip','nota','comentaris']
 
 @login_required
 def get_done_specs(request,qualificacio_id):
@@ -68,9 +83,24 @@ def get_done_specs(request,qualificacio_id):
         })
 
 @login_required
+def get_qualificacio(request,qualificacio_id):
+    quali_qs = Qualificacio.objects.filter(id=qualificacio_id,
+                sprint__projecte__admins__in=[request.user])
+    if not quali_qs:
+        return JsonResponse({
+            "status":"ERROR",
+            "message":"ERROR accedint a la qualificacio."})
+    qualificacio = quali_qs.first()
+    qualiserializer = QualiSerializer(qualificacio)
+    return JsonResponse({
+        "status":"OK",
+        "qualificacio":qualiserializer.data,
+        })
+
+@login_required
 def toggle_done_spec(request,done_spec_id):
     done_spec_qs = DoneSpec.objects.filter(id=done_spec_id,
-                done_spec__spec__projecte__admins__in=[request.user])
+                spec__projecte__admins__in=[request.user])
     if not done_spec_qs:
         return JsonResponse({
             "status":"ERROR",
@@ -79,7 +109,8 @@ def toggle_done_spec(request,done_spec_id):
     done_spec = done_spec_qs.first()
     done_spec.done = not done_spec.done
     done_spec.save()
+    serializer = DoneSpecSerializer(done_spec)
     return JsonResponse({
         "status":"OK",
-        "done_spec":done_spec.values(),
+        "done_spec":serializer.data,
         })
