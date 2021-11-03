@@ -142,7 +142,7 @@ function toggle_members() {
 
 			{% for equip in projecte.equips.all %}
 			<div class="row">
-			  <div class="col s12 m6">
+			  <div class="col s12 m9">
 			  		<h5>{{equip.nom}}</h5>
 			  		<div class="hide membersbox">
 			  		{% for membre in equip.membres.all %}
@@ -151,7 +151,7 @@ function toggle_members() {
 			  	  </div>
 			  </div>
 
-			  <div class="col s12 m6">
+			  <div class="col s12 m3">
 		  		<select onchange="crea_qualificacio({{equip.id}})">
 		  			<option>--- afegeix qualificació ---</option>
 						{% for sprint in projecte.sprints.all %}
