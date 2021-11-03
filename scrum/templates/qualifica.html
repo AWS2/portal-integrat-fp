@@ -89,6 +89,18 @@ function change_done_spec(done_spec_id) {
 	});	
 }
 
+function end_qualifica() {
+	location.reload();
+}
+
+function toggle_members() {
+	var elem = $(".membersbox");
+	if( elem.hasClass("hide") )
+		elem.removeClass("hide");
+	else
+		elem.addClass("hide");
+}
+
 </script>
 {% endblock %}
 
@@ -121,6 +133,10 @@ function change_done_spec(done_spec_id) {
 	  {% if projecte %}
     <div class="section">
 			<h3>Projecte: {{projecte.nom}}</h3>
+			<label>
+				<input type="checkbox" checked onclick="toggle_members()" id="toggle_members" />
+				<span>Mostrar/Amagar membres</span>
+			</label>
 			<table>
 				<thead>
 					<td>Equips</td>
@@ -131,10 +147,12 @@ function change_done_spec(done_spec_id) {
 			{% for equip in projecte.equips.all %}
 			  <tr>
 			  	<td>
-			  		{{equip.nom}}<br>
+			  		{{equip.nom}}
+			  		<div class="hide membersbox">
 			  		{% for membre in equip.membres.all %}
 			  		  &nbsp;&nbsp;&nbsp;&nbsp;{{membre.email}}<br>
 			  		{% endfor %}
+			  	  </div>
 			  	</td>
 				{% for sprint in projecte.sprints.all %}
 					<td>
@@ -167,7 +185,7 @@ function change_done_spec(done_spec_id) {
       <p>A bunch of text</p>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      <a href="#!" onclick="end_qualifica()" class="modal-close waves-effect waves-green btn-flat">Tanca</a>
     </div>
   </div>
 

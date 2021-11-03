@@ -18,6 +18,8 @@ def crea_qualificacio(request,sprint_id,equip_id):
     sprint = sprint_qs.first()
     projecte = Projecte.objects.filter(id=sprint.projecte.id,
                                 admins__in=[request.user])
+    if request.user.is_superuser:
+        projecte = Projecte.objects.filter(id=sprint.projecte.id)
     if not projecte:
         return JsonResponse({
             "status":"ERROR",
@@ -71,6 +73,8 @@ class QualiSerializer(serializers.ModelSerializer):
 def get_done_specs(request,qualificacio_id):
     quali_qs = Qualificacio.objects.filter(id=qualificacio_id,
                 sprint__projecte__admins__in=[request.user])
+    if request.user.is_superuser:
+        quali_qs = Qualificacio.objects.filter(id=qualificacio_id)
     if not quali_qs:
         return JsonResponse({
             "status":"ERROR",
@@ -86,6 +90,8 @@ def get_done_specs(request,qualificacio_id):
 def get_qualificacio(request,qualificacio_id):
     quali_qs = Qualificacio.objects.filter(id=qualificacio_id,
                 sprint__projecte__admins__in=[request.user])
+    if request.user.is_superuser:
+        quali_qs = Qualificacio.objects.filter(id=qualificacio_id)
     if not quali_qs:
         return JsonResponse({
             "status":"ERROR",
@@ -101,6 +107,8 @@ def get_qualificacio(request,qualificacio_id):
 def toggle_done_spec(request,done_spec_id):
     done_spec_qs = DoneSpec.objects.filter(id=done_spec_id,
                 spec__projecte__admins__in=[request.user])
+    if request.user.is_superuser:
+        done_spec_qs = DoneSpec.objects.filter(id=done_spec_id)
     if not done_spec_qs:
         return JsonResponse({
             "status":"ERROR",
