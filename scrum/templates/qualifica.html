@@ -4,7 +4,7 @@
 {% block extra_js %}
 <script type="text/javascript">
 	$(document).ready(function() {
-    $('#projecte').formSelect();
+    $('select').formSelect();
     $('.modal').modal();
 });
 
@@ -138,15 +138,27 @@ function toggle_members() {
 				<span>Mostrar/Amagar membres</span>
 			</label>
 
+
+
 			{% for equip in projecte.equips.all %}
 			<div class="row">
-			  <div class="col s12 m3">
+			  <div class="col s12 m6">
 			  		<h5>{{equip.nom}}</h5>
 			  		<div class="hide membersbox">
 			  		{% for membre in equip.membres.all %}
 			  		  &nbsp;&nbsp;&nbsp;&nbsp;{{membre.email}}<br>
 			  		{% endfor %}
 			  	  </div>
+			  </div>
+
+			  <div class="col s12 m6">
+		  		<select onchange="crea_qualificacio({{equip.id}})">
+		  			<option>--- afegeix qualificació ---</option>
+						{% for sprint in projecte.sprints.all %}
+	  					<option value="{{sprint.id}}">{{sprint.nom}}</option>
+						{% endfor %}
+					</select>
+					<label>Afegir qualificació</label>
 			  </div>
 			</div>
 
