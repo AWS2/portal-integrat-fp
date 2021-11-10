@@ -47,7 +47,7 @@ class SpecSerializer(serializers.ModelSerializer):
     mp = MpSerializer(many=True,read_only=True)
     class Meta:
         model = Spec
-        fields = ['id','ordre','nom','descripcio','mp']
+        fields = ['id','ordre','nom','descripcio','mp','hores_estimades']
 class DoneSpecSerializer(serializers.ModelSerializer):
     spec = SpecSerializer(read_only=True)
     class Meta:
@@ -67,7 +67,7 @@ class QualiSerializer(serializers.ModelSerializer):
     equip = EquipSerializer(read_only=True)
     class Meta:
         model = Qualificacio
-        fields = ['id','done_specs','equip','nota','comentaris']
+        fields = ['id','done_specs','equip','nota','comentaris',]
 
 @login_required
 def get_done_specs(request,qualificacio_id):
