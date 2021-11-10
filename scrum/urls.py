@@ -12,6 +12,8 @@ urlpatterns = [
     # api
     path( 'api/crea_qualificacio/<int:sprint_id>/<int:equip_id>',
                     api.crea_qualificacio,name="crea_qualificacio"),
+    path( 'api/elimina_qualificacio/<int:qualificacio_id>',
+                    api.elimina_qualificacio,name="elimina_qualificacio"),
     path( 'api/get_done_specs/<int:qualificacio_id>',
                     api.get_done_specs,name="get_done_specs"),
     path( 'api/get_qualificacio/<int:qualificacio_id>',

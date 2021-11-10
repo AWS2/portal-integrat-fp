@@ -104,6 +104,23 @@ def get_qualificacio(request,qualificacio_id):
         })
 
 @login_required
+def elimina_qualificacio(request,qualificacio_id):
+    quali_qs = Qualificacio.objects.filter(id=qualificacio_id,
+                sprint__projecte__admins__in=[request.user])
+    if request.user.is_superuser:
+        quali_qs = Qualificacio.objects.filter(id=qualificacio_id)
+    if not quali_qs:
+        return JsonResponse({
+            "status":"ERROR",
+            "message":"ERROR accedint a la qualificacio."})
+    qualificacio = quali_qs.first()
+    qualificacio.delete()
+    return JsonResponse({
+        "status":"OK",
+        "message":"Qualificació id={} eliminada.".format(qualificacio_id),
+        })
+
+@login_required
 def toggle_done_spec(request,done_spec_id):
     done_spec_qs = DoneSpec.objects.filter(id=done_spec_id,
                 spec__projecte__admins__in=[request.user])

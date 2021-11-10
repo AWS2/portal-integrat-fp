@@ -8,7 +8,8 @@
     $('.modal').modal();
 });
 
-function crea_qualificacio(sprint_id,equip_id) {
+function crea_qualificacio(elem,equip_id) {
+	var sprint_id = elem.value;
 	$.ajax({
 	  method: "GET",
 	  url: "/scrum/api/crea_qualificacio/"+sprint_id+"/"+equip_id,
@@ -22,6 +23,28 @@ function crea_qualificacio(sprint_id,equip_id) {
 		location.reload();
 	}).fail(function () {
 		alert("ERROR en la creació de la qualificació de l'equip");
+	});
+}
+
+function elimina_qualificacio(quali_id) {
+	var conf = confirm("Estàs segur que vols eliminar aquesta qualificació? La operació no es podrà desfer i es perdran les dades.");
+	if( !conf ) {
+		return;
+	}
+
+	$.ajax({
+	  method: "GET",
+	  url: "/scrum/api/elimina_qualificacio/"+quali_id,
+	  dataType: "json",
+	}).done(function (resp) {
+		//alert(JSON.stringify(resp));
+		if ( resp.status!="OK" ) {
+			alert("ERROR intern a l'eliminar la qualificació.");
+			return;
+		}
+		location.reload();
+	}).fail(function () {
+		alert("ERROR a l'eliminar la qualificació.");
 	});
 }
 
@@ -152,7 +175,7 @@ function toggle_members() {
 			  </div>
 
 			  <div class="col s12 m3">
-		  		<select onchange="crea_qualificacio({{equip.id}})">
+		  		<select onchange="crea_qualificacio(this,{{equip.id}})">
 		  			<option>--- afegeix qualificació ---</option>
 						{% for sprint in projecte.sprints.all %}
 	  					<option value="{{sprint.id}}">{{sprint.nom}}</option>
@@ -175,7 +198,7 @@ function toggle_members() {
 		        <div class="card-action">
 						  <a class="waves-effect modal-trigger" href="#modal1" 
 						 					onclick="edita_qualificacio({{quali.id}})">Editar</a>
-						 	<a href="#">Eliminar</a>
+						 	<a href="#" onclick="elimina_qualificacio({{quali.id}})">Eliminar</a>
 		        </div>
 		      </div>
 
