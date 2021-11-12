@@ -194,7 +194,7 @@ class ProjecteAdmin(admin.ModelAdmin):
                 # filtrem els centres del qual es admin
                 kwargs["queryset"] = request.user.centres_admin.all()
             elif request.user.es_profe:
-                kwargs["queryset"] = Centre.objects.filter(id__in=[request.user.centre.id,])
+                kwargs["queryset"] = Centre.objects.filter(id__in=[request.user.centre.id,]).distinct()
             elif request.user.es_alumne:
                 kwargs["queryset"] = Centre.objects.none()
             elif request.user.is_superuser:
@@ -202,9 +202,9 @@ class ProjecteAdmin(admin.ModelAdmin):
         elif db_field.name=="cicle":
             if request.user.es_admin_centre:
                 # filtrem els centres del qual es admin
-                kwargs["queryset"] = Cicle.objects.filter(centres__in=request.user.centres_admin.all())
+                kwargs["queryset"] = Cicle.objects.filter(centres__in=request.user.centres_admin.all()).distinct()
             elif request.user.es_profe:
-                kwargs["queryset"] = Cicle.objects.filter(centres__id__in=[request.user.centre.id,])
+                kwargs["queryset"] = Cicle.objects.filter(centres__id__in=[request.user.centre.id,]).distinct()
             elif request.user.es_alumne:
                 kwargs["queryset"] = Cicle.objects.none()
             elif request.user.is_superuser:
@@ -217,11 +217,11 @@ class ProjecteAdmin(admin.ModelAdmin):
                 # filtrem els centres del qual es admin
                 kwargs["queryset"] = User.objects.filter(
                                             centre__in=request.user.centres_admin.all(),
-                                            groups__in=[gprofes,])
+                                            groups__in=[gprofes,]).distinct()
             elif request.user.es_profe:
                 kwargs["queryset"] = User.objects.filter(
                                             centre__id__in=[request.user.centre.id,],
-                                            groups__in=[gprofes,])
+                                            groups__in=[gprofes,]).distinct()
             elif request.user.es_alumne:
                 kwargs["queryset"] = User.objects.none()
             elif request.user.is_superuser:

@@ -79,7 +79,7 @@ class Spec(models.Model):
     ordre = models.IntegerField(default=0)
     mp = models.ManyToManyField(ModulProfessional,related_name="specs",blank=True,
         help_text="Mòduls Professionals. NOTA: no apareixeran a en la CREACIÓ de la Spec, sinó en l'EDICIÓ")
-    hores_estimades = models.FloatField(blank=True,default=0.0)
+    hores_estimades = models.FloatField(default=0.0)
     sprints = models.ManyToManyField(Sprint,related_name="specs",blank=True)
     def __str__(self):
         return str(self.ordre) + ". " + self.nom
