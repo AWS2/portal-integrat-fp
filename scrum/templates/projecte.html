@@ -77,7 +77,7 @@
                     <ul class="collection">
                         <a class="collection-item" href="#moduls-professionals">Mòduls professionals</a>
                         <a class="collection-item" href="#descripcio">Descripció</a>
-                        {% for sprint in projecte.sprint_set.all %}
+                        {% for sprint in projecte.sprints.all %}
                         <a class="collection-item" href="#sprint-{{sprint.id}}">{{sprint.nom}}</a>
                         {% endfor %}
                     </ul>
@@ -100,7 +100,7 @@
         <div class="specs">
 
 
-        {% for sprint in projecte.sprint_set.all %}
+        {% for sprint in projecte.sprints.all %}
         	<ul class="collection with-header">
 	        	<li class="collection-header">
 
