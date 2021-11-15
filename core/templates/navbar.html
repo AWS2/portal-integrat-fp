@@ -17,6 +17,7 @@
   <ul id="dropdown4" class="dropdown-content">
     <li><a href="/borsa/convida_alumnes"><i class="material-icons left">mail_outline</i><div>Convida alumnes a Scrum</div></a></li>
     <li><a href="/admin/scrum"><i class="material-icons left">view_list</i><div>Administra Projectes</div></a></li>
+    <li><a href="{% url 'projectes' %}"><i class="material-icons left">remove_red_eye</i><div>Visualitza projectes</div></a></li>
     <li><a href="/scrum/qualifica"><i class="material-icons left">task_alt</i><div>Qualifica Alumnes Scrum</div></a></li>
   </ul>
 
@@ -111,6 +112,24 @@
         <li><a href="/admin/scrum"><i class="material-icons">view_list</i>Scrum / ABP</a></li>
         {% endif %}
 
+        {% if request.user.es_profe %}
+        <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+              <li>
+                <a class="collapsible-header">Administra Scrum/ABP<i class="material-icons">view_list</i></a>
+                <div class="collapsible-body">
+                  <ul>
+                    <li><a href="/borsa/convida_alumnes"><i class="material-icons left">mail_outline</i>Convida alumnes</a></li>
+                    <li><a href="/admin/scrum/"><i class="material-icons left">view_list</i>Administra Scrum</a></li>
+                    <li><a href="{% url 'projectes' %}"><i class="material-icons left">remove_red_eye</i>Visualitza projectes</a></li>
+                    <li><a href="/scrum/qualifica"><i class="material-icons left">task_alt</i>Qualifica</a></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+        </li>
+        {% endif %}
+
         {% if request.user.es_admin_centre %}
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
@@ -128,22 +147,6 @@
         </li>
         {% endif %}
 
-        {% if request.user.es_profe %}
-        <li class="no-padding">
-            <ul class="collapsible collapsible-accordion">
-              <li>
-                <a class="collapsible-header">Administra Scrum/ABP<i class="material-icons">view_list</i></a>
-                <div class="collapsible-body">
-                  <ul>
-                    <li><a href="/borsa/convida_alumnes"><i class="material-icons left">mail_outline</i>Convida alumnes</a></li>
-                    <li><a href="/admin/scrum/"><i class="material-icons left">view_list</i>Administra Scrum</a></li>
-                    <li><a href="/scrum/qualifica"><i class="material-icons left">task_alt</i>Qualifica</a></li>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-        </li>
-        {% endif %}
 
       {% endif %}
 
