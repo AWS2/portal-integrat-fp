@@ -68,13 +68,19 @@ def descarrega_qualificacions(request,projecte_id):
         # arxiu temporal per descàrrega
         file, path = tempfile.mkstemp()
         # TODO: filtrar segons si usuari es admin del projecte
-        projecte = Projecte.objects.get(id=projecte_id)
+        projectes = Projecte.objects.filter(id=projecte_id,admins__in=[request.user,])
+        if not projectes:
+            # problema de permisos
+            raise Http404
+
+        projecte = projectes.first()
 
         # creem arxiu de full de calcul
         workbook = xlsxwriter.Workbook(path)
         for mp in projecte.mps().all():
             codi = mp.nom[0:4]
             header = workbook.add_format({'bold': True,'bg_color':'black','font_color':'white'})
+            header.set_text_wrap()
             percent_format = workbook.add_format()
             percent_format.set_num_format('0,0%')
             worksheet = workbook.add_worksheet(codi)
@@ -87,9 +93,11 @@ def descarrega_qualificacions(request,projecte_id):
             worksheet.write(1,0,"Hores",header)
             worksheet.write(1,1,"",header)
             worksheet.write(1,2,"",header)
+            # ajustem amplades i alçada de les primeres files
             worksheet.set_column("A:A", 20)
             worksheet.set_column("B:B", 20)
             worksheet.set_column("C:C", 15)
+            worksheet.set_row(0, 40)
             col = 0
             for sprint in projecte.sprints.all():
                 worksheet.write(0,offset+col,sprint.nom,header)
@@ -100,12 +108,12 @@ def descarrega_qualificacions(request,projecte_id):
                 else:
                     worksheet.write(1,offset+col,0,header)
                 col += 1
-            worksheet.write(0,offset+col,"",header)
-            worksheet.write(0,offset+col+1,"",header)
-            worksheet.write(0,offset+col+2,"",header)
-            worksheet.write(1,offset+col,"Hores totals",header)
-            worksheet.write(1,offset+col+1,"Hores completades",header)
-            worksheet.write(1,offset+col+2,"Nota ponderada",header)
+            worksheet.write(1,offset+col,"",header)
+            worksheet.write(1,offset+col+1,"",header)
+            worksheet.write(1,offset+col+2,"",header)
+            worksheet.write(0,offset+col,"Hores totals",header)
+            worksheet.write(0,offset+col+1,"Hores completades",header)
+            worksheet.write(0,offset+col+2,"Nota ponderada",header)
             
             # offset rows=2; 0 = títols, 1 = Hores (ponderacions)
             row = 2
