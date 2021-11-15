@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
+{% block extra_js %}
+<script type="text/javascript">
+	$(document).ready(function() {
+    $('select').formSelect();
+    //$('.modal').modal();
+});
+</script>
+{% endblock %}
 
 {% block content %}
 
@@ -7,29 +15,64 @@
     <div class="section">
 		<h2>Projectes Scrum</h2>
 
-		<table>
-			<thead>
-				<tr>
-					<td>Nom projecte</td>
-					<td>Cicle</td>
-					<td>Dates inici - final</td>
-					<td>Go!</td>
-				</tr>
-			</thead>
-		{% for projecte in projectes %}
-			<tr>
-				<td><a class="title" href="{% url 'projecte' projecte.id %}">{{projecte.nom}}</a></td>
-				<td>{{projecte.cicle}}</td>
-				<td><span class="lighten-3">Inici: {{projecte.inici}} <br>Final: {{projecte.final}}</span></td>
-				<td><a class="secondary-content" href="{% url 'projecte' projecte.id %}">
-					<i class="material-icons">send</i></a>
-				</td>
-			</tr>
-		{% endfor %}
-		</table>
+			<div class="row">
+			<form>
 
-	</div>
-</div>
+	  		<div class="input-field col s12 m4 offset-m2">
+		  		<select name="centre_id" id="centre" onchange="submit()">
+		  			<option value=0>--- filtra per centre ---</option>
+						{% for centre in centres %}
+						{% if centre.id == centre_id %}
+							<option  selected value={{centre.id}}>{{centre.nom}}</option>
+						{% else %}
+	  					<option value={{centre.id}}>{{centre.nom}} {{centre.id}} {{centre_id}}</option>
+	  				{% endif %}
+						{% endfor %}
+					</select>
+				</div>
+
+				<div class="input-field col s12 m4">
+		  		<select name="cicle_id" id="cicle" onchange="submit()">
+		  			<option value=0>--- filtra per cicle ---</option>
+						{% for cicle in cicles %}
+						{% if cicle.id == cicle_id %}
+							<option  selected value={{cicle.id}}>{{cicle.nom}}</option>
+						{% else %}
+	  					<option value={{cicle.id}}>{{cicle.nom}}</option>
+	  				{% endif %}
+						{% endfor %}
+					</select>
+				</div>
+
+			</form>
+			</div>
+		</div>
+
+		<div class="section">
+			<table>
+				<thead>
+					<tr>
+						<td>Nom projecte</td>
+						<td>Cicle / Centre</td>
+						<td>Dates inici - final</td>
+						<td>Go!</td>
+					</tr>
+				</thead>
+			{% for projecte in projectes %}
+				<tr>
+					<td><a class="title" href="{% url 'projecte' projecte.id %}">{{projecte.nom}}</a></td>
+					<td>{{projecte.cicle}}<br>
+					{{projecte.centre}}</td>
+					<td><span class="lighten-3">Inici: {{projecte.inici}} <br>Final: {{projecte.final}}</span></td>
+					<td><a class="secondary-content" href="{% url 'projecte' projecte.id %}">
+						<i class="material-icons">send</i></a>
+					</td>
+				</tr>
+			{% endfor %}
+			</table>
+
+		</div> <!-- section -->
+	</div> <!-- container -->
 
 {% endblock %}
 

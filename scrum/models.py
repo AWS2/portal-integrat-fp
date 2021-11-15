@@ -13,11 +13,11 @@ from core.models import *
 class Projecte(models.Model):
     nom = models.CharField(max_length=255)
     descripcio = RichTextField()
-    centre = models.ForeignKey(Centre,on_delete=models.CASCADE)
+    centre = models.ForeignKey(Centre,on_delete=models.CASCADE,related_name="projectes")
     admins = models.ManyToManyField(User,help_text="Incloure aquí als professors implicats en el projecte")
     inici = models.DateField(default=datetime.datetime.now)
     final = models.DateField()
-    cicle = models.ForeignKey(Cicle,on_delete=models.SET_NULL,null=True)
+    cicle = models.ForeignKey(Cicle,on_delete=models.SET_NULL,null=True,related_name="projectes")
     def __str__(self):
         return self.nom
     def descripcio_html(self):

@@ -1,16 +1,31 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 
-from scrum.models import Projecte, Spec, SpecFeedback
-from core.models import ModulProfessional
+from scrum.models import *
+from core.models import *
 
 
 # Create your views here.
 
 
-def index(request):
+def llista_projectes(request):
+    centres = Centre.objects.annotate(proj_count=Sum("projectes")).filter(proj_count__gt=0)
+    cicles = Cicle.objects.annotate(proj_count=Sum("projectes")).filter(proj_count__gt=0)
     projectes = Projecte.objects.order_by('-inici')
-    return render( request, "projecte_list.html", {"projectes":projectes} )
+    centre_id = request.GET.get("centre_id")
+    cicle_id = request.GET.get("cicle_id")
+    if centre_id and centre_id.isnumeric() and centre_id!="0":
+        projectes = projectes.filter(centre__id=centre_id)
+    if cicle_id and cicle_id.isnumeric() and cicle_id!="0":
+        projectes = projectes.filter(cicle__id=cicle_id)
+    if cicle_id.isnumeric():
+        cicle_id = int(cicle_id)
+    if centre_id.isnumeric():
+        centre_id = int(centre_id)
+    return render( request, "projecte_list.html", {"projectes":projectes, "centres":centres,
+                    "cicles":cicles, "centre_id":centre_id, "cicle_id":cicle_id } )
+
 
 def projecte(request,id):
     projecte = Projecte.objects.get(id=id)
