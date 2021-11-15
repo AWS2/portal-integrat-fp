@@ -7,7 +7,9 @@ urlpatterns = [
     path( 'projecte', views.index, name='projectes' ),
     path( 'projectes', views.index, name='projectes2' ),
     path( 'projecte/<int:id>', views.projecte, name="projecte" ),
-    path( 'qualifica', views.qualifica ),
+    path( 'qualifica', views.qualifica, name="qualifica" ),
+    path( 'descarrega_qualificacions/<int:projecte_id>', views.descarrega_qualificacions,
+                name="descarrega_qualificacions" ),
 
     # api
     path( 'api/crea_qualificacio/<int:sprint_id>/<int:equip_id>',

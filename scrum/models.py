@@ -22,6 +22,9 @@ class Projecte(models.Model):
         return self.nom
     def descripcio_html(self):
         return mark_safe(self.descripcio)
+    def mps(self):
+        return ModulProfessional.objects.filter(
+                    specs__projecte=self).distinct().order_by('nom')
 
 class Equip(models.Model):
     nom = models.CharField(max_length=255)
@@ -174,6 +177,19 @@ class Qualificacio(models.Model):
                 if dades["total"]!=0:
                     ret += mp.nom[:4] + " : {}/{} ({:.1f}%)<br>".format(dades["done"],dades["total"],round(100*dades["done"]/dades["total"],1))
         return mark_safe(ret)
+    def hores_completades_per_mps(self):
+        # computem % d'hores de specs realitzades
+        mps = {}
+        for dspec in self.done_specs.all():
+            for mp in dspec.spec.mp.all():
+                # si no hi ha dict, el creem
+                if mp.id not in mps:
+                    mps[mp.id] = { "obj": mp, "total": 0, "done": 0 }
+                # afegim estadístiques
+                mps[mp.id]["total"] += dspec.spec.hores_estimades
+                if dspec.done:
+                    mps[mp.id]["done"] += dspec.spec.hores_estimades
+        return mps
 
 class DoneSpec(models.Model):
     qualificacio = models.ForeignKey(Qualificacio,on_delete=models.CASCADE,

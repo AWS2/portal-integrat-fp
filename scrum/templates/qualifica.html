@@ -169,7 +169,9 @@ function toggle_members() {
 				<span>Mostrar/Amagar membres</span>
 			</label>
 
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+			<a class="waves-effect waves-light right light-blue btn" href="{% url 'descarrega_qualificacions' projecte.id %}"><i class="material-icons left">file_download</i>Descarregar full de càlcul</a>
 
 			{% for equip in projecte.equips.all %}
 			<div class="row">
