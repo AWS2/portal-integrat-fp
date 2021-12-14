@@ -139,7 +139,10 @@ def descarrega_qualificacions(request,projecte_id):
                     # bucle alumnes
                     worksheet.write(row,offset+col,hores_totals)
                     worksheet.write(row,offset+col+1,hores_completades)
-                    worksheet.write(row,offset+col+2,hores_completades/hores_totals,percent_format)
+                    if hores_totals == 0:
+                        worksheet.write(row,offset+col+2,0,percent_format)
+                    else:
+                        worksheet.write(row,offset+col+2,hores_completades/hores_totals,percent_format)
                     row += 1
         workbook.close()
 
