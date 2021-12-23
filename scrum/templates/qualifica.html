@@ -62,6 +62,7 @@ function edita_qualificacio(qualificacio_id) {
 		}
 		var modalbox = $('#modal1 .modal-content');
 		modalbox.empty();
+
 		// construim HEADER (equip i membres)
 		var equip = resp.qualificacio.equip;
 		var membres_html = "";
@@ -74,6 +75,7 @@ function edita_qualificacio(qualificacio_id) {
 		var header = $('<li class="collection-header">\
 					<h4>'+equip.nom+'</h4>'+membres_html+'</li>');
 		list.append( header );
+
 		// construim llista de DONE SPECS
 		done_specs = resp.qualificacio.done_specs;
 		for(var i in done_specs) {
@@ -84,10 +86,10 @@ function edita_qualificacio(qualificacio_id) {
 				var mp = done_specs[i].spec.mp[j];
 				mpstring += mp.nom.substring(0,4)+" ";
 			}
-
 			var spec = $('<li class="collection-item" >\
 				<span onclick="change_done_spec('+done_specs[i].id+')" >\
 				<input type="checkbox" '+checked+' id="done_spec_'+done_specs[i].id+'"/>\
+				<span>'+done_specs[i].spec.ordre+')</span>\
 				<span class="teal-text">['+done_specs[i].spec.hores_estimades+' h]</span>\
 				<span>'+done_specs[i].spec.nom+'</span>\
 				<span class="teal-text">'+mpstring+'</span>\
@@ -95,6 +97,11 @@ function edita_qualificacio(qualificacio_id) {
 			list.append(spec);
 		}
 		modalbox.append(list);
+
+		// carrega comentaris
+		$('#comentaris').val(resp.qualificacio.comentaris);
+		console.log("lalala");
+
 	}).fail(function () {
 		alert("ERROR accedint a la qualificació de l'equip. Refresca la pantalla i torna a intentar-ho.");
 	});
@@ -133,6 +140,10 @@ function toggle_members() {
 }
 
 </script>
+
+<!-- Tiny MCE editor -->
+<script type="text/javascript" src="//cdn.tiny.cloud/1//tinymce/5/tinymce.min.js"></script>
+<script type="text/javascript" src="/djrichtextfield/init.js"></script>
 {% endblock %}
 
 {# carreguem filtres extra #}
@@ -226,9 +237,22 @@ function toggle_members() {
   <!-- Modal Structure -->
   <div id="modal1" class="modal">
     <div class="modal-content">
-      <h4>Modal Header</h4>
-      <p>A bunch of text</p>
+      <h4>Grup XXX</h4>
+      <p>Alumnes</p>
     </div>
+		
+		<div class="row">
+			<div class="col s12">
+	      <h5>Comentaris del <i>sprint review</i></h5>
+	    </div>
+	  </div>
+	  <div class="row">
+	    <div class="col s12">
+	    	<textarea class="djrichtextfield" id="comentaris"></textarea>
+	    	<!--label for="comentaris">Comentaris...</label-->
+	    </div>
+	  </div>
+
     <div class="modal-footer">
       <a href="#!" onclick="end_qualifica()" class="modal-close waves-effect waves-green btn-flat">Tanca</a>
     </div>
