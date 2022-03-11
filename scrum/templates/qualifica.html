@@ -49,6 +49,13 @@ function elimina_qualificacio(quali_id) {
 }
 
 
+let notaHTML = $("<select></select>");
+for(let i=0; i<=100; i+=10) {
+	let elem = $("<option>"+i+"%</option>");
+	notaHTML.append()
+}
+
+
 function edita_qualificacio(qualificacio_id) {
 	// check permissions (es fa al server)
 	$.ajax({
@@ -92,6 +99,7 @@ function edita_qualificacio(qualificacio_id) {
 				<span>'+done_specs[i].spec.nom+'</span>\
 				<span class="teal-text">'+mpstring+'</span>\
 				</div></li>');
+			spec.append(notaHTML);
 			list.append(spec);
 		}
 		modalbox.append(list);
