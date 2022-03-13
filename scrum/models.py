@@ -195,7 +195,7 @@ class DoneSpec(models.Model):
     qualificacio = models.ForeignKey(Qualificacio,on_delete=models.CASCADE,
                                             related_name="done_specs")
     spec = models.ForeignKey(Spec,on_delete=models.CASCADE)
-    done = models.BooleanField(default=False)
+    done = models.FloatField(default=0.0)
     nota = models.FloatField(default=0.0)
     def __str__(self):
         return str(self.spec.ordre)+" : "+str(self.spec.nom)

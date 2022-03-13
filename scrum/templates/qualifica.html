@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 
+{% block extra_css %}
+	.input-field.col {
+		margin: 0 15px 0 0;
+		padding: 0;
+	}
+	.input-field select {
+		height: auto;
+		padding: 5px 5px 5px 0;
+	}
+{% endblock %}
+
 
 {% block extra_js %}
 <script type="text/javascript">
@@ -49,13 +60,6 @@ function elimina_qualificacio(quali_id) {
 }
 
 
-let notaHTML = $("<select></select>");
-for(let i=0; i<=100; i+=10) {
-	let elem = $("<option>"+i+"%</option>");
-	notaHTML.append()
-}
-
-
 function edita_qualificacio(qualificacio_id) {
 	// check permissions (es fa al server)
 	$.ajax({
@@ -78,7 +82,7 @@ function edita_qualificacio(qualificacio_id) {
 											equip.membres[i].email+")<br>";
 		}
 		var list = $('<ul class="collection with-header"></ul>');
-		var header = $('<li class="collection-header">\
+		var header = $('<li class="collection-header row">\
 					<h4>'+equip.nom+'</h4>'+membres_html+'</li>');
 		list.append( header );
 		// construim llista de DONE SPECS
@@ -92,17 +96,33 @@ function edita_qualificacio(qualificacio_id) {
 				mpstring += mp.nom.substring(0,4)+" ";
 			}
 
-			var spec = $('<li class="collection-item" >\
-				<span onclick="change_done_spec('+done_specs[i].id+')" >\
-				<input type="checkbox" '+checked+' id="done_spec_'+done_specs[i].id+'"/>\
-				<span class="teal-text">['+done_specs[i].spec.hores_estimades+' h]</span>\
-				<span>'+done_specs[i].spec.nom+'</span>\
-				<span class="teal-text">'+mpstring+'</span>\
+			// creem desplegable de la nota
+			var notaHTML = $("<select class='browser-default' id='nota_"+done_specs[i].id+"'></select>");
+			for(var k=0; k<=100; k+=10) {
+				var selected = "";
+				if( !selected && done_specs[i].done>=k/100 ) selected = "selected";
+				var elem = $("<option "+selected+">"+k+"%</option>");
+				notaHTML.append(elem);
+			}
+			wrappedNota = $('<div class="input-field col s1">\
+				</div>');
+			wrappedNota.append(notaHTML);
+
+			// item d'avaluació
+			var spec = $('<li class="collection-item row" >\
+					<div class="col s10">\
+					<span onclick="change_done_spec('+done_specs[i].id+')" >\
+						<input type="checkbox" '+checked+' id="done_spec_'+done_specs[i].id+'"/>\
+						<span class="teal-text">['+done_specs[i].spec.hores_estimades+' h]</span>\
+						<span>'+done_specs[i].spec.nom+'</span>\
+						<span class="teal-text">'+mpstring+'</span>\
+					</span>\
 				</div></li>');
-			spec.append(notaHTML);
+			spec.prepend(wrappedNota);
 			list.append(spec);
 		}
 		modalbox.append(list);
+		$("select").formSelect();
 	}).fail(function () {
 		alert("ERROR accedint a la qualificació de l'equip. Refresca la pantalla i torna a intentar-ho.");
 	});
@@ -121,8 +141,15 @@ function change_done_spec(done_spec_id) {
 		//alert(JSON.stringify(resp));
 		var done_spec_id = resp.done_spec.id;
 		var checkbox = $("#done_spec_"+done_spec_id);
-		//alert(JSON.stringify(checkbox));
-		checkbox.prop("checked",resp.done_spec.done);
+		var nota = resp.done_spec.done;
+		// actualitzem nota
+		$("#nota_"+done_spec_id).prop("selectedIndex",nota*10);
+		if( nota>=1.0 ) {
+			checkbox.prop("checked","checked");
+		} else {
+			// si no està al 100%, no s'activa
+			checkbox.prop("checked",false);
+		}
 	}).fail(function () {
 		alert("ERROR en l'actualització de la spec per a la qualificació.");
 	});	
