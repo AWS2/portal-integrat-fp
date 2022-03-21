@@ -101,9 +101,12 @@ function edita_qualificacio(qualificacio_id) {
 			for(var k=0; k<=100; k+=10) {
 				var selected = "";
 				if( !selected && done_specs[i].done>=k/100 ) selected = "selected";
-				var elem = $("<option "+selected+">"+k+"%</option>");
+				var elem = $("<option "+selected+" value='"+k+"'>"+k+"%</option>");
 				notaHTML.append(elem);
 			}
+			notaHTML.change( function() {
+				change_done_spec(done_specs[i].id);
+			});
 			wrappedNota = $('<div class="input-field col s1">\
 				</div>');
 			wrappedNota.append(notaHTML);
@@ -129,9 +132,12 @@ function edita_qualificacio(qualificacio_id) {
 }
 
 function change_done_spec(done_spec_id) {
+	// capturem la dada que hi ha al desplegable
+	var value = $("#nota_"+done_spec_id).val();
+alert("val="+value);
 	$.ajax({
 	  method: "GET",
-	  url: "/scrum/api/toggle_done_spec/"+done_spec_id,
+	  url: "/scrum/api/change_done_spec/"+done_spec_id+"/"+value,
 	  dataType: "json",
 	}).done(function (resp) {
 		if ( resp.status!="OK" ) {

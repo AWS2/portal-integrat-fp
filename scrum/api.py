@@ -139,3 +139,27 @@ def toggle_done_spec(request,done_spec_id):
         "status":"OK",
         "done_spec":serializer.data,
         })
+
+
+@login_required
+def change_done_spec(request,done_spec_id,value):
+    # filtrem per usuari
+    done_spec_qs = DoneSpec.objects.filter(id=done_spec_id,
+                spec__projecte__admins__in=[request.user])
+    # superuser ho pot veure tot
+    if request.user.is_superuser:
+        done_spec_qs = DoneSpec.objects.filter(id=done_spec_id)
+    # gestionem errors
+    if not done_spec_qs:
+        return JsonResponse({
+            "status":"ERROR",
+            "message":"ERROR accedint a la spec a qualificar."})
+
+    done_spec = done_spec_qs.first()
+    done_spec.done = value/10
+    done_spec.save()
+    serializer = DoneSpecSerializer(done_spec)
+    return JsonResponse({
+        "status":"OK",
+        "done_spec":serializer.data,
+        })
