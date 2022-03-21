@@ -198,6 +198,9 @@ class DoneSpec(models.Model):
     done = models.BooleanField(default=False)
     def __str__(self):
         return str(self.spec.ordre)+" : "+str(self.spec.nom)
+    @property
+    def ordre(self):
+        return self.spec.ordre
 
 
 class SpecFeedback(models.Model):

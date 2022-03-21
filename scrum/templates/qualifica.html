@@ -8,6 +8,31 @@
     $('.modal').modal();
 });
 
+
+function guarda_comentari() {
+	var comments = tinymce.activeEditor.getContent();
+	M.toast({html:"Guardant comentari..."});
+	var qualificacio_id = $("#qualificacio_id").html();
+
+	$.ajax({
+	  method: "GET",
+	  url: "/scrum/api/set_comment_to_qualificacio/"+qualificacio_id,
+	  data: { "comentaris": comments },
+	  dataType: "json",
+	}).done(function (resp) {
+		//alert(JSON.stringify(resp));
+		if ( resp.status!="OK" ) {
+			alert("ERROR al modificar el comentari.");
+			return;
+		} else {
+			M.toast({html:"Comentari guardat!"});
+		}
+		//location.reload();
+	}).fail(function () {
+		M.toast({html:"ERROR a l'accedir al servidor per guardar el comentari"});
+	});
+}
+
 function crea_qualificacio(elem,equip_id) {
 	var sprint_id = elem.value;
 	$.ajax({
@@ -89,7 +114,7 @@ function edita_qualificacio(qualificacio_id) {
 			var spec = $('<li class="collection-item" >\
 				<span onclick="change_done_spec('+done_specs[i].id+')" >\
 				<input type="checkbox" '+checked+' id="done_spec_'+done_specs[i].id+'"/>\
-				<span>'+done_specs[i].spec.ordre+')</span>\
+				<span>'+done_specs[i].spec.ordre+'.</span>\
 				<span class="teal-text">['+done_specs[i].spec.hores_estimades+' h]</span>\
 				<span>'+done_specs[i].spec.nom+'</span>\
 				<span class="teal-text">'+mpstring+'</span>\
@@ -98,9 +123,10 @@ function edita_qualificacio(qualificacio_id) {
 		}
 		modalbox.append(list);
 
+		// set qualificacio_id for later editing
+		$("#qualificacio_id").html(qualificacio_id);
 		// carrega comentaris
-		$('#comentaris').val(resp.qualificacio.comentaris);
-		console.log("lalala");
+		tinymce.activeEditor.setContent(resp.qualificacio.comentaris);
 
 	}).fail(function () {
 		alert("ERROR accedint a la qualificació de l'equip. Refresca la pantalla i torna a intentar-ho.");
@@ -119,9 +145,13 @@ function change_done_spec(done_spec_id) {
 		}
 		//alert(JSON.stringify(resp));
 		var done_spec_id = resp.done_spec.id;
+		var state = "done";
+		if( ! resp.done_spec.done )
+			state = "undone";
 		var checkbox = $("#done_spec_"+done_spec_id);
 		//alert(JSON.stringify(checkbox));
 		checkbox.prop("checked",resp.done_spec.done);
+		M.toast({html:"Spec "+resp.done_spec.ordre+" set to "+state+"."});
 	}).fail(function () {
 		alert("ERROR en l'actualització de la spec per a la qualificació.");
 	});	
@@ -251,6 +281,13 @@ function toggle_members() {
 	    	<textarea class="djrichtextfield" id="comentaris"></textarea>
 	    	<!--label for="comentaris">Comentaris...</label-->
 	    </div>
+	  </div>
+
+	  <div class="row">
+	  	<div class="col s12">
+	  	  <a href="#!" onclick="guarda_comentari()" class="waves-effect waves-green btn">Guarda comentari</a>
+	  	  <span id="qualificacio_id" style="display:none"></span>
+	  	</div>
 	  </div>
 
     <div class="modal-footer">
