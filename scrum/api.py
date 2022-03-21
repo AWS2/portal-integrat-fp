@@ -52,7 +52,7 @@ class DoneSpecSerializer(serializers.ModelSerializer):
     spec = SpecSerializer(read_only=True)
     class Meta:
         model = DoneSpec
-        fields = ['id','done','spec',]
+        fields = ['id','done','spec','ordre']
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -139,3 +139,24 @@ def toggle_done_spec(request,done_spec_id):
         "status":"OK",
         "done_spec":serializer.data,
         })
+
+@login_required
+def set_comment_to_qualificacio(request,qualificacio_id):
+    quali_qs = Qualificacio.objects.filter(id=qualificacio_id,
+                sprint__projecte__admins__in=[request.user])
+    if request.user.is_superuser:
+        quali_qs = Qualificacio.objects.filter(id=qualificacio_id)
+    if not quali_qs:
+        return JsonResponse({
+            "status":"ERROR",
+            "message":"ERROR accedint a la qualificacio."})
+    # guardem comentaris enviats
+    comentaris = request.GET["comentaris"]
+    qualificacio = quali_qs.first()
+    qualificacio.comentaris = comentaris
+    qualificacio.save()
+    return JsonResponse({
+        "status":"OK",
+        "message":"Afegit comentari a la qualificació id={}.".format(qualificacio_id),
+        })
+
