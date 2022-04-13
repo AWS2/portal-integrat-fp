@@ -1,5 +1,5 @@
 
-# Borsa de Treball IETI
+# Portal Integrat IETI: Borsa de Treball i seguiment SCRUM
 
 Projecte per a borsa de treball online per a centres on s'imparteixen cicles formatius. El projecte s'ha iniciat a l'Institut Esteve Terradas i Illa de Cornellà de Llobregat i està sent dut a terme pel professorat i alumnes de DAW (desenvolupament web).
 
