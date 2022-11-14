@@ -163,10 +163,14 @@ function end_qualifica() {
 
 function toggle_members() {
 	var elem = $(".membersbox");
-	if( elem.hasClass("hide") )
+	var elem2 = $(".descbox");
+	if( elem.hasClass("hide") ) {
 		elem.removeClass("hide");
-	else
+		elem2.removeClass("hide");
+	} else {
 		elem.addClass("hide");
+		elem2.addClass("hide");
+	}
 }
 
 </script>
@@ -217,12 +221,15 @@ function toggle_members() {
 			{% for equip in projecte.equips.all %}
 			<div class="row">
 			  <div class="col s12 m9">
-			  		<h5>{{equip.nom}}</h5>
-			  		<div class="hide membersbox">
+			  	<h5>{{equip.nom}}</h5>
+			  	<div class="hide membersbox">
 			  		{% for membre in equip.membres.all %}
-			  		  &nbsp;&nbsp;&nbsp;&nbsp;{{membre.email}}<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;{{membre.first_name}} {{membre.last_name}} ({{membre.email}})<br>
 			  		{% endfor %}
-			  	  </div>
+			  	</div>
+			  	<div class="hide descbox">
+					{{equip.descripcio|safe}}
+			  	</div>
 			  </div>
 
 			  <div class="col s12 m3">

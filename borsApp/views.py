@@ -112,7 +112,7 @@ def convida_alumnes(request):
                     titol.save()
                 # afegim al grup alumnes
                 galumnes.user_set.add(usuari)
-            elif validate_email(email,check_mx=True):
+            elif validate_email(email,check_mx=False):
                 # crear usuari (al grup alumnes)
                 user = User(username=email.replace("@","_"),email=email,is_staff=True,centre=centre)
                 user.is_staff = False
