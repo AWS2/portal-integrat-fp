@@ -38,9 +38,11 @@ def projecte(request,id):
         equips = request.user.equips.filter(membres__in=[request.user])
         if len(equips)>0:
             activa_comentaris = True
+    rest_of_specs = Spec.objects.filter(sprints=None,projecte=projecte)
     return render( request, "projecte.html", {"projecte":projecte,
                     "mps": mps, "toggled_comment": toggled_comment,
-                    "activa_comentaris": activa_comentaris } )
+                    "activa_comentaris": activa_comentaris ,
+                    "rest_of_specs":rest_of_specs })
 
 @login_required
 def qualifica(request):

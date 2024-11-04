@@ -80,6 +80,7 @@
                         {% for sprint in projecte.sprints.all %}
                         <a class="collection-item" href="#sprint-{{sprint.id}}">{{sprint.nom}}</a>
                         {% endfor %}
+                        <a class="collection-item" href="#sprint-backlog-rest">Resta del Backlog</a>
                     </ul>
                 </div>
             </div>
@@ -202,11 +203,41 @@
                     {% endif %}
         		</li>
         	{% endfor %}
-        	</ul>
+
+            </ul>
 
         {% endfor %}
 
-        </div>
+
+        {# specs sense sprint (resta del backlog) #}
+            <ul class="collection with-header">
+                <li class="collection-header">
+                    <h4><a class="anchor" id="sprint-backlog-rest">Resta del Backlog</a></h4>
+                </li>
+            {% for spec in rest_of_specs.all %}
+                <li class="collection-item">
+                    <h6 style="font-weight: bold;">
+                        <a class="anchor" id="spec-{{spec.id}}">
+                        {{spec.ordre}}. {{spec.nom}}
+                        </a>
+                    </h6>
+                    <div>
+                        {{spec.descripcio|safe}}
+                    </div>
+                    <div>
+                        <p><a>hores estimades: {{spec.hores_estimades}}</a>
+                            Mòduls:
+                            {% for mp in spec.mp.all %}
+                                {{mp.nom|slice:"0:4"}}
+                            {% endfor %}
+                        </p>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+
+
+        </div> <!-- specs -->
 
         <div>
             <a href="/scrum/projectes"><i class="material-icons">arrow_back</i>Tornar a la llista de projectes</a>
