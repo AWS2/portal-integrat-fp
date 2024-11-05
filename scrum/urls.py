@@ -4,6 +4,7 @@ from scrum import views
 from scrum import api
 
 urlpatterns = [
+    path( 'videos', views.videos, name='videos' ),
     path( 'projecte', views.index, name='projectes' ),
     path( 'projectes', views.index, name='projectes2' ),
     path( 'projecte/<int:id>', views.projecte, name="projecte" ),

@@ -12,12 +12,10 @@
       <div class="row center">
         <h5 class="header col s12 light">Una iniciativa de IETI - Innovació Esteve Terradas i Illa</h5>
       </div>
-      {% if request.user.is_anonymous %}
       <div class="row center">
-        <a href="/login" id="init-button" class="btn-large waves-effect waves-light orange">Comença</a>
+        <a href="/scrum/projectes" id="abp-button" class="btn-large waves-effect waves-light orange">Mira els projectes</a>
+        <a href="/scrum/videos" id="abp-button" class="btn-large waves-effect waves-light orange">Mira els vídeos</a>
       </div>
-      <br><br>
-      {% endif %}
 
     </div>
   </div>
@@ -41,9 +39,6 @@
       {% else %}
             <h5 class="center">Scrum / ABP</h5>
       {% endif %}
-            <div class="row center">
-              <a href="/scrum/projectes" id="abp-button" class="btn-large waves-effect waves-light orange">Mira els projectes!</a>
-            </div>
             <p class="light">Gestiona els projectes a l'aula amb metodologia Scrum.</p>
       {% endif %}
           </div>

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
-from scrum.models import Projecte, Spec, SpecFeedback
+from scrum.models import Projecte, Spec, SpecFeedback, Equip
 from core.models import ModulProfessional
 
 
@@ -11,6 +11,10 @@ from core.models import ModulProfessional
 def index(request):
     projectes = Projecte.objects.order_by('-inici')
     return render( request, "projecte_list.html", {"projectes":projectes} )
+
+def videos(request):
+    equips = Equip.objects.exclude(video=None)
+    return render( request, "video_list.html", {"equips":equips} )
 
 def projecte(request,id):
     projecte = Projecte.objects.get(id=id)

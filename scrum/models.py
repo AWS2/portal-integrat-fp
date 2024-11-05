@@ -31,6 +31,7 @@ class Equip(models.Model):
     descripcio = RichTextField(blank=True)
     projecte = models.ForeignKey(Projecte,on_delete=models.CASCADE,related_name="equips")
     membres = models.ManyToManyField(User,related_name="equips")
+    video = models.URLField(max_length=200,null=True,blank=True)
     # TODO: permisos (read, write, etc.)
     def __str__(self):
         return self.nom
