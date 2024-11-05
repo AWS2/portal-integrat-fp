@@ -31,6 +31,7 @@ class EquipAdmin(admin.ModelAdmin):
     #form = EquipForm
     filter_horizontal = ('membres',)
     list_display = ('nom','projecte','centre','show_membres',)
+    search_fields = ('nom','projecte__nom','membres__first_name','membres__last_name')
     inlines = [ QualificacioInline, ]
     def centre(self,obj):
         return obj.projecte.centre.nom
