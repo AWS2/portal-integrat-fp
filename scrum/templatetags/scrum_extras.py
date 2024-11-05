@@ -1,7 +1,5 @@
 from django import template
 
-
-
 register = template.Library()
 
 @register.filter
@@ -21,4 +19,16 @@ def compte_dels_grups_de(feedbacks,usuari):
 @register.filter
 def del_equip(qualificacions,equip):
 	return qualificacions.filter(equip=equip)
+
+@register.filter
+def youtube(url):
+	video_id = ""
+	if "embed" in url:
+		return url
+	elif "youtu.be" in url:
+		video_id = url.split(".be/")[1]
+	else:
+		video_id = url.split("?v=")[1]
+	
+	return "https://www.youtube.com/embed/{}".format(video_id)
 

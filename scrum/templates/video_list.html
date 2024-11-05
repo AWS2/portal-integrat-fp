@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 
+{% load scrum_extras %}
+
 {% block content %}
 
   <div class="container">
@@ -14,9 +16,16 @@
 	        <div class="card-content white-text">
 	          <span class="card-title">Equip {{equip}}</span>
 	          <p>Projecte {{equip.projecte}}</p>
-	          <iframe width="100%" src="https://www.youtube.com/embed/xe2jmwfza2Y?si=3LFs-1pY0FBMi1n5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+	          {% if "youtube.com" in equip.video or "youtu.be" in equip.video %}
+	          <iframe width="100%" src="{{equip.video|youtube}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+	          {% else %}
+	          <p>Vídeo preview no disponible.</p>
+	          <p><a target="_blank" href="{{equip.video}}">Obrir vídeo (pestanya nova)</a></p>
+	          {% endif %}
 	        </div>
 	        <div class="card-action">
+	          <a target="_blank" href="{{equip.video}}">Obrir vídeo (pestanya nova)</a>
+	          <br>
 	          <a href="/scrum/projecte/{{equip.projecte.id}}">Veure specs del projecte</a>
 	        </div>
 	      </div>
