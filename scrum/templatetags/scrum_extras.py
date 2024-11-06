@@ -23,12 +23,15 @@ def del_equip(qualificacions,equip):
 @register.filter
 def youtube(url):
 	video_id = ""
-	if "embed" in url:
-		return url
-	elif "youtu.be" in url:
-		video_id = url.split(".be/")[1]
-	else:
-		video_id = url.split("?v=")[1]
+	try:
+		if "embed" in url:
+			return url
+		elif "youtu.be" in url:
+			video_id = url.split(".be/")[1]
+		else:
+			video_id = url.split("?v=")[1]
+	except:
+		pass
 	
 	return "https://www.youtube.com/embed/{}".format(video_id)
 
