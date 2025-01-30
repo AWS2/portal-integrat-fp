@@ -7,6 +7,7 @@ from adminsortable2.admin import SortableAdminMixin
 from adminsortable2.admin import SortableInlineAdminMixin
 
 from django.utils import timezone
+from datetime import timedelta
 
 # Register your models here.
 
@@ -62,7 +63,8 @@ class EquipAdmin(admin.ModelAdmin):
             if request.user.centre:
                 centres |= Centre.objects.filter(pk=request.user.centre.id)
             kwargs["queryset"] = Projecte.objects.filter(centre__in=centres,
-                                    final__gt=timezone.now()).order_by('-inici')
+                                    final__gt=timezone.now()-datetime.timedelta(days=60)).order_by('-inici')
+                                    #final__gt=timezone.now()).order_by('-inici')
         return super().formfield_for_foreignkey(db_field,request=request,**kwargs)
     def formfield_for_manytomany(slef,db_field,request=None,**kwargs):
         if db_field.name=="membres" and not request.user.is_superuser:

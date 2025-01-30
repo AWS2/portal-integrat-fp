@@ -13,7 +13,7 @@ def index(request):
     return render( request, "projecte_list.html", {"projectes":projectes} )
 
 def videos(request):
-    equips = Equip.objects.exclude(video=None)
+    equips = Equip.objects.exclude(video=None).order_by("-projecte__inici")
     return render( request, "video_list.html", {"equips":equips} )
 
 def projecte(request,id):
