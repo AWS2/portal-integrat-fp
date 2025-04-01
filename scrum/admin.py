@@ -76,10 +76,10 @@ class EquipAdmin(admin.ModelAdmin):
                 kwargs["initial"] = User.objects.filter(pk=request.user.id)
         return super().formfield_for_manytomany(db_field,request=request,**kwargs)
 
-class SpecInline(SortableInlineAdminMixin,admin.TabularInline):
+class SpecInline(SortableInlineAdminMixin,admin.StackedInline):
     model = Spec
     #form = SpecForm
-    fields = ('nom','mp','hores_estimades','sprints')
+    fields = ('nom','mp','hores_estimades','sprints','descripcio')
     #readonly_fields = ('show_sprints',)
     #exclude = ('pare','descripcio')
     #TODO: no exclude descripcio pero adaptar-ho be en amplada

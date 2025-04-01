@@ -13,6 +13,20 @@
 		  <li>
 		  	<script type="text/javascript">
 		  		var amaga_toggled = false;
+		  		var colapsa_toggled = false;
+		  		function colapsa_specs() {
+					var inline_content = $('.inline-related fieldset');
+					if( colapsa_toggled ) {
+						// mostra specs complertes
+						inline_content.css("display","block");
+					} else {
+						// col.lapsa specs
+						inline_content.css("display","none");
+					}
+					colapsa_toggled = !colapsa_toggled;
+					var specs_section = $('#spec_set-group')[0];
+					specs_section.scrollIntoView({behavior: "smooth"});
+				}
 		  		function amaga_specs() {
 		  			var sprints = $("td.field-sprints ul.select2-selection__rendered");
 
@@ -33,7 +47,8 @@
 					amaga_toggled = ! amaga_toggled;
 				}
 			</script>
-		  	<a href="#" onclick="amaga_specs()" class="viewlink">Amaga specs de sprints passats</a>
+		  	<a href="#spec_set-group" onclick="amaga_specs(); return false;" class="viewlink">Amaga specs de sprints passats</a>
+		  	<a href="#spec_set-group" onclick="colapsa_specs(); return false;" class="viewlink">Col.lapsa specs per redordenar</a>
 		  </li>
 	  {% endif %}
 
