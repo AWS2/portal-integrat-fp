@@ -178,7 +178,7 @@ DJRICHTEXTFIELD_CONFIG = {
             ['Image', 'Table', 'Link', 'Unlink', 'Anchor'],
             ['Source']
         ],
-        'width': '100%'
+        'width': '700'
     }
 }
 
