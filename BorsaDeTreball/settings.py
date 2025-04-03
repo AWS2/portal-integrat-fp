@@ -110,7 +110,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
-                'scrum.context_processors.tiny_key',
+                #'scrum.context_processors.tiny_key',
             ],
         },
     },
@@ -164,10 +164,30 @@ ca_formats.DATETIME_FORMAT = "d M Y H:i:s"
 
 TINYMCE_KEY = env("TINYMCE_KEY",default="")
 
+FORM_RENDERER = 'django.forms.renderers.DjangoTemplates'
+
+# ckeditor
 DJRICHTEXTFIELD_CONFIG = {
+    'js': ['//cdn.ckeditor.com/4.22.1/standard/ckeditor.js'],
+    'init_template': 'djrichtextfield/init/ckeditor.js',
+    'removePlugins': 'linkimageautoresizecodelists', 
+    'settings': {
+        'settings': [
+            ['Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker'],
+            ['NumberedList', 'BulletedList', 'Indent', 'Outdent'],
+            ['Image', 'Table', 'Link', 'Unlink', 'Anchor'],
+            ['Source']
+        ],
+        'width': '100%'
+    }
+}
+
+TINY_DJRICHTEXTFIELD_CONFIG = {
     #'js': ['//tinymce.cachefly.net/4.1/tinymce.min.js'],
-    'js': ['//cdn.tiny.cloud/1/'+TINYMCE_KEY+'/tinymce/5/tinymce.min.js'],
-    'init_template': 'djrichtextfield/init/tinymce.js',
+    'init_template': 'djrichtextfield/init/ckeditor.js',
+    'js': ['//cdn.ckeditor.com/4.14.0/standard/ckeditor.js'],
+    #'js': [''], #['//cdn.tiny.cloud/1/'+TINYMCE_KEY+'/tinymce/5/tinymce.min.js'],
+    #'init_template': 'djrichtextfield/init/tinymce.js',
     'settings': {
         'menubar': False,
         'plugins': 'link image autoresize code lists',
