@@ -6,11 +6,19 @@
 	$(document).ready(function() {
     $('select').formSelect();
     $('.modal').modal();
+
+    // posar toggle al seu estat
+    if( $("#toggle_members")[0].checked ) {
+	    toggle_members();
+    }
+
 });
 
 
 function guarda_comentari() {
-	var comments = tinymce.activeEditor.getContent();
+	//var comments = tinymce.activeEditor.getContent();
+	var editor = Object.values(CKEDITOR.instances)[0];
+	var comments = editor.getData();
 	M.toast({html:"Guardant comentari..."});
 	var qualificacio_id = $("#qualificacio_id").html();
 
@@ -126,7 +134,9 @@ function edita_qualificacio(qualificacio_id) {
 		// set qualificacio_id for later editing
 		$("#qualificacio_id").html(qualificacio_id);
 		// carrega comentaris
-		tinymce.activeEditor.setContent(resp.qualificacio.comentaris);
+		var editor = Object.values(CKEDITOR.instances)[0];
+		editor.setData(resp.qualificacio.comentaris);
+		//tinymce.activeEditor.setContent(resp.qualificacio.comentaris);
 
 	}).fail(function () {
 		alert("ERROR accedint a la qualificació de l'equip. Refresca la pantalla i torna a intentar-ho.");
@@ -175,8 +185,8 @@ function toggle_members() {
 
 </script>
 
-<!-- Tiny MCE editor -->
-<script type="text/javascript" src="//cdn.tiny.cloud/1/{{ TINYMCE_KEY }}/tinymce/5/tinymce.min.js"></script>
+<!-- CK editor -->
+<script type="text/javascript" src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 <script type="text/javascript" src="/djrichtextfield/init.js"></script>
 {% endblock %}
 
