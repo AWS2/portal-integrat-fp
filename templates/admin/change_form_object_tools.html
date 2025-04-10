@@ -14,7 +14,35 @@
 		  	<script type="text/javascript">
 		  		var amaga_toggled = false;
 		  		var colapsa_toggled = false;
-		  		function colapsa_specs() {
+				var botons_creats = false;
+				function crea_botons_colapsar() {
+					if( !botons_creats ) {
+						botons_creats = true;
+						console.log("crea botons");
+						var boto = $('<a style="float:right;color:#666;margin-right:16px;font-weight:normal;font-size:11px">Col.lapsa</a>');
+						boto.click(colapsa_spec);
+						$('h3.ui-sortable-handle').append(boto);
+					}
+				}
+				function colapsa_spec(e) {
+					// callback del boto individual de spec
+					console.log("colapsa spec");
+					var caller = e.target || e.srcElement;
+					var elem = $(caller).parent();
+					var fieldset = elem.next();
+					fieldset.slideToggle("slow");
+					/*if( fieldset.css("display") != "none" ) {
+						fieldset.css("display","none");
+					} else {
+						fieldset.css("display","block");
+					}*/
+					// evitem que s'obri el link
+					return false;
+
+				}
+		  		function colapsa_totes_specs() {
+					// col.lapsa totes les specs
+					crea_botons_colapsar();
 					var inline_content = $('.inline-related fieldset');
 					if( colapsa_toggled ) {
 						// mostra specs complertes
@@ -27,28 +55,33 @@
 					var specs_section = $('#spec_set-group')[0];
 					specs_section.scrollIntoView({behavior: "smooth"});
 				}
-		  		function amaga_specs() {
-		  			var sprints = $("td.field-sprints ul.select2-selection__rendered");
+		  		function colapsa_specs_amb_sprints() {
+					console.log("amagar specs");
+					crea_botons_colapsar();
+		  			//var sprints = $("td.field-sprints ul.select2-selection__rendered");
+					//var sprints = $("fieldset ul.select2-selection__rendered");
+					var sprints = $("div > h3.ui-sortable-handle ~ fieldset");
 
 		  			if( amaga_toggled ) {
 		  				// MOSTREM FILES (SPECS)
-			  			var parents = sprints.parent().parent().parent().parent().parent().parent();
+			  			var parents = sprints.parent().parent().parent().parent().parent().parent().parent();
 		  				parents.css("display","table-row");
 		  			} else {
 		  				// AMAGUEM LES QUE TENEN UN SPRINT ASSIGNAT
 			  			sprints.each(function() {
 			  				var sons = $("li",$(this));
 			  				if( sons.length>1 ) {
-			  					var parent = $(this).parent().parent().parent().parent().parent().parent();
+			  					var parent = $(this).parent().parent().parent().parent().parent().parent().parent();
 					  			parent.css("display","none");
 					  		}
 					 	});
 					}
 					amaga_toggled = ! amaga_toggled;
 				}
+				setTimeout(crea_botons_colapsar,5000);
 			</script>
-		  	<a href="#spec_set-group" onclick="amaga_specs(); return false;" class="viewlink">Amaga specs de sprints passats</a>
-		  	<a href="#spec_set-group" onclick="colapsa_specs(); return false;" class="viewlink">Col.lapsa specs per a reordenar</a>
+		  	<a href="#spec_set-group" onclick="colapsa_specs_amb_sprints(); return false;" class="viewlink">Col.lapsa specs de sprints assignats</a>
+		  	<a href="#spec_set-group" onclick="colapsa_totes_specs(); return false;" class="viewlink">Col.lapsa totes les specs</a>
 		  </li>
 	  {% endif %}
 

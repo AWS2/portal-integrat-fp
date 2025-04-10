@@ -186,6 +186,8 @@ class OfertaAdmin(admin.ModelAdmin):
         for cicles in obj.cicles.all():
             ret += str(cicles.nom) +", "
         return ret
+    def descripcio_html(self,obj):
+        return mark_safe(obj.descripcio)
     def get_form(self,request,obj=None,**kwargs):
         # tots els camps del model
         self.fields = [ field.name for field in Oferta._meta.get_fields(include_hidden=False) ]
@@ -197,8 +199,6 @@ class OfertaAdmin(admin.ModelAdmin):
             self.fields = ('empresa','titol','descripcio_html','inici','final','dades_empresa')
         form = super().get_form(request,obj,**kwargs)
         return form
-    def descripcio_html(self,obj):
-        return mark_safe(obj.descripcio)
     def dades_empresa(self,obj):
         text = "<p style='float:left;'><img style='max-width:8em;' src='/media/%s'></p>\
                 <p>Email: %s</p>\

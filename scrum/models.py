@@ -86,7 +86,10 @@ class Spec(models.Model):
     hores_estimades = models.FloatField(default=0.0)
     sprints = models.ManyToManyField(Sprint,related_name="specs",blank=True)
     def __str__(self):
-        return str(self.ordre) + ". " + self.nom
+        sprints_str = ""
+        for sprint in self.sprints.all():
+            sprints_str += " [" + sprint.nom + "]"
+        return str(self.ordre) + ". " + sprints_str + " " + self.nom
     def show_sprints(self):
         ret = ""
         for sprint in self.sprints.all():
