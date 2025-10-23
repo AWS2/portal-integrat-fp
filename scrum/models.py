@@ -87,8 +87,8 @@ class Spec(models.Model):
     sprints = models.ManyToManyField(Sprint,related_name="specs",blank=True)
     def __str__(self):
         sprints_str = ""
-        for sprint in self.sprints.all():
-            sprints_str += " [" + sprint.nom + "]"
+        #for sprint in self.sprints.all():
+        #    sprints_str += " [" + sprint.nom + "]"
         return str(self.ordre) + ". " + sprints_str + " " + self.nom
     def show_sprints(self):
         ret = ""
